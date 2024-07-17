@@ -73,6 +73,14 @@ export default function ItemsList() {
     );
   };
 
+  const total_price = function (Items) {
+    return Items.qty * Items.unit_price;
+  };
+
+  const total_cost = function (Items) {
+    return Items.qty * Items.unit_price + Items.trans;
+  };
+
   return (
     <div className="w-full py-8 px-4 flex flex-col">
       <NavLink
@@ -103,18 +111,60 @@ export default function ItemsList() {
             field="name"
             header="Name"
             sortable
-            style={{ width: "25%", borderBottom: "1px solid #dee2e6" }}
+            style={{ width: "10%", borderBottom: "1px solid #dee2e6" }}
           ></Column>
           <Column
-            field="created_at"
-            header="Created at"
+            field="unit"
+            header="Unit"
             sortable
-            style={{ width: "25%", borderBottom: "1px solid #dee2e6" }}
+            style={{ width: "10%", borderBottom: "1px solid #dee2e6" }}
+          ></Column>
+          <Column
+            field="qty"
+            header="QTY"
+            sortable
+            style={{ width: "10%", borderBottom: "1px solid #dee2e6" }}
+          ></Column>
+          <Column
+            field="unit_price"
+            header="Unit Price"
+            sortable
+            style={{ width: "10%", borderBottom: "1px solid #dee2e6" }}
+          ></Column>
+          <Column
+            header="Total Price"
+            body={total_price}
+            sortable
+            style={{ width: "10%", borderBottom: "1px solid #dee2e6" }}
+          ></Column>
+          <Column
+            field="trans"
+            header="Trans"
+            sortable
+            style={{ width: "10%", borderBottom: "1px solid #dee2e6" }}
+          ></Column>
+          <Column
+            header="Total Cost"
+            body={total_cost}
+            sortable
+            style={{ width: "10%", borderBottom: "1px solid #dee2e6" }}
+          ></Column>
+          <Column
+            field="date"
+            header="Date"
+            sortable
+            style={{ width: "10%", borderBottom: "1px solid #dee2e6" }}
+          ></Column>
+          <Column
+            field="remarks"
+            header="Remarks"
+            sortable
+            style={{ width: "10%", borderBottom: "1px solid #dee2e6" }}
           ></Column>
           <Column
             header="Actions"
             body={actionTemplate}
-            style={{ width: "25%", borderBottom: "1px solid #dee2e6" }}
+            style={{ width: "10%", borderBottom: "1px solid #dee2e6" }}
           ></Column>
         </DataTable>
       </div>

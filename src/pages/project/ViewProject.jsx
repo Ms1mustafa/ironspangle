@@ -28,7 +28,7 @@ export default function View() {
       <h1 className="text-gray-700 mb-3 text-3xl">{project?.name}</h1>
       <p className="text-gray-500 mb-5">{project?.body}</p>
       <p className="text-gray-700 mb-5">Budget: {project?.budget}</p>
-      <div className="flex flex-wrap w-48 -mx-3 mb-6">
+      <div className="flex flex-wrap w-60 -mx-3 mb-6">
         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <p className="text-gray-700">PO: {project?.po}</p>
         </div>

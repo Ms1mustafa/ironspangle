@@ -20,7 +20,7 @@ export default function WorkersList() {
     getWorkers();
   }, []);
 
-  const refreshItems = () => {
+  const refreshWorkers = () => {
     getWorkers();
   };
 
@@ -41,17 +41,17 @@ export default function WorkersList() {
     }
   }
 
-  const actionTemplate = (Items) => {
+  const actionTemplate = (Workers) => {
     return (
       <div className="flex gap-2">
         <NavLink
-          to={`/projects/${id}/workers/${Items.id}/edit`}
+          to={`/projects/${id}/workers/${Workers.id}/edit`}
           className="button"
         >
           Edit
         </NavLink>
         <Button
-          to={`/projects/${id}/items`}
+          to={`/projects/${id}/workers`}
           className="button bg-red-500 hover:bg-red-600"
           onClick={() =>
             SweetAlert({
@@ -61,7 +61,7 @@ export default function WorkersList() {
                 showCancelButton: true,
                 confirmButtonText: "Delete",
                 onConfirm: () => {
-                  Delete(Items.id, setLoading, refreshItems);
+                  Delete(Workers.id, setLoading, refreshWorkers);
                 },
               },
             })
@@ -71,6 +71,10 @@ export default function WorkersList() {
         </Button>
       </div>
     );
+  };
+
+  const totalFood = function (workers) {
+    return workers.day * workers.food;
   };
 
   return (
@@ -88,7 +92,7 @@ export default function WorkersList() {
           paginator
           rows={5}
           rowsPerPageOptions={[5, 10, 25, 50]}
-          emptyMessage="No Items found."
+          emptyMessage="No Workers found."
           paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
           currentPageReportTemplate="{first} to {last} of {totalRecords}"
           loading={loading}
@@ -103,18 +107,60 @@ export default function WorkersList() {
             field="name"
             header="Name"
             sortable
-            style={{ width: "25%", borderBottom: "1px solid #dee2e6" }}
+            style={{ width: "8%", borderBottom: "1px solid #dee2e6" }}
           ></Column>
           <Column
-            field="created_at"
-            header="Created at"
+            field="day"
+            header="Day"
             sortable
-            style={{ width: "25%", borderBottom: "1px solid #dee2e6" }}
+            style={{ width: "8%", borderBottom: "1px solid #dee2e6" }}
+          ></Column>
+          <Column
+            field="night"
+            header="Night"
+            sortable
+            style={{ width: "8%", borderBottom: "1px solid #dee2e6" }}
+          ></Column>
+          <Column
+            field="hours"
+            header="Hours"
+            sortable
+            style={{ width: "8%", borderBottom: "1px solid #dee2e6" }}
+          ></Column>
+          <Column
+            field="cost_day"
+            header="Cost / Day"
+            sortable
+            style={{ width: "8%", borderBottom: "1px solid #dee2e6" }}
+          ></Column>
+          <Column
+            field="cost_day"
+            header="Cost / Day"
+            sortable
+            style={{ width: "8%", borderBottom: "1px solid #dee2e6" }}
+          ></Column>
+          <Column
+            field=""
+            header="Total Salary"
+            sortable
+            style={{ width: "8%", borderBottom: "1px solid #dee2e6" }}
+          ></Column>
+          <Column
+            field="food"
+            header="Food"
+            sortable
+            style={{ width: "8%", borderBottom: "1px solid #dee2e6" }}
+          ></Column>
+          <Column
+            header="Total Food"
+            body={totalFood}
+            sortable
+            style={{ width: "8%", borderBottom: "1px solid #dee2e6" }}
           ></Column>
           <Column
             header="Actions"
             body={actionTemplate}
-            style={{ width: "25%", borderBottom: "1px solid #dee2e6" }}
+            style={{ width: "8%", borderBottom: "1px solid #dee2e6" }}
           ></Column>
         </DataTable>
       </div>
