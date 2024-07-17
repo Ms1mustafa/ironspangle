@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .navLink {
+    @apply select-none px-4 py-[.775rem] cursor-pointer my-[.4rem] flex items-center flex-grow text-[1.15rem] dark:text-neutral-400/75 text-stone-500;
+  }
+  .input {
+    @apply appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500;
+  }
+  .button {
+    @apply flex justify-center rounded-md bg-[#00427f] disabled:bg-indigo-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[#2c7bc4] focus:outline-none focus:opacity-70;
+  }
+  .input-label {
+    @apply block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2;
+  }
+  .tab {
+    @apply inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300;
+  }
+}
+
+@layer utilities {
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .section-content {
+    max-height: 0;
+    overflow-y: hidden;
+    transition: max-height 0.3s ease-out;
+  }
+
+  .section-content.open {
+    max-height: 100px; /* Adjust the max-height as needed */
+  }
+}
