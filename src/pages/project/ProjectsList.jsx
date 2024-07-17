@@ -15,14 +15,6 @@ export default function ProjectsList() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    getProjects();
-  }, []);
-
-  const refreshProjects = () => {
-    getProjects(); // Function to refresh projects list
-  };
-
   async function getProjects() {
     try {
       setLoading(true);
@@ -37,6 +29,14 @@ export default function ProjectsList() {
       setLoading(false);
     }
   }
+
+  useEffect(() => {
+    getProjects();
+  }, []);
+
+  const refreshProjects = () => {
+    getProjects(); // Function to refresh projects list
+  };
 
   const actionTemplate = (projects) => {
     return (
