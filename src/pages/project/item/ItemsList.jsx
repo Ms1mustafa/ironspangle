@@ -8,6 +8,8 @@ import AuthCheck from "../../../API/account/AuthCheck";
 import Button from "../../../components/Button";
 import SweetAlert from "../../../components/SweetAlert";
 import Delete from "../../../API/project/item/Delete";
+import { ColumnGroup } from "primereact/columngroup";
+import { Row } from "primereact/row";
 
 export default function ItemsList() {
   const user = AuthCheck();
@@ -81,6 +83,31 @@ export default function ItemsList() {
     return Items.qty * Items.unit_price + Items.trans;
   };
 
+  const totalCostTotal = () => {
+    let total = 0;
+
+    for (let i = 0; i < Items.length; i++) {
+      total += total_cost(Items[i]);
+    }
+    return total;
+  };
+
+  const footerGroup = (
+    <ColumnGroup>
+      <Row>
+        <Column colSpan={6} footerStyle={{ textAlign: "right" }} />
+        <Column
+          footer={totalCostTotal}
+          footerStyle={{
+            backgroundColor: "yellow",
+            fontWeight: "bold",
+          }}
+        />
+        {/* <Column footer={totalCostTotal} /> */}
+      </Row>
+    </ColumnGroup>
+  );
+
   return (
     <div className="w-full py-8 px-4 flex flex-col">
       <NavLink
@@ -96,6 +123,7 @@ export default function ItemsList() {
           paginator
           rows={5}
           rowsPerPageOptions={[5, 10, 25, 50]}
+          footerColumnGroup={Items.length && footerGroup}
           emptyMessage="No Items found."
           paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
           currentPageReportTemplate="{first} to {last} of {totalRecords}"
@@ -111,60 +139,60 @@ export default function ItemsList() {
             field="name"
             header="Name"
             sortable
-            style={{ width: "10%", borderBottom: "1px solid #dee2e6" }}
+            style={{ borderBottom: "1px solid #dee2e6" }}
           ></Column>
           <Column
             field="unit"
             header="Unit"
             sortable
-            style={{ width: "10%", borderBottom: "1px solid #dee2e6" }}
+            style={{ borderBottom: "1px solid #dee2e6" }}
           ></Column>
           <Column
             field="qty"
             header="QTY"
             sortable
-            style={{ width: "10%", borderBottom: "1px solid #dee2e6" }}
+            style={{ borderBottom: "1px solid #dee2e6" }}
           ></Column>
           <Column
             field="unit_price"
             header="Unit Price"
             sortable
-            style={{ width: "10%", borderBottom: "1px solid #dee2e6" }}
+            style={{ borderBottom: "1px solid #dee2e6" }}
           ></Column>
           <Column
             header="Total Price"
             body={total_price}
             sortable
-            style={{ width: "10%", borderBottom: "1px solid #dee2e6" }}
+            style={{ borderBottom: "1px solid #dee2e6" }}
           ></Column>
           <Column
             field="trans"
             header="Trans"
             sortable
-            style={{ width: "10%", borderBottom: "1px solid #dee2e6" }}
+            style={{ borderBottom: "1px solid #dee2e6" }}
           ></Column>
           <Column
             header="Total Cost"
             body={total_cost}
             sortable
-            style={{ width: "10%", borderBottom: "1px solid #dee2e6" }}
+            style={{ borderBottom: "1px solid #dee2e6" }}
           ></Column>
           <Column
             field="date"
             header="Date"
             sortable
-            style={{ width: "10%", borderBottom: "1px solid #dee2e6" }}
+            style={{ borderBottom: "1px solid #dee2e6" }}
           ></Column>
           <Column
             field="remarks"
             header="Remarks"
             sortable
-            style={{ width: "10%", borderBottom: "1px solid #dee2e6" }}
+            style={{ borderBottom: "1px solid #dee2e6" }}
           ></Column>
           <Column
             header="Actions"
             body={actionTemplate}
-            style={{ width: "10%", borderBottom: "1px solid #dee2e6" }}
+            style={{ borderBottom: "1px solid #dee2e6" }}
           ></Column>
         </DataTable>
       </div>

@@ -100,18 +100,18 @@ export default function ProjectsList() {
             field="name"
             header="Name"
             sortable
-            style={{ width: "25%", borderBottom: "1px solid #dee2e6" }}
+            style={{ borderBottom: "1px solid #dee2e6" }}
           ></Column>
           <Column
             field="created_at"
             header="Created at"
             sortable
-            style={{ width: "25%", borderBottom: "1px solid #dee2e6" }}
+            style={{ borderBottom: "1px solid #dee2e6" }}
           ></Column>
           <Column
             header="Actions"
             body={actionTemplate}
-            style={{ width: "25%", borderBottom: "1px solid #dee2e6" }}
+            style={{ borderBottom: "1px solid #dee2e6" }}
           ></Column>
         </DataTable>
       </div>
