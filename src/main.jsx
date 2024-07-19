@@ -17,6 +17,15 @@ import CreateProjectWorker from "./pages/project/worker/CreateProjectWorker.jsx"
 import View from "./pages/project/ViewProject.jsx";
 import ItemsList from "./pages/project/item/ItemsList.jsx";
 import WorkersList from "./pages/project/worker/WorkersList.jsx";
+import Company_expensesList from "./pages/expenses/company/ExpensesList.jsx";
+import CreateExpense from "./pages/expenses/company/CreateExpense.jsx";
+import EditExpense from "./pages/expenses/company/EditExpense.jsx";
+import CreateLafargeExpense from "./pages/expenses/lafarge/CreateExpense.jsx";
+import EditLafargeExpense from "./pages/expenses/lafarge/EditExpense.jsx";
+import Lafarge_expensesList from "./pages/expenses/lafarge/ExpensesList.jsx";
+import CreatePPEExpense from "./pages/expenses/ppe/CreateExpense.jsx";
+import EditPPEExpense from "./pages/expenses/ppe/EditExpense.jsx";
+import PPE_expensesList from "./pages/expenses/ppe/ExpensesList.jsx";
 
 const router = createBrowserRouter([
   {
@@ -72,6 +81,42 @@ const router = createBrowserRouter([
       {
         path: "/projects/:projectId/workers/:workerId/edit",
         element: <EditProjectWorker />,
+      },
+      {
+        path: "/expenses/company",
+        element: <Company_expensesList />,
+      },
+      {
+        path: "/expenses/company/create",
+        element: <CreateExpense />,
+      },
+      {
+        path: "/expenses/company/:id/edit",
+        element: <EditExpense />,
+      },
+      {
+        path: "/expenses/lafarge",
+        element: <Lafarge_expensesList />,
+      },
+      {
+        path: "/expenses/lafarge/create",
+        element: <CreateLafargeExpense />,
+      },
+      {
+        path: "/expenses/lafarge/:id/edit",
+        element: <EditLafargeExpense />,
+      },
+      {
+        path: "/expenses/ppe",
+        element: <PPE_expensesList />,
+      },
+      {
+        path: "/expenses/ppe/create",
+        element: <CreatePPEExpense />,
+      },
+      {
+        path: "/expenses/ppe/:id/edit",
+        element: <EditPPEExpense />,
       },
     ],
   },

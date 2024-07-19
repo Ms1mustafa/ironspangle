@@ -95,7 +95,7 @@ export default function SideBar({ logo }) {
                 onClick={() => toggleSection("applications")}
               >
                 <span className="text-[#00427f] font-semibold text-[0.95rem] uppercase dark:text-neutral-500/80 text-secondary-dark">
-                  Applications
+                  Expenses
                 </span>
                 <span>
                   {sectionsOpen.applications ? (
@@ -111,7 +111,7 @@ export default function SideBar({ logo }) {
                 }`}
               >
                 <NavLink
-                  to="/test"
+                  to="/expenses/company"
                   className={({ isActive }) =>
                     isActive
                       ? "navLink bg-[#00427f] text-slate-50"
@@ -121,7 +121,7 @@ export default function SideBar({ logo }) {
                   Company Expenses
                 </NavLink>
                 <NavLink
-                  to="/test"
+                  to="/expenses/lafarge"
                   className={({ isActive }) =>
                     isActive
                       ? "navLink bg-[#00427f] text-slate-50"
@@ -131,7 +131,7 @@ export default function SideBar({ logo }) {
                   Lafarge Expenses
                 </NavLink>
                 <NavLink
-                  to="/test"
+                  to="/expenses/ppe"
                   className={({ isActive }) =>
                     isActive
                       ? "navLink bg-[#00427f] text-slate-50"
