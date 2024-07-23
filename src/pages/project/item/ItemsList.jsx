@@ -1,5 +1,5 @@
 import axios from "axios";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
@@ -13,20 +13,15 @@ import { Row } from "primereact/row";
 
 export default function ItemsList() {
   const user = AuthCheck();
-
-  const [Items, setItems] = useState([]);
-  const [loading, setLoading] = useState(false);
   const { id } = useParams();
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getItems();
   }, []);
 
-  const refreshItems = () => {
-    getItems();
-  };
-
-  async function getItems() {
+  const getItems = async () => {
     try {
       setLoading(true);
       const response = await axios.get(
@@ -35,75 +30,67 @@ export default function ItemsList() {
         }/project/item/list.php?project_id=${id}`
       );
       setItems(response.data);
-      setLoading(false);
     } catch (error) {
       console.error("Error fetching Items:", error);
       toast.error("Failed to fetch Items.");
+    } finally {
       setLoading(false);
     }
-  }
+  };
 
-  const actionTemplate = (Items) => {
-    return (
-      <div className="flex gap-2">
-        <NavLink
-          to={`/projects/${id}/items/${Items.id}/edit`}
-          className="button"
-        >
-          Edit
-        </NavLink>
-        <Button
-          to={`/projects/${id}/items`}
-          className="button bg-red-500 hover:bg-red-600"
-          onClick={() =>
-            SweetAlert({
-              props: {
-                title: "Are you sure?",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonText: "Delete",
-                onConfirm: () => {
-                  Delete(Items.id, setLoading, refreshItems);
-                },
+  const refreshItems = () => {
+    getItems();
+  };
+
+  const actionTemplate = (item) => (
+    <div className="flex gap-2">
+      <NavLink to={`/projects/${id}/items/${item.id}/edit`} className="button">
+        Edit
+      </NavLink>
+      <Button
+        className="button bg-red-500 hover:bg-red-600"
+        onClick={() =>
+          SweetAlert({
+            props: {
+              title: "Are you sure?",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonText: "Delete",
+              onConfirm: () => {
+                Delete(item.id, setLoading, refreshItems);
               },
-            })
-          }
-        >
-          Delete
-        </Button>
-      </div>
-    );
-  };
+            },
+          })
+        }
+      >
+        Delete
+      </Button>
+    </div>
+  );
 
-  const total_price = function (Items) {
-    return Items.qty * Items.unit_price;
-  };
+  const total_price = (item) => (item.qty * item.unit_price).toLocaleString();
+  const total_cost = (item) =>
+    (item.qty * item.unit_price + item.trans).toLocaleString();
 
-  const total_cost = function (Items) {
-    return Items.qty * Items.unit_price + Items.trans;
-  };
-
-  const totalCostTotal = () => {
-    let total = 0;
-
-    for (let i = 0; i < Items.length; i++) {
-      total += total_cost(Items[i]);
-    }
-    return total;
-  };
+  const calculateTotalCost = () =>
+    items
+      .reduce(
+        (total, item) => total + item.trans + item.qty * item.unit_price,
+        0
+      )
+      .toLocaleString();
 
   const footerGroup = (
     <ColumnGroup>
       <Row>
-        <Column colSpan={6} footerStyle={{ textAlign: "right" }} />
         <Column
-          footer={totalCostTotal}
-          footerStyle={{
-            backgroundColor: "yellow",
-            fontWeight: "bold",
-          }}
+          colSpan={6}
+          footerStyle={{ backgroundColor: "#fff", textAlign: "right" }}
         />
-        {/* <Column footer={totalCostTotal} /> */}
+        <Column
+          footer={calculateTotalCost}
+          footerStyle={{ backgroundColor: "yellow", fontWeight: "bold" }}
+        />
       </Row>
     </ColumnGroup>
   );
@@ -119,81 +106,43 @@ export default function ItemsList() {
       </NavLink>
       <div className="card">
         <DataTable
-          value={Items}
+          value={items}
           paginator
           rows={5}
+          showGridlines
+          stripedRows
           rowsPerPageOptions={[5, 10, 25, 50]}
-          footerColumnGroup={Items.length && footerGroup}
+          footerColumnGroup={footerGroup}
           emptyMessage="No Items found."
           paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
           currentPageReportTemplate="{first} to {last} of {totalRecords}"
           loading={loading}
           tableStyle={{
             minWidth: "50rem",
-            borderCollapse: "separate",
-            // borderSpacing: "0 10px",
-            height: "20rem",
           }}
         >
+          <Column field="name" header="Name" sortable />
+          <Column field="unit" header="Unit" sortable />
+          <Column field="qty" header="QTY" sortable />
           <Column
-            field="name"
-            header="Name"
-            sortable
-            style={{ borderBottom: "1px solid #dee2e6" }}
-          ></Column>
-          <Column
-            field="unit"
-            header="Unit"
-            sortable
-            style={{ borderBottom: "1px solid #dee2e6" }}
-          ></Column>
-          <Column
-            field="qty"
-            header="QTY"
-            sortable
-            style={{ borderBottom: "1px solid #dee2e6" }}
-          ></Column>
-          <Column
-            field="unit_price"
             header="Unit Price"
+            body={(rowData) =>
+              rowData?.unit_price ? rowData.unit_price.toLocaleString() : ""
+            }
             sortable
-            style={{ borderBottom: "1px solid #dee2e6" }}
-          ></Column>
+          />
+          <Column header="Total Price" body={total_price} sortable />
           <Column
-            header="Total Price"
-            body={total_price}
-            sortable
-            style={{ borderBottom: "1px solid #dee2e6" }}
-          ></Column>
-          <Column
-            field="trans"
             header="Trans"
+            body={(rowData) =>
+              rowData?.trans ? rowData.trans.toLocaleString() : ""
+            }
             sortable
-            style={{ borderBottom: "1px solid #dee2e6" }}
-          ></Column>
-          <Column
-            header="Total Cost"
-            body={total_cost}
-            sortable
-            style={{ borderBottom: "1px solid #dee2e6" }}
-          ></Column>
-          <Column
-            field="date"
-            header="Date"
-            sortable
-            style={{ borderBottom: "1px solid #dee2e6" }}
-          ></Column>
-          <Column
-            field="remarks"
-            header="Remarks"
-            sortable
-            style={{ borderBottom: "1px solid #dee2e6" }}
-          ></Column>
-          <Column
-            header="Actions"
-            body={actionTemplate}
-            style={{ borderBottom: "1px solid #dee2e6" }}
-          ></Column>
+          />
+          <Column header="Total Cost" body={total_cost} sortable />
+          <Column field="date" header="Date" sortable />
+          <Column field="remarks" header="Remarks" sortable />
+          <Column header="Actions" body={actionTemplate} />
         </DataTable>
       </div>
     </div>

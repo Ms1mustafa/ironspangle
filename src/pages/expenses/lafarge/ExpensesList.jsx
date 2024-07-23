@@ -84,6 +84,7 @@ export default function Lafarge_expensesList() {
           value={expenses}
           paginator
           rows={5}
+          showGridlines
           rowsPerPageOptions={[5, 10, 25, 50]}
           emptyMessage="No expenses found."
           paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
@@ -91,40 +92,13 @@ export default function Lafarge_expensesList() {
           loading={loading}
           tableStyle={{
             minWidth: "50rem",
-            borderCollapse: "separate",
-            // borderSpacing: "0 10px",
-            height: "20rem",
           }}
         >
-          <Column
-            field="item"
-            header="Item Name"
-            sortable
-            style={{ borderBottom: "1px solid #dee2e6" }}
-          ></Column>
-          <Column
-            field="cost"
-            header="Cost"
-            sortable
-            style={{ borderBottom: "1px solid #dee2e6" }}
-          ></Column>
-          <Column
-            field="date"
-            header="Date"
-            sortable
-            style={{ borderBottom: "1px solid #dee2e6" }}
-          ></Column>
-          <Column
-            field="remark"
-            header="Remark"
-            sortable
-            style={{ borderBottom: "1px solid #dee2e6" }}
-          ></Column>
-          <Column
-            header="Actions"
-            body={actionTemplate}
-            style={{ borderBottom: "1px solid #dee2e6" }}
-          ></Column>
+          <Column field="item" header="Item Name" sortable></Column>
+          <Column field="cost" header="Cost" sortable></Column>
+          <Column field="date" header="Date" sortable></Column>
+          <Column field="remark" header="Remark" sortable></Column>
+          <Column header="Actions" body={actionTemplate}></Column>
         </DataTable>
       </div>
     </div>

@@ -106,13 +106,16 @@ export default function CreateUser() {
           <label htmlFor="unit" className="input-label">
             Unit <span className="text-red-500 text-sm">*</span>
           </label>
-          <input
-            id="unit"
-            className="input"
+          <select
             name="unit"
             onChange={handleChange}
             value={inputs.unit}
-          />
+            className="input"
+          >
+            <option value="LS">LS</option>
+            <option value="EA">EA</option>
+            <option value="Set">Set</option>
+          </select>
         </div>
         <div className="w-full md:w-1/2 px-3">
           <label htmlFor="qty" className="input-label">

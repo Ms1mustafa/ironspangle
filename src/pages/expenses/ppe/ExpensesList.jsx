@@ -81,6 +81,7 @@ export default function PPE_expensesList() {
           value={expenses}
           paginator
           rows={5}
+          showGridlines
           rowsPerPageOptions={[5, 10, 25, 50]}
           emptyMessage="No expenses found."
           paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
@@ -88,45 +89,17 @@ export default function PPE_expensesList() {
           loading={loading}
           tableStyle={{
             minWidth: "50rem",
-            borderCollapse: "separate",
-            // borderSpacing: "0 10px",
-            height: "20rem",
           }}
         >
-          <Column
-            field="item"
-            header="Item Name"
-            sortable
-            style={{ borderBottom: "1px solid #dee2e6" }}
-          ></Column>
-          <Column
-            field="unit"
-            header="Unit"
-            sortable
-            style={{ borderBottom: "1px solid #dee2e6" }}
-          ></Column>
-          <Column
-            field="qty"
-            header="QTY"
-            sortable
-            style={{ borderBottom: "1px solid #dee2e6" }}
-          ></Column>
-          <Column
-            field="unit_price"
-            header="Unit Price"
-            sortable
-            style={{ borderBottom: "1px solid #dee2e6" }}
-          ></Column>
+          <Column field="item" header="Item Name" sortable></Column>
+          <Column field="unit" header="Unit" sortable></Column>
+          <Column field="qty" header="QTY" sortable></Column>
+          <Column field="unit_price" header="Unit Price" sortable></Column>
           <Column
             header="Total Price"
             body={({ unit_price, qty }) => unit_price * qty}
-            style={{ borderBottom: "1px solid #dee2e6" }}
           ></Column>
-          <Column
-            header="Actions"
-            body={actionTemplate}
-            style={{ borderBottom: "1px solid #dee2e6" }}
-          ></Column>
+          <Column header="Actions" body={actionTemplate}></Column>
         </DataTable>
       </div>
     </div>

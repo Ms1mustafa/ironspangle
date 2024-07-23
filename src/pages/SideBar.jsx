@@ -141,7 +141,7 @@ export default function SideBar({ logo }) {
                   PPE
                 </NavLink>
                 <NavLink
-                  to="/test"
+                  to="/expenses/sd"
                   className={({ isActive }) =>
                     isActive
                       ? "navLink bg-[#00427f] text-slate-50"

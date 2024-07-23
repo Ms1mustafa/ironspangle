@@ -52,12 +52,18 @@ export default function CreateExpense() {
           <label htmlFor="unit" className="input-label">
             unit
           </label>
-          <input
-            id="unit"
-            className="input"
+          <select
             name="unit"
             onChange={handleChange}
-          />
+            value={inputs.unit || ""}
+            className="input"
+          >
+            <option value="LS" selected>
+              LS
+            </option>
+            <option value="EA">EA</option>
+            <option value="Set">Set</option>
+          </select>
         </div>
       </div>
       <div className="flex flex-wrap -mx-3 mb-6">

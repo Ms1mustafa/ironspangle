@@ -98,13 +98,16 @@ export default function EditExpense() {
           <label htmlFor="unit" className="input-label">
             Unit
           </label>
-          <input
-            id="unit"
-            className="input"
+          <select
             name="unit"
             onChange={handleChange}
             value={inputs.unit}
-          />
+            className="input"
+          >
+            <option value="LS">LS</option>
+            <option value="EA">EA</option>
+            <option value="Set">Set</option>
+          </select>
         </div>
       </div>
       <div className="flex flex-wrap -mx-3 mb-6">

@@ -84,6 +84,7 @@ export default function ProjectsList() {
           value={projects}
           paginator
           rows={5}
+          showGridlines
           rowsPerPageOptions={[5, 10, 25, 50]}
           emptyMessage="No projects found."
           paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
@@ -91,28 +92,11 @@ export default function ProjectsList() {
           loading={loading}
           tableStyle={{
             minWidth: "50rem",
-            borderCollapse: "separate",
-            // borderSpacing: "0 10px",
-            height: "20rem",
           }}
         >
-          <Column
-            field="name"
-            header="Name"
-            sortable
-            style={{ borderBottom: "1px solid #dee2e6" }}
-          ></Column>
-          <Column
-            field="created_at"
-            header="Created at"
-            sortable
-            style={{ borderBottom: "1px solid #dee2e6" }}
-          ></Column>
-          <Column
-            header="Actions"
-            body={actionTemplate}
-            style={{ borderBottom: "1px solid #dee2e6" }}
-          ></Column>
+          <Column field="name" header="Name" sortable></Column>
+          <Column field="created_at" header="Created at" sortable></Column>
+          <Column header="Actions" body={actionTemplate}></Column>
         </DataTable>
       </div>
     </div>

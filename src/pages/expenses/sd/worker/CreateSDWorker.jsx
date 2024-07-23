@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
-import AuthCheck from "../../../API/account/AuthCheck";
+import AuthCheck from "../../../../API/account/AuthCheck";
 import LaddaButton, { EXPAND_LEFT } from "react-ladda-button";
 import "react-ladda-button/dist/ladda-themeless.min.css";
 import { useNavigate, useParams } from "react-router-dom";
-import GetProject from "../../../API/project/GetProject";
-import toast from "react-hot-toast";
-import CreateItem from "../../../API/project/item/CreateItem";
+import GetSD from "../../../../API/expenses/sd/GetSD";
+import CreateWorker from "../../../../API/expenses/sd/worker/CreateWorker";
 
-export default function CreateProjectItem() {
+export default function CreateSDWorker() {
   const [inputs, setInputs] = useState({});
   const [loading, setLoading] = useState(false);
-  const [project, setProject] = useState(null);
+  const [SD, setSD] = useState(null);
   const navigate = useNavigate();
   const user = AuthCheck();
   const { id } = useParams();
@@ -19,8 +18,8 @@ export default function CreateProjectItem() {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const projectData = await GetProject(id, setLoading, navigate); // Await GetProject promise
-        setProject(projectData); // Set project data in state
+        const SDData = await GetSD(id, setLoading, navigate); // Await GetSD promise
+        setSD(SDData); // Set SD data in state
       } catch (error) {
         // toast.error(error.message); // Display specific error message using toast
       } finally {
@@ -30,7 +29,7 @@ export default function CreateProjectItem() {
 
     fetchData();
 
-    setInputs((values) => ({ ...values, project_id: id }));
+    setInputs((values) => ({ ...values, sd_id: id }));
   }, [id, navigate]); // Fetch data whenever id changes
 
   //add user name to inputs
@@ -49,28 +48,28 @@ export default function CreateProjectItem() {
   }
 
   function Create() {
-    CreateItem(inputs, setLoading, navigate);
+    CreateWorker(inputs, setLoading, navigate);
   }
 
   function CreateAnother() {
-    CreateItem(inputs, setLoading);
+    CreateWorker(inputs, setLoading);
     //empty inputs
-    setInputs({ project_id: id, created_by: user?.data.name });
+    setInputs({ sd_id: id, created_by: user?.data.name });
   }
 
   return (
     <form className="w-full p-10 max-w-lg" onSubmit={handleSubmit}>
       <h1 className="text-3xl text-gray-600 font-bold mb-3">
-        Create Project Item
+        Create SD Worker
       </h1>
-      <p className="text-gray-600 mb-10">{project?.name ?? "loading..."}</p>
+      <p className="text-gray-600 mb-10">{SD?.name ?? "loading..."}</p>
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full px-3">
-          <label htmlFor="item-name" className="input-label">
-            Item Name <span className="text-red-500 text-sm">*</span>
+          <label htmlFor="name" className="input-label">
+            Name <span className="text-red-500 text-sm">*</span>
           </label>
           <input
-            id="item-name"
+            id="name"
             className="input"
             name="name"
             onChange={handleChange}
@@ -82,91 +81,60 @@ export default function CreateProjectItem() {
 
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-          <label htmlFor="unit" className="input-label">
-            Unit <span className="text-red-500 text-sm">*</span>
-          </label>
-          <select
-            name="unit"
-            onChange={handleChange}
-            value={inputs.unit || ""}
-            className="input"
-          >
-            <option value="LS" selected>
-              LS
-            </option>
-            <option value="EA">EA</option>
-            <option value="Set">Set</option>
-          </select>
-        </div>
-        <div className="w-full md:w-1/2 px-3">
-          <label htmlFor="qty" className="input-label">
-            QTY <span className="text-red-500 text-sm">*</span>
+          <label htmlFor="days" className="input-label">
+            days <span className="text-red-500 text-sm">*</span>
           </label>
           <input
-            id="qty"
+            id="days"
             type="number"
             className="input"
-            name="qty"
+            name="days"
             onChange={handleChange}
-            value={inputs.qty || ""}
-          />
-        </div>
-      </div>
-      <div className="flex flex-wrap -mx-3 mb-6">
-        <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-          <label htmlFor="unit-price" className="input-label">
-            Unit Price <span className="text-red-500 text-sm">*</span>
-          </label>
-          <input
-            id="unit-price"
-            type="number"
-            className="input"
-            name="unit_price"
-            onChange={handleChange}
-            value={inputs.unit_price || ""}
+            value={inputs.days || ""}
           />
         </div>
         <div className="w-full md:w-1/2 px-3">
-          <label htmlFor="trans" className="input-label">
-            Trans <span className="text-red-500 text-sm">*</span>
+          <label htmlFor="day_cost" className="input-label">
+            day cost
           </label>
           <input
-            id="trans"
+            id="day_cost"
             type="number"
             className="input"
-            name="trans"
+            name="day_cost"
             onChange={handleChange}
-            value={inputs.trans || ""}
+            value={inputs.day_cost || ""}
           />
         </div>
       </div>
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full px-3">
-          <label htmlFor="remarks" className="input-label">
-            Remarks <span className="text-red-500 text-sm">*</span>
+          <label htmlFor="transportation" className="input-label">
+            transportation <span className="text-red-500 text-sm">*</span>
           </label>
           <input
-            id="remarks"
+            id="transportation"
+            type="number"
             className="input"
-            name="remarks"
+            name="transportation"
             onChange={handleChange}
-            value={inputs.remarks || ""}
+            value={inputs.transportation || ""}
           />
           <p className="text-gray-600 text-xs italic"></p>
         </div>
       </div>
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full px-3">
-          <label htmlFor="date" className="input-label">
-            Date <span className="text-red-500 text-sm">*</span>
+          <label htmlFor="day_salary" className="input-label">
+            day salary <span className="text-red-500 text-sm">*</span>
           </label>
           <input
-            id="date"
-            type="date"
+            id="day_salary"
+            type="number"
             className="input"
-            name="date"
+            name="day_salary"
             onChange={handleChange}
-            value={inputs.date || ""}
+            value={inputs.day_salary || ""}
           />
           <p className="text-gray-600 text-xs italic"></p>
         </div>

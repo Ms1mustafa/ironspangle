@@ -7,48 +7,48 @@ import { NavLink } from "react-router-dom";
 import AuthCheck from "../../../API/account/AuthCheck";
 import Button from "../../../components/Button";
 import SweetAlert from "../../../components/SweetAlert";
-import Delete from "../../../API/expenses/company/Delete";
+import Delete from "../../../API/expenses/sd/Delete";
 
-export default function Company_expensesList() {
+export default function SDsList() {
   const user = AuthCheck();
 
-  const [expenses, setExpenses] = useState([]);
+  const [SDs, setSDs] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  async function getExpenses() {
+  async function getSDs() {
     try {
       setLoading(true);
       const response = await axios.get(
-        `${import.meta.env.VITE_REACT_APP_API_URL}/expense/company/list.php`
+        `${import.meta.env.VITE_REACT_APP_API_URL}/expense/sd/list.php`
       );
-      setExpenses(response.data);
+      setSDs(response.data);
       setLoading(false);
     } catch (error) {
-      console.error("Error fetching expenses:", error);
-      toast.error("Failed to fetch expenses.");
+      console.error("Error fetching SDs:", error);
+      toast.error("Failed to fetch SDs.");
       setLoading(false);
     }
   }
 
   useEffect(() => {
-    getExpenses();
+    getSDs();
   }, []);
 
-  const refreshExpenses = () => {
-    getExpenses(); // Function to refresh projects list
+  const refreshSDs = () => {
+    getSDs(); // Function to refresh SDs list
   };
 
-  const actionTemplate = (expenses) => {
+  const actionTemplate = (SDs) => {
     return (
       <div className="flex gap-2">
-        <NavLink
-          to={`/expenses/company/${expenses.id}/edit`}
-          className="button"
-        >
+        <NavLink to={`/expenses/sd/${SDs.id}/workers`} className="button">
+          View
+        </NavLink>
+        <NavLink to={`/`} className="button">
           Edit
         </NavLink>
         <Button
-          to={`/expenses/company`}
+          to={`/expenses/sd`}
           className="button bg-red-500 hover:bg-red-600"
           onClick={() =>
             SweetAlert({
@@ -58,7 +58,7 @@ export default function Company_expensesList() {
                 showCancelButton: true,
                 confirmButtonText: "Delete",
                 onConfirm: () => {
-                  Delete(expenses.id, setLoading, refreshExpenses);
+                  Delete(SDs.id, setLoading, refreshSDs);
                 },
               },
             })
@@ -73,20 +73,20 @@ export default function Company_expensesList() {
   return (
     <div className="w-full p-8 flex flex-col">
       <NavLink
-        to="/expenses/company/create"
+        to="/expenses/sd/create"
         className="button mb-4 self-end"
         disabled={user?.data.role !== "admin"}
       >
-        Create Expense
+        Create SD
       </NavLink>
       <div className="card">
         <DataTable
-          value={expenses}
+          value={SDs}
           paginator
           rows={5}
           showGridlines
           rowsPerPageOptions={[5, 10, 25, 50]}
-          emptyMessage="No expenses found."
+          emptyMessage="No SDs found."
           paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
           currentPageReportTemplate="{first} to {last} of {totalRecords}"
           loading={loading}
@@ -94,14 +94,10 @@ export default function Company_expensesList() {
             minWidth: "50rem",
           }}
         >
-          <Column field="item" header="Item Name" sortable></Column>
-          <Column field="unit" header="Unit" sortable></Column>
-          <Column field="qty" header="QTY" sortable></Column>
-          <Column field="unit_price" header="Unit Price" sortable></Column>
-          <Column
-            header="Total Price"
-            body={({ unit_price, qty }) => unit_price * qty}
-          ></Column>
+          <Column field="name" header="Name" sortable></Column>
+          <Column field="budget" header="Budget" sortable></Column>
+          <Column field="po" header="PO" sortable></Column>
+          <Column field="pr" header="PR" sortable></Column>
           <Column header="Actions" body={actionTemplate}></Column>
         </DataTable>
       </div>

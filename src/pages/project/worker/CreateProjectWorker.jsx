@@ -96,7 +96,7 @@ export default function CreateProjectWorker() {
         </div>
         <div className="w-full md:w-1/2 px-3">
           <label htmlFor="night" className="input-label">
-            night <span className="text-red-500 text-sm">*</span>
+            night
           </label>
           <input
             id="night"
@@ -111,7 +111,7 @@ export default function CreateProjectWorker() {
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <label htmlFor="hours" className="input-label">
-            hours <span className="text-red-500 text-sm">*</span>
+            hours
           </label>
           <input
             id="hours"
@@ -123,6 +123,21 @@ export default function CreateProjectWorker() {
           />
         </div>
         <div className="w-full md:w-1/2 px-3">
+          <label htmlFor="cost_hour" className="input-label">
+            cost hour <span className="text-red-500 text-sm">*</span>
+          </label>
+          <input
+            id="cost_hour"
+            type="number"
+            className="input"
+            name="cost_hour"
+            onChange={handleChange}
+            value={inputs.cost_hour || ""}
+          />
+        </div>
+      </div>
+      <div className="flex flex-wrap -mx-3 mb-6">
+        <div className="w-full px-3">
           <label htmlFor="cost_day" className="input-label">
             cost day <span className="text-red-500 text-sm">*</span>
           </label>
@@ -134,6 +149,7 @@ export default function CreateProjectWorker() {
             onChange={handleChange}
             value={inputs.cost_day || ""}
           />
+          <p className="text-gray-600 text-xs italic"></p>
         </div>
       </div>
       <div className="flex flex-wrap -mx-3 mb-6">

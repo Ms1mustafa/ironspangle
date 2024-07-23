@@ -4,6 +4,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import App from "./App.jsx";
 import "./index.css";
+// import "primeflex/primeflex.css";
+import "primereact/resources/primereact.css";
+import "primereact/resources/themes/lara-light-indigo/theme.css";
 
 import Login from "./pages/Login.jsx";
 import CreateProject from "./pages/project/CreateProject.jsx";
@@ -26,6 +29,11 @@ import Lafarge_expensesList from "./pages/expenses/lafarge/ExpensesList.jsx";
 import CreatePPEExpense from "./pages/expenses/ppe/CreateExpense.jsx";
 import EditPPEExpense from "./pages/expenses/ppe/EditExpense.jsx";
 import PPE_expensesList from "./pages/expenses/ppe/ExpensesList.jsx";
+import SDsList from "./pages/expenses/sd/SDsList.jsx";
+import ViewSD from "./pages/expenses/sd/ViewSD.jsx";
+import SDWorkersList from "./pages/expenses/sd/worker/SDWorkersList.jsx";
+import CreateSD from "./pages/expenses/sd/CreateSD.jsx";
+import CreateSDWorker from "./pages/expenses/sd/worker/CreateSDWorker.jsx";
 
 const router = createBrowserRouter([
   {
@@ -117,6 +125,32 @@ const router = createBrowserRouter([
       {
         path: "/expenses/ppe/:id/edit",
         element: <EditPPEExpense />,
+      },
+      {
+        path: "/expenses/sd",
+        element: <SDsList />,
+      },
+      {
+        path: "/expenses/sd/:id",
+        element: <View />,
+        children: [
+          {
+            path: "workers",
+            element: <SDWorkersList />,
+          },
+        ],
+      },
+      {
+        path: "/expenses/sd/:id/workers",
+        element: <ViewSD />,
+      },
+      {
+        path: "/expenses/sd/create",
+        element: <CreateSD />,
+      },
+      {
+        path: "/expenses/sd/:id/workers/create",
+        element: <CreateSDWorker />,
       },
     ],
   },

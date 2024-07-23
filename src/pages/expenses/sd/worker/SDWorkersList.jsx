@@ -4,14 +4,14 @@ import { useEffect, useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { NavLink, useParams } from "react-router-dom";
-import AuthCheck from "../../../API/account/AuthCheck";
-import Button from "../../../components/Button";
-import SweetAlert from "../../../components/SweetAlert";
-import Delete from "../../../API/project/worker/Delete";
+import AuthCheck from "../../../../API/account/AuthCheck";
+import Button from "../../../../components/Button";
+import SweetAlert from "../../../../components/SweetAlert";
+import Delete from "../../../../API/expenses/sd/worker/Delete";
 import { ColumnGroup } from "primereact/columngroup";
 import { Row } from "primereact/row";
 
-export default function WorkersList() {
+export default function SDWorkersList() {
   const user = AuthCheck();
   const { id } = useParams();
 
@@ -28,7 +28,7 @@ export default function WorkersList() {
       const response = await axios.get(
         `${
           import.meta.env.VITE_REACT_APP_API_URL
-        }/project/worker/list.php?project_id=${id}`
+        }/expense/sd/worker/list.php?sd_id=${id}`
       );
       setWorkers(response.data);
       setLoading(false);
