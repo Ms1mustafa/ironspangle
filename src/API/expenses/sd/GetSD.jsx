@@ -1,7 +1,7 @@
 import axios from "axios";
 import toast from "react-hot-toast";
 
-const GetProject = async (id, setLoading, navigate = null) => {
+const GetSD = async (id, setLoading, navigate = null) => {
   setLoading(true);
   try {
     const response = await axios.get(
@@ -22,4 +22,4 @@ const GetProject = async (id, setLoading, navigate = null) => {
   }
 };
 
-export default GetProject;
+export default GetSD;

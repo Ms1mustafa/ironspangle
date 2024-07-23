@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import GetSD from "../../../API/expenses/sd/GetSD";
 import { NavLink, Outlet, useNavigate, useParams } from "react-router-dom";
 
-export default function View() {
+export default function ViewSD() {
   const { id } = useParams();
   const [SD, setSD] = useState(null);
   const [loading, setLoading] = useState(false);

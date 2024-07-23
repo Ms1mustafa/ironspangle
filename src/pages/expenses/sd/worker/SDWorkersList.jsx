@@ -19,10 +19,10 @@ export default function SDWorkersList() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    getWorkers();
+    getSDs();
   }, []);
 
-  const getWorkers = async () => {
+  const getSDs = async () => {
     try {
       setLoading(true);
       const response = await axios.get(
@@ -40,7 +40,7 @@ export default function SDWorkersList() {
   };
 
   const refreshWorkers = () => {
-    getWorkers();
+    getSDs();
   };
 
   const actionTemplate = (rowData) => {
@@ -83,149 +83,10 @@ export default function SDWorkersList() {
     }
   };
 
-  // Calculate individual worker totals
-  const calculateTotalSalary = (rowData) => {
-    const { day, night, cost_day, hours, cost_hour } = rowData;
-    return ((day + night) * cost_day + hours * cost_hour).toLocaleString();
-  };
-
-  const calculateTotalFood = (rowData) => {
-    const { day, food } = rowData;
-    return (day * food).toLocaleString();
-  };
-
-  const calculateTotalTransportation = (rowData) => {
-    const { day, transportation } = rowData;
-    return (day * transportation).toLocaleString();
-  };
-
-  const calculateTotalCost = (rowData) => {
-    const { day, food, transportation } = rowData;
-    const totalFood = day * food;
-    const totalTransportation = day * transportation;
-    return (totalFood + totalTransportation).toLocaleString();
-  };
-
-  // Calculate overall totals for footer
-  const calculateOverallTotalSalary = () => {
-    return workers
-      .reduce((total, worker) => {
-        const { day, night, cost_day, hours, cost_hour } = worker;
-        return total + ((day + night) * cost_day + hours * cost_hour);
-      }, 0)
-      .toLocaleString();
-  };
-
-  const calculateOverallTotalFood = () => {
-    return workers
-      .reduce((total, worker) => {
-        const { day, food } = worker;
-        return total + day * food;
-      }, 0)
-      .toLocaleString();
-  };
-
-  const calculateOverallTotalTransportation = () => {
-    return workers
-      .reduce((total, worker) => {
-        const { day, transportation } = worker;
-        return total + day * transportation;
-      }, 0)
-      .toLocaleString();
-  };
-
-  const calculateOverallTotalCost = () => {
-    return workers
-      .reduce((total, worker) => {
-        const { day, food, transportation } = worker;
-        const totalFood = day * food;
-        const totalTransportation = day * transportation;
-        return total + totalFood + totalTransportation;
-      }, 0)
-      .toLocaleString();
-  };
-
-  const footerGroup = (
-    <ColumnGroup>
-      <Row>
-        <Column
-          footer="Total"
-          footerStyle={{
-            // textAlign: "center",
-            backgroundColor: "#980000",
-            color: "#fff",
-            fontWeight: "bold",
-          }}
-        />
-        <Column
-          footerStyle={{
-            backgroundColor: "#00427f",
-            color: "#fff",
-            fontWeight: "bold",
-          }}
-        />
-        <Column
-          footerStyle={{
-            backgroundColor: "#00427f",
-            color: "#fff",
-            fontWeight: "bold",
-          }}
-        />
-        <Column
-          footerStyle={{
-            backgroundColor: "#00427f",
-            color: "#fff",
-            fontWeight: "bold",
-          }}
-        />
-        <Column footerStyle={{ backgroundColor: "#00427f" }} />
-        <Column footerStyle={{ backgroundColor: "#00427f" }} />
-        <Column
-          footer={calculateOverallTotalSalary}
-          footerStyle={{
-            // textAlign: "center",
-            backgroundColor: "#00427f",
-            color: "#fff",
-            fontWeight: "bold",
-          }}
-        />
-        <Column footerStyle={{ backgroundColor: "#00427f" }} />
-        <Column
-          footer={calculateOverallTotalFood}
-          footerStyle={{
-            // textAlign: "center",
-            backgroundColor: "#00427f",
-            color: "#fff",
-            fontWeight: "bold",
-          }}
-        />
-        <Column footerStyle={{ backgroundColor: "#00427f" }} />
-        <Column
-          footer={calculateOverallTotalTransportation}
-          footerStyle={{
-            // textAlign: "center",
-            backgroundColor: "#00427f",
-            color: "#fff",
-            fontWeight: "bold",
-          }}
-        />
-        <Column
-          footer={calculateOverallTotalCost}
-          footerStyle={{
-            // textAlign: "center",
-            backgroundColor: "#00427f",
-            color: "#fff",
-            fontWeight: "bold",
-          }}
-        />
-      </Row>
-    </ColumnGroup>
-  );
-
   return (
     <div className="w-full py-8 px-4 flex flex-col">
       <NavLink
-        to={`/projects/${id}/workers/create`}
+        to={`/expenses/sd/${id}/workers/create`}
         className="button mb-4 self-end"
         disabled={user?.data.role !== "admin"}
       >
@@ -238,7 +99,6 @@ export default function SDWorkersList() {
           rows={5}
           showGridlines
           stripedRows
-          footerColumnGroup={footerGroup}
           rowsPerPageOptions={[5, 10, 25, 50]}
           emptyMessage="No Workers found."
           paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
@@ -247,52 +107,53 @@ export default function SDWorkersList() {
           tableStyle={{ minWidth: "50rem" }}
         >
           <Column field="name" header="Name" sortable />
-          <Column field="day" header="Day" sortable />
-          <Column field="night" header="Night" sortable />
-          <Column field="hours" header="Hours" sortable />
-          <Column
-            field="cost_hour"
-            header="Cost / Hour"
-            sortable
-            body={(rowData) =>
-              rowData?.cost_hour ? rowData.cost_hour.toLocaleString() : ""
-            }
-          />
-          <Column
-            field="cost_day"
-            header="Cost / Day"
-            sortable
-            body={(rowData) =>
-              rowData?.cost_day ? rowData.cost_day.toLocaleString() : ""
-            }
-          />
 
-          <Column header="Total Salary" body={calculateTotalSalary} sortable />
+          <Column field="days" header="Days" sortable />
           <Column
-            field="food"
-            header="Food"
+            header="Cost / Day"
             body={(rowData) =>
-              rowData?.food ? rowData.food.toLocaleString() : ""
+              rowData?.day_cost ? Number(rowData.day_cost).toLocaleString() : ""
             }
             sortable
           />
-          <Column header="Total Food" body={calculateTotalFood} sortable />
           <Column
-            field="transportation"
-            header="Transportation"
+            header="Total Contract Salarys"
             body={(rowData) =>
-              rowData?.transportation
-                ? rowData.transportation.toLocaleString()
+              rowData?.days && rowData?.day_cost
+                ? (
+                    Number(rowData.days) * Number(rowData.day_cost)
+                  ).toLocaleString()
                 : ""
             }
             sortable
           />
           <Column
-            header="Total Transportation"
-            body={calculateTotalTransportation}
+            header="Transportation"
+            body={(rowData) =>
+              rowData?.transportation
+                ? Number(rowData.transportation).toLocaleString()
+                : ""
+            }
             sortable
           />
-          <Column header="Total Cost" body={calculateTotalCost} sortable />
+          <Column
+            header="Day Salary"
+            body={(rowData) =>
+              rowData?.day_salary
+                ? Number(rowData.day_salary).toLocaleString()
+                : ""
+            }
+            sortable
+          />
+          <Column
+            header="Total Salary"
+            body={(rowData) =>
+              rowData?.day_salary && rowData?.days
+                ? Number(rowData.day_salary * rowData.days).toLocaleString()
+                : ""
+            }
+            sortable
+          />
           <Column header="Actions" body={actionTemplate} />
         </DataTable>
       </div>

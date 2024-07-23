@@ -132,7 +132,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/expenses/sd/:id",
-        element: <View />,
+        element: <ViewSD />,
         children: [
           {
             path: "workers",
