@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import GetProject from "../../API/project/GetProject";
+import GetTotals from "../../API/project/GetTotals";
 import { NavLink, Outlet, useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 
 export default function View() {
   const { id } = useParams();
   const [project, setProject] = useState(null);
+  const [totals, setTotals] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
@@ -13,7 +15,9 @@ export default function View() {
       setLoading(true);
       try {
         const projectData = await GetProject(id, setLoading, navigate); // Await GetProject promise
+        const totalsData = await GetTotals(id, setLoading, navigate); // Await GetTotals promise
         setProject(projectData); // Set project data in state
+        setTotals(totalsData); // Set totals data in state
       } catch (error) {
         // toast.error("Failed to fetch project."); // Display specific error message using toast
       } finally {
@@ -27,13 +31,41 @@ export default function View() {
     <div className="w-full p-10">
       <h1 className="text-gray-700 mb-3 text-3xl">{project?.name}</h1>
       <p className="text-gray-500 mb-5">{project?.body}</p>
-      <p className="text-gray-700 mb-5">Budget: {project?.budget}</p>
       <div className="flex flex-wrap w-60 -mx-3 mb-6">
         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <p className="text-gray-700">PO: {project?.po}</p>
         </div>
         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <p className="text-gray-700">PR: {project?.pr}</p>
+        </div>
+      </div>
+
+      <div className="flex flex-wrap w-1/2 -mx-3 mb-6">
+        <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+          <p className="text-gray-700">
+            Total Project Cost:{" "}
+            <span className="bg-[#FBBC04] p-2">
+              {Number(totals?.total_project_cost).toLocaleString()}
+            </span>
+          </p>
+        </div>
+        <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+          <div className="flex flex-col">
+            <p className="text-gray-700 mb-6 w-1/2 flex items-center justify-between">
+              Budget:{" "}
+              <span className="bg-[#990000] p-2 text-white">
+                {Number(project?.budget).toLocaleString()}
+              </span>
+            </p>
+            <p className="text-gray-700 mb-2 w-1/2 flex items-center justify-between">
+              Profit:{" "}
+              <span className="bg-[#1A5529] p-2 text-white">
+                {(
+                  project?.budget - totals?.total_project_cost
+                ).toLocaleString()}
+              </span>
+            </p>
+          </div>
         </div>
       </div>
 

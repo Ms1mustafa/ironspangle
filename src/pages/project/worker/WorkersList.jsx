@@ -86,7 +86,10 @@ export default function WorkersList() {
   // Calculate individual worker totals
   const calculateTotalSalary = (rowData) => {
     const { day, night, cost_day, hours, cost_hour } = rowData;
-    return ((day + night) * cost_day + hours * cost_hour).toLocaleString();
+    return (
+      (Number(day) + Number(night)) * Number(cost_day) +
+      Number(hours) * Number(cost_hour)
+    ).toLocaleString();
   };
 
   const calculateTotalFood = (rowData) => {
@@ -100,10 +103,14 @@ export default function WorkersList() {
   };
 
   const calculateTotalCost = (rowData) => {
-    const { day, food, transportation } = rowData;
-    const totalFood = day * food;
-    const totalTransportation = day * transportation;
-    return (totalFood + totalTransportation).toLocaleString();
+    const { day, food, transportation, night, cost_day, hours, cost_hour } =
+      rowData;
+    const totalFood = Number(day) * Number(food);
+    const totalTransportation = Number(day) * Number(transportation);
+    const totalSalary =
+      (Number(day) + Number(night)) * Number(cost_day) +
+      Number(hours) * Number(cost_hour);
+    return (totalSalary + totalFood + totalTransportation).toLocaleString();
   };
 
   // Calculate overall totals for footer
@@ -111,7 +118,11 @@ export default function WorkersList() {
     return workers
       .reduce((total, worker) => {
         const { day, night, cost_day, hours, cost_hour } = worker;
-        return total + ((day + night) * cost_day + hours * cost_hour);
+        return (
+          total +
+          ((Number(day) + Number(night)) * Number(cost_day) +
+            Number(hours) * Number(cost_hour))
+        );
       }, 0)
       .toLocaleString();
   };
@@ -120,7 +131,7 @@ export default function WorkersList() {
     return workers
       .reduce((total, worker) => {
         const { day, food } = worker;
-        return total + day * food;
+        return total + Number(day) * Number(food);
       }, 0)
       .toLocaleString();
   };
@@ -129,7 +140,7 @@ export default function WorkersList() {
     return workers
       .reduce((total, worker) => {
         const { day, transportation } = worker;
-        return total + day * transportation;
+        return total + Number(day) * Number(transportation);
       }, 0)
       .toLocaleString();
   };
@@ -137,10 +148,14 @@ export default function WorkersList() {
   const calculateOverallTotalCost = () => {
     return workers
       .reduce((total, worker) => {
-        const { day, food, transportation } = worker;
-        const totalFood = day * food;
-        const totalTransportation = day * transportation;
-        return total + totalFood + totalTransportation;
+        const { day, food, transportation, night, cost_day, hours, cost_hour } =
+          worker;
+        const totalFood = Number(day) * Number(food);
+        const totalTransportation = Number(day) * Number(transportation);
+        const totalSalary =
+          (Number(day) + Number(night)) * Number(cost_day) +
+          Number(hours) * Number(cost_hour);
+        return total + totalSalary + totalFood + totalTransportation;
       }, 0)
       .toLocaleString();
   };
@@ -223,7 +238,7 @@ export default function WorkersList() {
   );
 
   return (
-    <div className="w-full py-8 px-4 flex flex-col">
+    <div className="w-full py-8 flex flex-col">
       <NavLink
         to={`/projects/${id}/workers/create`}
         className="button mb-4 self-end"
@@ -244,16 +259,15 @@ export default function WorkersList() {
           paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
           currentPageReportTemplate="{first} to {last} of {totalRecords}"
           loading={loading}
-          tableStyle={{ minWidth: "50rem" }}
+          tableStyle={{ minWidth: "50rem", fontSize: "16px" }}
         >
-          <Column field="name" header="Name" sortable />
-          <Column field="day" header="Day" sortable />
-          <Column field="night" header="Night" sortable />
-          <Column field="hours" header="Hours" sortable />
+          <Column field="name" header="Name" />
+          <Column field="day" header="Day" />
+          <Column field="night" header="Night" />
+          <Column field="hours" header="Hours" />
           <Column
             field="cost_hour"
             header="Cost / Hour"
-            sortable
             body={(rowData) =>
               rowData?.cost_hour ? rowData.cost_hour.toLocaleString() : ""
             }
@@ -261,22 +275,20 @@ export default function WorkersList() {
           <Column
             field="cost_day"
             header="Cost / Day"
-            sortable
             body={(rowData) =>
               rowData?.cost_day ? rowData.cost_day.toLocaleString() : ""
             }
           />
 
-          <Column header="Total Salary" body={calculateTotalSalary} sortable />
+          <Column header="Total Salary" body={calculateTotalSalary} />
           <Column
             field="food"
             header="Food"
             body={(rowData) =>
               rowData?.food ? rowData.food.toLocaleString() : ""
             }
-            sortable
           />
-          <Column header="Total Food" body={calculateTotalFood} sortable />
+          <Column header="Total Food" body={calculateTotalFood} />
           <Column
             field="transportation"
             header="Transportation"
@@ -285,14 +297,12 @@ export default function WorkersList() {
                 ? rowData.transportation.toLocaleString()
                 : ""
             }
-            sortable
           />
           <Column
             header="Total Transportation"
             body={calculateTotalTransportation}
-            sortable
           />
-          <Column header="Total Cost" body={calculateTotalCost} sortable />
+          <Column header="Total Cost" body={calculateTotalCost} />
           <Column header="Actions" body={actionTemplate} />
         </DataTable>
       </div>

@@ -68,14 +68,21 @@ export default function ItemsList() {
     </div>
   );
 
-  const total_price = (item) => (item.qty * item.unit_price).toLocaleString();
+  const total_price = (item) =>
+    (Number(item.qty) * Number(item.unit_price)).toLocaleString();
   const total_cost = (item) =>
-    (item.qty * item.unit_price + item.trans).toLocaleString();
+    (
+      Number(item.qty) * Number(item.unit_price) +
+      Number(item.trans)
+    ).toLocaleString();
 
   const calculateTotalCost = () =>
     items
       .reduce(
-        (total, item) => total + item.trans + item.qty * item.unit_price,
+        (total, item) =>
+          total +
+          Number(item.trans) +
+          Number(item.qty) * Number(item.unit_price),
         0
       )
       .toLocaleString();

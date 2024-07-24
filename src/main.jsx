@@ -34,6 +34,7 @@ import ViewSD from "./pages/expenses/sd/ViewSD.jsx";
 import SDWorkersList from "./pages/expenses/sd/worker/SDWorkersList.jsx";
 import CreateSD from "./pages/expenses/sd/CreateSD.jsx";
 import CreateSDWorker from "./pages/expenses/sd/worker/CreateSDWorker.jsx";
+import EditSDWorker from "./pages/expenses/sd/worker/EditSDWorker.jsx";
 
 const router = createBrowserRouter([
   {
@@ -151,6 +152,10 @@ const router = createBrowserRouter([
       {
         path: "/expenses/sd/:id/workers/create",
         element: <CreateSDWorker />,
+      },
+      {
+        path: "/expenses/sd/:sd_id/workers/:workerId/edit",
+        element: <EditSDWorker />,
       },
     ],
   },

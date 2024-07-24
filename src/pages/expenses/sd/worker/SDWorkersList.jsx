@@ -47,7 +47,7 @@ export default function SDWorkersList() {
     return (
       <div className="flex gap-2">
         <NavLink
-          to={`/projects/${id}/workers/${rowData.id}/edit`}
+          to={`/expenses/sd/${id}/workers/${rowData.id}/edit`}
           className="button"
         >
           Edit

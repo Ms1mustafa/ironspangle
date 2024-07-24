@@ -1,28 +1,25 @@
 import React, { useEffect, useState } from "react";
-import Edit from "../../../API/project/worker/Edit";
-import AuthCheck from "../../../API/account/AuthCheck";
+import Edit from "../../../../API/expenses/sd/worker/Edit";
+import AuthCheck from "../../../../API/account/AuthCheck";
 import LaddaButton, { EXPAND_LEFT } from "react-ladda-button";
 import "react-ladda-button/dist/ladda-themeless.min.css";
 import { useNavigate, useParams } from "react-router-dom";
-import GetWorker from "../../../API/project/worker/GetWorker";
+import GetWorker from "../../../../API/expenses/sd/worker/GetWorker";
 
-export default function EditProjectWorker() {
+export default function EditSDWorker() {
   const [inputs, setInputs] = useState({
     name: "",
-    day: "",
-    night: "",
-    hours: "",
-    cost_day: "",
-    cost_hour: "",
-    food: "",
+    days: "",
+    day_cost: "",
     transportation: "",
-    project_id: "",
+    day_salary: "",
+    worker_id: "",
   });
   const [loading, setLoading] = useState(false);
   const [Worker, setWorker] = useState({});
   const navigate = useNavigate();
   const user = AuthCheck();
-  const { projectId, workerId } = useParams();
+  const { sd_id, workerId } = useParams();
 
   // Fetch project data on component mount
   useEffect(() => {
@@ -30,7 +27,7 @@ export default function EditProjectWorker() {
       setLoading(true);
       try {
         const itemData = await GetWorker(
-          { workerId: workerId, projectId: projectId },
+          { workerId: workerId, sd_id: sd_id },
           setLoading,
           navigate
         );
@@ -40,14 +37,11 @@ export default function EditProjectWorker() {
           setInputs((prevInputs) => ({
             ...prevInputs,
             name: itemData.name || "",
-            day: itemData.day || "",
-            night: itemData.night || null,
-            hours: itemData.hours || null,
-            cost_day: itemData.cost_day || "",
-            cost_hour: itemData.cost_hour || "",
-            food: itemData.food || "",
+            days: itemData.days || "",
+            day_cost: itemData.day_cost || "",
             transportation: itemData.transportation || "",
-            project_id: projectId, // Assuming id is correctly defined from useParams
+            day_salary: itemData.day_salary || "",
+            sd_id: sd_id, // Assuming id is correctly defined from useParams
             worker_id: workerId,
           }));
         }
@@ -60,7 +54,7 @@ export default function EditProjectWorker() {
     };
 
     fetchData();
-  }, [projectId, workerId, navigate]);
+  }, [sd_id, workerId, navigate]);
 
   // Handle input changes
   const handleChange = (event) => {
@@ -105,92 +99,33 @@ export default function EditProjectWorker() {
 
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-          <label htmlFor="day" className="input-label">
-            day <span className="text-red-500 text-sm">*</span>
+          <label htmlFor="days" className="input-label">
+            days <span className="text-red-500 text-sm">*</span>
           </label>
           <input
-            id="day"
+            id="days"
             type="number"
             className="input"
-            name="day"
+            name="days"
             onChange={handleChange}
-            value={inputs.day}
+            value={inputs.days}
           />
         </div>
-        <div className="w-full md:w-1/2 px-3">
-          <label htmlFor="night" className="input-label">
-            night
-          </label>
-          <input
-            id="night"
-            type="number"
-            className="input"
-            name="night"
-            onChange={handleChange}
-            value={inputs.night}
-          />
-        </div>
-      </div>
-      <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-          <label htmlFor="hours" className="input-label">
-            hours
+          <label htmlFor="day_cost" className="input-label">
+            day_cost
           </label>
           <input
-            id="hours"
+            id="day_cost"
             type="number"
             className="input"
-            name="hours"
+            name="day_cost"
             onChange={handleChange}
-            value={inputs.hours}
-          />
-        </div>
-        <div className="w-full md:w-1/2 px-3">
-          <label htmlFor="cost_hour" className="input-label">
-            cost hour <span className="text-red-500 text-sm">*</span>
-          </label>
-          <input
-            id="cost_hour"
-            type="number"
-            className="input"
-            name="cost_hour"
-            onChange={handleChange}
-            value={inputs.cost_hour}
+            value={inputs.day_cost}
           />
         </div>
       </div>
-      <div className="flex flex-wrap -mx-3 mb-6">
-        <div className="w-full px-3">
-          <label htmlFor="cost_day" className="input-label">
-            cost_day <span className="text-red-500 text-sm">*</span>
-          </label>
-          <input
-            id="cost_day"
-            type="number"
-            className="input"
-            name="cost_day"
-            onChange={handleChange}
-            value={inputs.cost_day}
-          />
-          <p className="text-gray-600 text-xs italic"></p>
-        </div>
-      </div>
-      <div className="flex flex-wrap -mx-3 mb-6">
-        <div className="w-full px-3">
-          <label htmlFor="food" className="input-label">
-            food <span className="text-red-500 text-sm">*</span>
-          </label>
-          <input
-            id="food"
-            type="number"
-            className="input"
-            name="food"
-            onChange={handleChange}
-            value={inputs.food}
-          />
-          <p className="text-gray-600 text-xs italic"></p>
-        </div>
-      </div>
+
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full px-3">
           <label htmlFor="transportation" className="input-label">
@@ -203,6 +138,22 @@ export default function EditProjectWorker() {
             name="transportation"
             onChange={handleChange}
             value={inputs.transportation}
+          />
+          <p className="text-gray-600 text-xs italic"></p>
+        </div>
+      </div>
+      <div className="flex flex-wrap -mx-3 mb-6">
+        <div className="w-full px-3">
+          <label htmlFor="day_salary" className="input-label">
+            day_salary <span className="text-red-500 text-sm">*</span>
+          </label>
+          <input
+            id="day_salary"
+            type="number"
+            className="input"
+            name="day_salary"
+            onChange={handleChange}
+            value={inputs.day_salary}
           />
           <p className="text-gray-600 text-xs italic"></p>
         </div>

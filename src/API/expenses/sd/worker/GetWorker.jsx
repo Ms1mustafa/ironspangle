@@ -7,17 +7,17 @@ const GetProject = async (data, setLoading, navigate = null) => {
     const response = await axios.get(
       `${
         import.meta.env.VITE_REACT_APP_API_URL
-      }/project/worker/get.php?workerId=${data.workerId}`
+      }/expense/sd/worker/get.php?workerId=${data.workerId}`
     );
     setLoading(false);
     if (response.status === 200) {
       return response.data;
     } else {
-      if (navigate) navigate(`/projects/${data.projectId}/workers`);
+      if (navigate) navigate(`/expenses/sd/${data.sd_id}/workers`);
       throw new Error(response.data.message);
     }
   } catch (error) {
-    if (navigate) navigate("/projects");
+    if (navigate) navigate("/expenses/sd");
     toast.error("Failed to fetch Worker.");
     setLoading(false);
     throw error;
