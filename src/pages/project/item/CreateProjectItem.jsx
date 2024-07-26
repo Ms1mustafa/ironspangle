@@ -8,7 +8,9 @@ import toast from "react-hot-toast";
 import CreateItem from "../../../API/project/item/CreateItem";
 
 export default function CreateProjectItem() {
-  const [inputs, setInputs] = useState({});
+  const [inputs, setInputs] = useState({
+    unit: "LS", // Set default value for unit here
+  });
   const [loading, setLoading] = useState(false);
   const [project, setProject] = useState(null);
   const navigate = useNavigate();
@@ -88,7 +90,7 @@ export default function CreateProjectItem() {
           <select
             name="unit"
             onChange={handleChange}
-            value={inputs.unit || ""}
+            value={inputs.unit || "LS"}
             className="input"
           >
             <option value="LS" selected>
@@ -143,7 +145,7 @@ export default function CreateProjectItem() {
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full px-3">
           <label htmlFor="remarks" className="input-label">
-            Remarks <span className="text-red-500 text-sm">*</span>
+            Remarks
           </label>
           <input
             id="remarks"
@@ -158,7 +160,7 @@ export default function CreateProjectItem() {
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full px-3">
           <label htmlFor="date" className="input-label">
-            Date <span className="text-red-500 text-sm">*</span>
+            Date
           </label>
           <input
             id="date"

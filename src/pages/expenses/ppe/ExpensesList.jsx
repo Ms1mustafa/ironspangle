@@ -11,15 +11,17 @@ import Delete from "../../../API/expenses/ppe/Delete";
 
 export default function PPE_expensesList() {
   const user = AuthCheck();
-
   const [expenses, setExpenses] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [date, setDate] = useState(new Date().toISOString().slice(0, 7));
 
   async function getExpenses() {
     try {
       setLoading(true);
       const response = await axios.get(
-        `${import.meta.env.VITE_REACT_APP_API_URL}/expense/ppe/list.php`
+        `${
+          import.meta.env.VITE_REACT_APP_API_URL
+        }/expense/ppe/list.php?date=${date}`
       );
       setExpenses(response.data);
       setLoading(false);
@@ -32,7 +34,7 @@ export default function PPE_expensesList() {
 
   useEffect(() => {
     getExpenses();
-  }, []);
+  }, [date]);
 
   const refreshExpenses = () => {
     getExpenses(); // Function to refresh projects list
@@ -69,13 +71,22 @@ export default function PPE_expensesList() {
 
   return (
     <div className="w-full p-8 flex flex-col">
-      <NavLink
-        to="/expenses/ppe/create"
-        className="button mb-4 self-end"
-        disabled={user?.data.role !== "admin"}
-      >
-        Create Expense
-      </NavLink>
+      <div className="place-content-between flex flex-wrap gap-4">
+        <input
+          type="month"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+          className="input w-fit mb-4 self-start"
+        />
+
+        <NavLink
+          to="/expenses/ppe/create"
+          className="button mb-4 self-end"
+          disabled={user?.data.role !== "admin"}
+        >
+          Create Expense
+        </NavLink>
+      </div>
       <div className="card">
         <DataTable
           value={expenses}
@@ -91,10 +102,10 @@ export default function PPE_expensesList() {
             minWidth: "50rem",
           }}
         >
-          <Column field="item" header="Item Name" sortable></Column>
-          <Column field="unit" header="Unit" sortable></Column>
-          <Column field="qty" header="QTY" sortable></Column>
-          <Column field="unit_price" header="Unit Price" sortable></Column>
+          <Column field="item" header="Item Name"></Column>
+          <Column field="unit" header="Unit"></Column>
+          <Column field="qty" header="QTY"></Column>
+          <Column field="unit_price" header="Unit Price"></Column>
           <Column
             header="Total Price"
             body={({ unit_price, qty }) => unit_price * qty}

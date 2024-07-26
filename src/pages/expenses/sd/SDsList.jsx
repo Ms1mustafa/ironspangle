@@ -94,10 +94,10 @@ export default function SDsList() {
             minWidth: "50rem",
           }}
         >
-          <Column field="name" header="Name" sortable></Column>
-          <Column field="budget" header="Budget" sortable></Column>
-          <Column field="po" header="PO" sortable></Column>
-          <Column field="pr" header="PR" sortable></Column>
+          <Column field="name" header="Name"></Column>
+          <Column field="budget" header="Budget"></Column>
+          <Column field="po" header="PO"></Column>
+          <Column field="pr" header="PR"></Column>
           <Column header="Actions" body={actionTemplate}></Column>
         </DataTable>
       </div>

@@ -162,7 +162,7 @@ export default function CreateUser() {
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full px-3">
           <label htmlFor="remarks" className="input-label">
-            Remarks <span className="text-red-500 text-sm">*</span>
+            Remarks
           </label>
           <input
             id="remarks"
@@ -177,7 +177,7 @@ export default function CreateUser() {
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full px-3">
           <label htmlFor="date" className="input-label">
-            Date <span className="text-red-500 text-sm">*</span>
+            Date
           </label>
           <input
             id="date"

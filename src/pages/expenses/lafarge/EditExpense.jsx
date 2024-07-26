@@ -112,7 +112,7 @@ export default function EditLafargeExpense() {
           </label>
           <input
             id="date"
-            type="date"
+            type="month"
             className="input"
             name="date"
             onChange={handleChange}

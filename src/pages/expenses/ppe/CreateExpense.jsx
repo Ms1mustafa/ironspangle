@@ -100,7 +100,7 @@ export default function CreateExpense() {
           </label>
           <input
             id="date"
-            type="date"
+            type="month"
             className="input"
             name="date"
             onChange={handleChange}

@@ -40,32 +40,30 @@ export default function View() {
         </div>
       </div>
 
-      <div className="flex flex-wrap w-1/2 -mx-3 mb-6">
-        <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-          <p className="text-gray-700">
+      <div className="flex flex-wrap gap-4 -mx-3 mb-6">
+        <div className="px-3 pr-0 border border-gray-800">
+          <p className="text-gray-700 flex items-center justify-between">
             Total Project Cost:{" "}
             <span className="bg-[#FBBC04] p-2">
               {Number(totals?.total_project_cost).toLocaleString()}
             </span>
           </p>
         </div>
-        <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-          <div className="flex flex-col">
-            <p className="text-gray-700 mb-6 w-1/2 flex items-center justify-between">
-              Budget:{" "}
-              <span className="bg-[#990000] p-2 text-white">
-                {Number(project?.budget).toLocaleString()}
-              </span>
-            </p>
-            <p className="text-gray-700 mb-2 w-1/2 flex items-center justify-between">
-              Profit:{" "}
-              <span className="bg-[#1A5529] p-2 text-white">
-                {(
-                  project?.budget - totals?.total_project_cost
-                ).toLocaleString()}
-              </span>
-            </p>
-          </div>
+        <div className="px-3 pr-0 border border-gray-800">
+          <p className="text-gray-700 flex items-center justify-between">
+            Budget:{" "}
+            <span className="bg-[#990000] p-2 text-white">
+              {Number(project?.budget).toLocaleString()}
+            </span>
+          </p>
+        </div>
+        <div className="px-3 pr-0 border border-gray-800">
+          <p className="text-gray-700 flex items-center justify-between">
+            Profit:{" "}
+            <span className="bg-[#1A5529] p-2 text-white">
+              {(project?.budget - totals?.total_project_cost).toLocaleString()}
+            </span>
+          </p>
         </div>
       </div>
 

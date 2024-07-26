@@ -6,10 +6,17 @@ import "react-ladda-button/dist/ladda-themeless.min.css";
 import { useNavigate } from "react-router-dom";
 
 export default function CreateExpense() {
-  const [inputs, setInputs] = useState({});
+  const [inputs, setInputs] = useState({
+    unit: "LS",
+  });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const user = AuthCheck();
+
+  const today = new Date();
+  const maxMonth = `${today.getFullYear()}-${String(
+    today.getMonth() + 1
+  ).padStart(2, "0")}`;
 
   //add user name to inputs
   useEffect(() => {
@@ -100,7 +107,8 @@ export default function CreateExpense() {
           </label>
           <input
             id="date"
-            type="date"
+            type="month"
+            // max={maxMonth}
             className="input"
             name="date"
             onChange={handleChange}

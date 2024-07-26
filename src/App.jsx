@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 import SideBar from "./pages/SideBar.jsx";
 import { Toaster } from "react-hot-toast";

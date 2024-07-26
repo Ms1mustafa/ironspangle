@@ -106,15 +106,14 @@ export default function SDWorkersList() {
           loading={loading}
           tableStyle={{ minWidth: "50rem" }}
         >
-          <Column field="name" header="Name" sortable />
+          <Column field="name" header="Name" />
 
-          <Column field="days" header="Days" sortable />
+          <Column field="days" header="Days" />
           <Column
             header="Cost / Day"
             body={(rowData) =>
               rowData?.day_cost ? Number(rowData.day_cost).toLocaleString() : ""
             }
-            sortable
           />
           <Column
             header="Total Contract Salarys"
@@ -125,16 +124,16 @@ export default function SDWorkersList() {
                   ).toLocaleString()
                 : ""
             }
-            sortable
           />
           <Column
             header="Transportation"
             body={(rowData) =>
               rowData?.transportation
-                ? Number(rowData.transportation).toLocaleString()
+                ? (
+                    Number(rowData.days) * Number(rowData.transportation)
+                  ).toLocaleString()
                 : ""
             }
-            sortable
           />
           <Column
             header="Day Salary"
@@ -143,7 +142,6 @@ export default function SDWorkersList() {
                 ? Number(rowData.day_salary).toLocaleString()
                 : ""
             }
-            sortable
           />
           <Column
             header="Total Salary"
@@ -152,7 +150,20 @@ export default function SDWorkersList() {
                 ? Number(rowData.day_salary * rowData.days).toLocaleString()
                 : ""
             }
-            sortable
+          />
+          <Column
+            header="Profit"
+            body={(rowData) =>
+              rowData?.day_salary && rowData?.day_cost
+                ? (
+                    Number(Number(rowData.days) * Number(rowData.day_cost)) -
+                    Number(
+                      Number(rowData.days) * Number(rowData.transportation)
+                    ) -
+                    Number(Number(rowData.day_salary) * Number(rowData.days))
+                  ).toLocaleString()
+                : ""
+            }
           />
           <Column header="Actions" body={actionTemplate} />
         </DataTable>

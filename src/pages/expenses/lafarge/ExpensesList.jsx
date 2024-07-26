@@ -11,15 +11,17 @@ import Delete from "../../../API/expenses/lafarge/Delete";
 
 export default function Lafarge_expensesList() {
   const user = AuthCheck();
-
   const [expenses, setExpenses] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [date, setDate] = useState(new Date().toISOString().slice(0, 7));
 
   async function getExpenses() {
     try {
       setLoading(true);
       const response = await axios.get(
-        `${import.meta.env.VITE_REACT_APP_API_URL}/expense/lafarge/list.php`
+        `${
+          import.meta.env.VITE_REACT_APP_API_URL
+        }/expense/lafarge/list.php?date=${date}`
       );
       setExpenses(response.data);
       setLoading(false);
@@ -32,7 +34,7 @@ export default function Lafarge_expensesList() {
 
   useEffect(() => {
     getExpenses();
-  }, []);
+  }, [date]);
 
   const refreshExpenses = () => {
     getExpenses(); // Function to refresh projects list
@@ -72,13 +74,21 @@ export default function Lafarge_expensesList() {
 
   return (
     <div className="w-full p-8 flex flex-col">
-      <NavLink
-        to="/expenses/lafarge/create"
-        className="button mb-4 self-end"
-        disabled={user?.data.role !== "admin"}
-      >
-        Create Expense
-      </NavLink>
+      <div className="place-content-between flex flex-wrap gap-4">
+        <input
+          type="month"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+          className="input w-fit mb-4 self-start"
+        />
+        <NavLink
+          to="/expenses/lafarge/create"
+          className="button mb-4 self-end"
+          disabled={user?.data.role !== "admin"}
+        >
+          Create Expense
+        </NavLink>
+      </div>
       <div className="card">
         <DataTable
           value={expenses}
@@ -94,10 +104,10 @@ export default function Lafarge_expensesList() {
             minWidth: "50rem",
           }}
         >
-          <Column field="item" header="Item Name" sortable></Column>
-          <Column field="cost" header="Cost" sortable></Column>
-          <Column field="date" header="Date" sortable></Column>
-          <Column field="remark" header="Remark" sortable></Column>
+          <Column field="item" header="Item Name"></Column>
+          <Column field="cost" header="Cost"></Column>
+          <Column field="date" header="Date"></Column>
+          <Column field="remark" header="Remark"></Column>
           <Column header="Actions" body={actionTemplate}></Column>
         </DataTable>
       </div>

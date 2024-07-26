@@ -160,7 +160,7 @@ export default function WorkersList() {
       .toLocaleString();
   };
 
-  const footerGroup = (
+  const footerGroup = workers.length > 0 && (
     <ColumnGroup>
       <Row>
         <Column
@@ -252,16 +252,19 @@ export default function WorkersList() {
           paginator
           rows={5}
           showGridlines
-          stripedRows
           footerColumnGroup={footerGroup}
           rowsPerPageOptions={[5, 10, 25, 50]}
           emptyMessage="No Workers found."
           paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
           currentPageReportTemplate="{first} to {last} of {totalRecords}"
           loading={loading}
-          tableStyle={{ minWidth: "50rem", fontSize: "16px" }}
+          tableStyle={{ minWidth: "50rem", fontSize: "14px" }}
         >
-          <Column field="name" header="Name" />
+          <Column
+            field="name"
+            header="Name"
+            style={{ width: "auto", whiteSpace: "nowrap" }}
+          />
           <Column field="day" header="Day" />
           <Column field="night" header="Night" />
           <Column field="hours" header="Hours" />

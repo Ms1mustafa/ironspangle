@@ -87,7 +87,7 @@ export default function ItemsList() {
       )
       .toLocaleString();
 
-  const footerGroup = (
+  const footerGroup = items.length > 0 && (
     <ColumnGroup>
       <Row>
         <Column
@@ -103,7 +103,7 @@ export default function ItemsList() {
   );
 
   return (
-    <div className="w-full py-8 px-4 flex flex-col">
+    <div className="w-full py-8 flex flex-col">
       <NavLink
         to={`/projects/${id}/items/create`}
         className="button mb-4 self-end"
@@ -117,7 +117,6 @@ export default function ItemsList() {
           paginator
           rows={5}
           showGridlines
-          stripedRows
           rowsPerPageOptions={[5, 10, 25, 50]}
           footerColumnGroup={footerGroup}
           emptyMessage="No Items found."
@@ -126,29 +125,32 @@ export default function ItemsList() {
           loading={loading}
           tableStyle={{
             minWidth: "50rem",
+            fontSize: "14px",
           }}
         >
-          <Column field="name" header="Name" sortable />
-          <Column field="unit" header="Unit" sortable />
-          <Column field="qty" header="QTY" sortable />
+          <Column
+            field="name"
+            header="Name"
+            style={{ width: "auto", whiteSpace: "nowrap" }}
+          />
+          <Column field="unit" header="Unit" />
+          <Column field="qty" header="QTY" />
           <Column
             header="Unit Price"
             body={(rowData) =>
               rowData?.unit_price ? rowData.unit_price.toLocaleString() : ""
             }
-            sortable
           />
-          <Column header="Total Price" body={total_price} sortable />
+          <Column header="Total Price" body={total_price} />
           <Column
             header="Trans"
             body={(rowData) =>
               rowData?.trans ? rowData.trans.toLocaleString() : ""
             }
-            sortable
           />
-          <Column header="Total Cost" body={total_cost} sortable />
-          <Column field="date" header="Date" sortable />
-          <Column field="remarks" header="Remarks" sortable />
+          <Column header="Total Cost" body={total_cost} />
+          <Column field="date" header="Date" />
+          <Column field="remarks" header="Remarks" />
           <Column header="Actions" body={actionTemplate} />
         </DataTable>
       </div>

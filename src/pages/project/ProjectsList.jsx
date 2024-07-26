@@ -94,8 +94,8 @@ export default function ProjectsList() {
             minWidth: "50rem",
           }}
         >
-          <Column field="name" header="Name" sortable></Column>
-          <Column field="created_at" header="Created at" sortable></Column>
+          <Column field="name" header="Name"></Column>
+          <Column field="created_at" header="Created at"></Column>
           <Column header="Actions" body={actionTemplate}></Column>
         </DataTable>
       </div>
