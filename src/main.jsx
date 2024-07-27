@@ -36,6 +36,10 @@ import CreateSD from "./pages/expenses/sd/CreateSD.jsx";
 import CreateSDWorker from "./pages/expenses/sd/worker/CreateSDWorker.jsx";
 import EditSDWorker from "./pages/expenses/sd/worker/EditSDWorker.jsx";
 
+import CreateAdmin from "./pages/admin/CreateAdmin.jsx";
+import AdminList from "./pages/admin/AdminList.jsx";
+import EditAdmin from "./pages/admin/EditAdmin.jsx";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -156,6 +160,18 @@ const router = createBrowserRouter([
       {
         path: "/expenses/sd/:sd_id/workers/:workerId/edit",
         element: <EditSDWorker />,
+      },
+      {
+        path: "/admin/create",
+        element: <CreateAdmin />,
+      },
+      {
+        path: "/admin/:id/edit",
+        element: <EditAdmin />,
+      },
+      {
+        path: "/admin",
+        element: <AdminList />,
       },
     ],
   },

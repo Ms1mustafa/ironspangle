@@ -154,136 +154,45 @@ export default function SideBar({ logo }) {
             </div>
 
             {/* Admin Section */}
-            <div className="block pt-5 pb-[.15rem]">
-              <div
-                className="px-4 py-[.65rem] cursor-pointer flex justify-between"
-                onClick={() => toggleSection("admin")}
+            <div className="pt-2">
+              <NavLink
+                to="/admin"
+                className={({ isActive }) =>
+                  isActive
+                    ? "navLink bg-[#00427f] text-slate-50"
+                    : "navLink text-slate-400 hover:bg-gray-50"
+                }
               >
-                <span className="text-[#00427f] font-semibold text-[0.95rem] uppercase dark:text-neutral-500/80 text-secondary-dark">
-                  Admin
-                </span>
-                <span>
-                  {sectionsOpen.admin ? (
-                    <i className="pi pi-angle-up text-[#00427f] text-xs"></i>
-                  ) : (
-                    <i className="pi pi-angle-down text-[#00427f] text-xs"></i>
-                  )}
-                </span>
-              </div>
-              <div
-                className={`section-content ${
-                  sectionsOpen.admin ? "open" : ""
-                }`}
-              >
-                <NavLink
-                  to="/test"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "navLink bg-[#00427f] text-slate-50"
-                      : "navLink text-slate-400 hover:bg-gray-50"
-                  }
-                >
-                  Admin Management
-                </NavLink>
-                <NavLink
-                  to="/test"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "navLink bg-[#00427f] text-slate-50"
-                      : "navLink text-slate-400 hover:bg-gray-50"
-                  }
-                >
-                  Admin Workers
-                </NavLink>
-              </div>
+                Admin
+              </NavLink>
             </div>
 
             {/* MEC Section */}
-            <div className="block pt-5 pb-[.15rem]">
-              <div
-                className="px-4 py-[.65rem] cursor-pointer flex justify-between"
-                onClick={() => toggleSection("mec")}
+            <div className="pt-2">
+              <NavLink
+                to="/mec"
+                className={({ isActive }) =>
+                  isActive
+                    ? "navLink bg-[#00427f] text-slate-50"
+                    : "navLink text-slate-400 hover:bg-gray-50"
+                }
               >
-                <span className="text-[#00427f] font-semibold text-[0.95rem] uppercase dark:text-neutral-500/80 text-secondary-dark">
-                  MEC
-                </span>
-                <span>
-                  {sectionsOpen.mec ? (
-                    <i className="pi pi-angle-up text-[#00427f] text-xs"></i>
-                  ) : (
-                    <i className="pi pi-angle-down text-[#00427f] text-xs"></i>
-                  )}
-                </span>
-              </div>
-              <div
-                className={`section-content ${sectionsOpen.mec ? "open" : ""}`}
-              >
-                <NavLink
-                  to="/test"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "navLink bg-[#00427f] text-slate-50"
-                      : "navLink text-slate-400 hover:bg-gray-50"
-                  }
-                >
-                  MEC Management
-                </NavLink>
-                <NavLink
-                  to="/test"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "navLink bg-[#00427f] text-slate-50"
-                      : "navLink text-slate-400 hover:bg-gray-50"
-                  }
-                >
-                  MEC Workers
-                </NavLink>
-              </div>
+                MEC
+              </NavLink>
             </div>
 
             {/* Supply Chain Section */}
-            <div className="block pt-5 pb-[.15rem]">
-              <div
-                className="px-4 py-[.65rem] cursor-pointer flex justify-between"
-                onClick={() => toggleSection("supplyChain")}
+            <div className="pt-2">
+              <NavLink
+                to="/supplychain"
+                className={({ isActive }) =>
+                  isActive
+                    ? "navLink bg-[#00427f] text-slate-50"
+                    : "navLink text-slate-400 hover:bg-gray-50"
+                }
               >
-                <span className="text-[#00427f] font-semibold text-[0.95rem] uppercase dark:text-neutral-500/80 text-secondary-dark">
-                  supply chain
-                </span>
-                <span>
-                  {sectionsOpen.supplyChain ? (
-                    <i className="pi pi-angle-up text-[#00427f] text-xs"></i>
-                  ) : (
-                    <i className="pi pi-angle-down text-[#00427f] text-xs"></i>
-                  )}
-                </span>
-              </div>
-              <div
-                className={`section-content ${
-                  sectionsOpen.supplyChain ? "open" : ""
-                }`}
-              >
-                <NavLink
-                  to="/test"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "navLink bg-[#00427f] text-slate-50"
-                      : "navLink text-slate-400 hover:bg-gray-50"
-                  }
-                >
-                  SH Management
-                </NavLink>
-                <NavLink
-                  to="/test"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "navLink bg-[#00427f] text-slate-50"
-                      : "navLink text-slate-400 hover:bg-gray-50"
-                  }
-                >
-                  SH Workers
-                </NavLink>
-              </div>
+                Supply Chain
+              </NavLink>
             </div>
 
             <div className=" mt-6 px-4">

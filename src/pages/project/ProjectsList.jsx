@@ -53,7 +53,8 @@ export default function ProjectsList() {
           onClick={() =>
             SweetAlert({
               props: {
-                title: "Are you sure?",
+                title:
+                  "By deleting this project, all associated items, workers will also be deleted. Are you sure?",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonText: "Delete",
