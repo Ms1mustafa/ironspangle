@@ -78,7 +78,7 @@ export default function CreateLafargeExpense() {
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <label htmlFor="remark" className="input-label">
-            remark <span className="text-red-500 text-sm">*</span>
+            remark
           </label>
           <input
             id="remark"

@@ -16,7 +16,7 @@ const GetAdmin = async (id, setLoading, navigate = null) => {
     }
   } catch (error) {
     if (navigate) navigate("/admin");
-    toast.error("Failed to fetch project."); // Display specific error message using toast
+    toast.error("Failed to fetch Admin."); // Display specific error message using toast
     setLoading(false);
     throw error; // Re-throw error for further handling if needed
   }

@@ -83,6 +83,78 @@ export default function SDWorkersList() {
     }
   };
 
+  const calculateOverallTotalDays = () => {
+    return workers
+      .reduce((total, workers) => {
+        const { days } = workers;
+        return total + Number(days);
+      }, 0)
+      .toLocaleString();
+  };
+  const calculateOverallTotalTransportation = () => {
+    return workers
+      .reduce((total, workers) => {
+        const { days, transportation } = workers;
+        return total + Number(days) * Number(transportation);
+      }, 0)
+      .toLocaleString();
+  };
+  const calculateOverallTotalProfit = () => {
+    return workers
+      .reduce((total, workers) => {
+        const { days, day_salary, day_cost, transportation } = workers;
+        return (
+          total +
+          Number(Number(days) * Number(day_cost)) -
+          Number(Number(days) * Number(transportation)) -
+          Number(Number(day_salary) * Number(days))
+        );
+      }, 0)
+      .toLocaleString();
+  };
+
+  const footerGroup = workers.length > 0 && (
+    <ColumnGroup>
+      <Row>
+        <Column
+          footerStyle={{
+            backgroundColor: "#fff",
+          }}
+        />
+        <Column
+          footer={calculateOverallTotalDays}
+          footerStyle={{
+            backgroundColor: "yellow",
+          }}
+        />
+        <Column
+          colSpan={2}
+          footerStyle={{
+            backgroundColor: "#fff",
+          }}
+        />
+        <Column
+          footer={calculateOverallTotalTransportation}
+          footerStyle={{
+            backgroundColor: "yellow",
+          }}
+        />
+        <Column
+          colSpan={2}
+          footerStyle={{
+            backgroundColor: "#fff",
+          }}
+        />
+        <Column
+          footer={calculateOverallTotalProfit}
+          footerStyle={{
+            backgroundColor: "yellow",
+          }}
+        />
+      </Row>
+    </ColumnGroup>
+  );
+
   return (
     <div className="w-full py-8 px-4 flex flex-col">
       <NavLink
@@ -99,6 +171,7 @@ export default function SDWorkersList() {
           rows={5}
           showGridlines
           stripedRows
+          footerColumnGroup={footerGroup}
           rowsPerPageOptions={[5, 10, 25, 50]}
           emptyMessage="No Workers found."
           paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"

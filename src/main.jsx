@@ -39,6 +39,10 @@ import EditSDWorker from "./pages/expenses/sd/worker/EditSDWorker.jsx";
 import CreateAdmin from "./pages/admin/CreateAdmin.jsx";
 import AdminList from "./pages/admin/AdminList.jsx";
 import EditAdmin from "./pages/admin/EditAdmin.jsx";
+import ViewAdmin from "./pages/admin/ViewAdmin.jsx";
+import AdminWorkersList from "./pages/admin/worker/AdminWorkersList.jsx";
+import CreateAdminWorker from "./pages/admin/worker/CreateAdminWorker.jsx";
+import EditAdminWorker from "./pages/admin/worker/EditAdminWorker.jsx";
 
 const router = createBrowserRouter([
   {
@@ -170,8 +174,26 @@ const router = createBrowserRouter([
         element: <EditAdmin />,
       },
       {
+        path: "/admin/:id",
+        element: <ViewAdmin />,
+        children: [
+          {
+            path: "workers",
+            element: <AdminWorkersList />,
+          },
+        ],
+      },
+      {
         path: "/admin",
         element: <AdminList />,
+      },
+      {
+        path: "/admin/:id/workers/create",
+        element: <CreateAdminWorker />,
+      },
+      {
+        path: "/admin/:admin_id/workers/:worker_id/edit",
+        element: <EditAdminWorker />,
       },
     ],
   },

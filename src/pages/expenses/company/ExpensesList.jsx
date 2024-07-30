@@ -8,6 +8,8 @@ import AuthCheck from "../../../API/account/AuthCheck";
 import Button from "../../../components/Button";
 import SweetAlert from "../../../components/SweetAlert";
 import Delete from "../../../API/expenses/company/Delete";
+import { ColumnGroup } from "primereact/columngroup";
+import { Row } from "primereact/row";
 
 export default function Company_expensesList() {
   const user = AuthCheck();
@@ -72,6 +74,34 @@ export default function Company_expensesList() {
     );
   };
 
+  const calculateOverallTotalPriceTotal = () => {
+    return expenses
+      .reduce((total, expenses) => {
+        const { unit_price, qty } = expenses;
+        return total + Number(unit_price) * Number(qty);
+      }, 0)
+      .toLocaleString();
+  };
+
+  const footerGroup = expenses.length > 0 && (
+    <ColumnGroup>
+      <Row>
+        <Column
+          colSpan={4}
+          footerStyle={{
+            backgroundColor: "#fff",
+          }}
+        />
+        <Column
+          footer={calculateOverallTotalPriceTotal}
+          footerStyle={{
+            backgroundColor: "yellow",
+          }}
+        />
+      </Row>
+    </ColumnGroup>
+  );
+
   return (
     <div className="w-full p-8 flex flex-col">
       <div className="place-content-between flex flex-wrap gap-4">
@@ -95,6 +125,7 @@ export default function Company_expensesList() {
           paginator
           rows={5}
           showGridlines
+          footerColumnGroup={footerGroup}
           rowsPerPageOptions={[5, 10, 25, 50]}
           emptyMessage="No expenses found."
           paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
@@ -107,10 +138,15 @@ export default function Company_expensesList() {
           <Column field="item" header="Item Name"></Column>
           <Column field="unit" header="Unit"></Column>
           <Column field="qty" header="QTY"></Column>
-          <Column field="unit_price" header="Unit Price"></Column>
+          <Column
+            header="Unit Price"
+            body={({ unit_price }) => Number(unit_price).toLocaleString()}
+          ></Column>
           <Column
             header="Total Price"
-            body={({ unit_price, qty }) => unit_price * qty}
+            body={({ unit_price, qty }) =>
+              (Number(unit_price) * Number(qty)).toLocaleString()
+            }
           ></Column>
           <Column header="Actions" body={actionTemplate}></Column>
         </DataTable>
