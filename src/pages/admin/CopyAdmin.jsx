@@ -119,7 +119,7 @@ export default function CopyAdmin() {
         data-style={EXPAND_LEFT}
         loading={loading}
       >
-        edit admin
+        Copy admin
       </LaddaButton>
     </form>
   );
