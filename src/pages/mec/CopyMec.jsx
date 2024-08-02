@@ -1,43 +1,45 @@
 import React, { useEffect, useState } from "react";
-import Copy from "../../API/admin/Copy";
+import Copy from "../../API/mec/Copy";
 import AuthCheck from "../../API/account/AuthCheck";
 import LaddaButton, { EXPAND_LEFT } from "react-ladda-button";
 import "react-ladda-button/dist/ladda-themeless.min.css";
 import { useNavigate, useParams } from "react-router-dom";
-import GetAdmin from "../../API/admin/GetAdmin";
+import GetMec from "../../API/mec/GetMec";
 
-export default function CopyAdmin() {
+export default function CopyMec() {
   const [inputs, setInputs] = useState({
+    fixed_invoice_cost: "",
     po: "",
     pr: "",
     date: "",
-    admin_id: "",
+    mec_id: "",
   });
   const [loading, setLoading] = useState(false);
-  const [admin, setAdmin] = useState({});
+  const [mec, setMec] = useState({});
   const navigate = useNavigate();
   const user = AuthCheck();
   const { id } = useParams();
 
-  // Fetch admin data on component mount
+  // Fetch mec data on component mount
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const adminData = await GetAdmin(id, setLoading, navigate);
-        setAdmin(adminData); // Set admin data in state
-        // Update inputs with admin data
-        if (adminData) {
+        const mecData = await GetMec(id, setLoading, navigate);
+        setMec(mecData); // Set mec data in state
+        // Update inputs with mec data
+        if (mecData) {
           setInputs((prevInputs) => ({
             ...prevInputs,
-            po: adminData.po || "",
-            pr: adminData.pr || "",
-            date: adminData.date || "",
-            admin_id: id, // Assuming id is correctly defined from useParams
+            fixed_invoice_cost: mecData.fixed_invoice_cost || "",
+            po: mecData.po || "",
+            pr: mecData.pr || "",
+            date: mecData.date || "",
+            mec_id: id, // Assuming id is correctly defined from useParams
           }));
         }
       } catch (error) {
-        console.error("Error fetching admin:", error);
+        console.error("Error fetching mec:", error);
         // Handle error or display message
       } finally {
         setLoading(false);
@@ -61,17 +63,33 @@ export default function CopyAdmin() {
     e.preventDefault();
     try {
       await Copy(inputs, setLoading, navigate);
-      console.log("admin copied successfully:", inputs);
+      console.log("mec copied successfully:", inputs);
       // Optionally, you can navigate to another page or show a success message
     } catch (error) {
-      console.error("Error copying admin:", error);
+      console.error("Error copying mec:", error);
       // Handle error or display message
     }
   };
 
   return (
     <form className="w-full p-10 max-w-lg" onSubmit={handleSubmit}>
-      <h1 className="text-3xl text-gray-600 font-bold mb-10">Copy Admin</h1>
+      <h1 className="text-3xl text-gray-600 font-bold mb-10">Copy MEC</h1>
+      <div className="flex flex-wrap -mx-3 mb-6">
+        <div className="w-full px-3">
+          <label htmlFor="fixed_invoice_cost" className="input-label">
+            Fixed Invoice Cost <span className="text-red-500 text-sm">*</span>
+          </label>
+          <input
+            id="fixed_invoice_cost"
+            className="input"
+            type="number"
+            name="fixed_invoice_cost"
+            onChange={handleChange}
+            value={inputs.fixed_invoice_cost}
+          />
+          <p className="text-gray-600 text-xs italic"></p>
+        </div>
+      </div>
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <label htmlFor="po" className="input-label">
@@ -119,7 +137,7 @@ export default function CopyAdmin() {
         data-style={EXPAND_LEFT}
         loading={loading}
       >
-        Copy admin
+        Copy MEC
       </LaddaButton>
     </form>
   );
