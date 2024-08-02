@@ -177,7 +177,7 @@ export default function AdminWorkersList() {
     return workers
       .reduce((total, { salary = 0, insurance2 = 0, active_days = 0 }) => {
         return (
-          total + Number(salary) * Number(active_days) - Number(insurance2)
+          total + (Number(salary) * Number(active_days) - Number(insurance2))
         );
       }, 0)
       .toLocaleString();
@@ -371,7 +371,7 @@ export default function AdminWorkersList() {
             header="Insurance"
             field="insurance"
             body={(rowData) =>
-              rowData?.insurance
+              rowData?.insurance || 0
                 ? Number(rowData.insurance).toLocaleString()
                 : ""
             }
