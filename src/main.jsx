@@ -45,6 +45,15 @@ import AdminWorkersList from "./pages/admin/worker/AdminWorkersList.jsx";
 import CreateAdminWorker from "./pages/admin/worker/CreateAdminWorker.jsx";
 import EditAdminWorker from "./pages/admin/worker/EditAdminWorker.jsx";
 
+import CreateMEC from "./pages/mec/CreateMec.jsx";
+import CopyMEC from "./pages/mec/CopyMec.jsx";
+import MECList from "./pages/mec/MecList.jsx";
+import EditMEC from "./pages/mec/EditMec.jsx";
+import ViewMEC from "./pages/mec/ViewMec.jsx";
+import MECWorkersList from "./pages/mec/worker/MecWorkersList.jsx";
+import CreateMECWorker from "./pages/mec/worker/CreateMecWorker.jsx";
+import EditMECWorker from "./pages/mec/worker/EditMECWorker.jsx";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -166,6 +175,7 @@ const router = createBrowserRouter([
         path: "/expenses/sd/:sd_id/workers/:workerId/edit",
         element: <EditSDWorker />,
       },
+      // Admin Routes
       {
         path: "/admin/create",
         element: <CreateAdmin />,
@@ -199,6 +209,42 @@ const router = createBrowserRouter([
       {
         path: "/admin/:admin_id/workers/:worker_id/edit",
         element: <EditAdminWorker />,
+      },
+
+      // MEC Routes
+      {
+        path: "/mec/create",
+        element: <CreateMEC />,
+      },
+      {
+        path: "/mec/:id/edit",
+        element: <EditMEC />,
+      },
+      {
+        path: "/mec/:id/copy",
+        element: <CopyMEC />,
+      },
+      {
+        path: "/mec/:id",
+        element: <ViewMEC />,
+        children: [
+          {
+            path: "workers",
+            element: <MECWorkersList />,
+          },
+        ],
+      },
+      {
+        path: "/mec",
+        element: <MECList />,
+      },
+      {
+        path: "/mec/:id/workers/create",
+        element: <CreateMECWorker />,
+      },
+      {
+        path: "/mec/:mec_id/workers/:worker_id/edit",
+        element: <EditMECWorker />,
       },
     ],
   },

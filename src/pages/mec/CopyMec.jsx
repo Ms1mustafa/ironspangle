@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
-import Edit from "../../API/admin/Edit";
+import Copy from "../../API/admin/Copy";
 import AuthCheck from "../../API/account/AuthCheck";
 import LaddaButton, { EXPAND_LEFT } from "react-ladda-button";
 import "react-ladda-button/dist/ladda-themeless.min.css";
 import { useNavigate, useParams } from "react-router-dom";
 import GetAdmin from "../../API/admin/GetAdmin";
 
-export default function EditAdmin() {
+export default function CopyAdmin() {
   const [inputs, setInputs] = useState({
     po: "",
     pr: "",
     date: "",
-    id: "",
+    admin_id: "",
   });
   const [loading, setLoading] = useState(false);
   const [admin, setAdmin] = useState({});
@@ -33,7 +33,7 @@ export default function EditAdmin() {
             po: adminData.po || "",
             pr: adminData.pr || "",
             date: adminData.date || "",
-            id: id, // Assuming id is correctly defined from useParams
+            admin_id: id, // Assuming id is correctly defined from useParams
           }));
         }
       } catch (error) {
@@ -60,18 +60,18 @@ export default function EditAdmin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await Edit(inputs, setLoading, navigate);
-      console.log("admin updated successfully:", inputs);
+      await Copy(inputs, setLoading, navigate);
+      console.log("admin copied successfully:", inputs);
       // Optionally, you can navigate to another page or show a success message
     } catch (error) {
-      console.error("Error updating admin:", error);
+      console.error("Error copying admin:", error);
       // Handle error or display message
     }
   };
 
   return (
     <form className="w-full p-10 max-w-lg" onSubmit={handleSubmit}>
-      <h1 className="text-3xl text-gray-600 font-bold mb-10">Edit Admin</h1>
+      <h1 className="text-3xl text-gray-600 font-bold mb-10">Copy Admin</h1>
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <label htmlFor="po" className="input-label">
@@ -111,7 +111,7 @@ export default function EditAdmin() {
           className="input"
           name="date"
           onChange={handleChange}
-          value={inputs.date}
+          // value={inputs.date}
         />
       </div>
       <LaddaButton
@@ -119,7 +119,7 @@ export default function EditAdmin() {
         data-style={EXPAND_LEFT}
         loading={loading}
       >
-        edit admin
+        Copy admin
       </LaddaButton>
     </form>
   );

@@ -7,11 +7,11 @@ import { NavLink, useParams } from "react-router-dom";
 import AuthCheck from "../../../API/account/AuthCheck";
 import Button from "../../../components/Button";
 import SweetAlert from "../../../components/SweetAlert";
-import Delete from "../../../API/admin/worker/Delete";
+import Delete from "../../../API/mec/worker/Delete";
 import { ColumnGroup } from "primereact/columngroup";
 import { Row } from "primereact/row";
 
-export default function AdminWorkersList() {
+export default function MecWorkersList() {
   const user = AuthCheck();
   const { id } = useParams();
 
@@ -28,7 +28,7 @@ export default function AdminWorkersList() {
       const response = await axios.get(
         `${
           import.meta.env.VITE_REACT_APP_API_URL
-        }/admin/worker/list.php?admin_id=${id}`
+        }/mec/worker/list.php?mec_id=${id}`
       );
       setWorkers(response.data);
       setLoading(false);
@@ -47,7 +47,7 @@ export default function AdminWorkersList() {
     return (
       <div className="flex gap-2">
         <NavLink
-          to={`/admin/${id}/workers/${rowData.id}/edit`}
+          to={`/mec/${id}/workers/${rowData.id}/edit`}
           className="button"
         >
           Edit
@@ -114,20 +114,29 @@ export default function AdminWorkersList() {
   };
 
   // Calculate overall totals for footer
-  const calculateOverallTotalSalary = () => {
+  const calculateOverallTotalActiveDays = () => {
     return workers
       .reduce((total, worker) => {
-        const { salary, active_days } = worker;
-        return total + Number(salary * active_days);
+        const { active_days } = worker;
+        return total + Number(active_days);
       }, 0)
       .toLocaleString();
   };
 
-  const calculateOverallTotalContractSalary = () => {
+  const calculateOverallTotalSalary = () => {
+    return workers
+      .reduce((total, worker) => {
+        const { labor_salary, active_days } = worker;
+        return total + Number(labor_salary * active_days);
+      }, 0)
+      .toLocaleString();
+  };
+
+  const calculateOverallContTotalSalary = () => {
     return workers
       .reduce((total, worker) => {
         const { contract_salary, active_days } = worker;
-        return total + Number(contract_salary * active_days);
+        return total + Number(contract_salary) * Number(active_days);
       }, 0)
       .toLocaleString();
   };
@@ -157,46 +166,27 @@ export default function AdminWorkersList() {
       }, 0)
       .toLocaleString();
   };
-  const calculateOverallTotalRewards = () => {
-    return workers
-      .reduce((total, worker) => {
-        const { rewards } = worker;
-        return total + Number(rewards);
-      }, 0)
-      .toLocaleString();
-  };
-  const calculateOverallTotalInsurance2 = () => {
-    return workers
-      .reduce((total, worker) => {
-        const { insurance2 } = worker;
-        return total + Number(insurance2);
-      }, 0)
-      .toLocaleString();
-  };
-  const calculateOverallTotalReceived = () => {
-    return workers
-      .reduce((total, { salary = 0, insurance2 = 0, active_days = 0 }) => {
-        return (
-          total + Number(salary) * Number(active_days) - Number(insurance2)
-        );
-      }, 0)
-      .toLocaleString();
-  };
-
-  const calculateOverallTotalPRTotal = () => {
-    return workers
-      .reduce((total, worker) => {
-        const { pr_days, pr_cost, rewards } = worker;
-        return total + Number(pr_days) * Number(pr_cost) + Number(rewards);
-      }, 0)
-      .toLocaleString();
-  };
 
   const footerGroup = workers.length > 0 && (
     <ColumnGroup>
       <Row>
         <Column
-          colSpan={5}
+          colSpan={3}
+          footerStyle={{
+            backgroundColor: "#fff",
+          }}
+        />
+        <Column
+          footer={calculateOverallTotalActiveDays}
+          footerStyle={{
+            // textAlign: "center",
+            backgroundColor: "yellow",
+            color: "#000",
+            fontWeight: "bold",
+          }}
+        />
+        <Column
+          colSpan={2}
           footerStyle={{
             backgroundColor: "#fff",
           }}
@@ -211,16 +201,7 @@ export default function AdminWorkersList() {
           }}
         />
         <Column
-          footer={calculateOverallTotalContractSalary}
-          footerStyle={{
-            // textAlign: "center",
-            backgroundColor: "yellow",
-            color: "#000",
-            fontWeight: "bold",
-          }}
-        />
-        <Column
-          footer={calculateOverallTotalTransportation}
+          footer={calculateOverallContTotalSalary}
           footerStyle={{
             // textAlign: "center",
             backgroundColor: "yellow",
@@ -238,49 +219,16 @@ export default function AdminWorkersList() {
           }}
         />
         <Column
+          footer={calculateOverallTotalTransportation}
+          footerStyle={{
+            // textAlign: "center",
+            backgroundColor: "yellow",
+            color: "#000",
+            fontWeight: "bold",
+          }}
+        />
+        <Column
           footer={calculateOverallTotalPPE}
-          footerStyle={{
-            // textAlign: "center",
-            backgroundColor: "yellow",
-            color: "#000",
-            fontWeight: "bold",
-          }}
-        />
-        <Column
-          footer={calculateOverallTotalRewards}
-          footerStyle={{
-            // textAlign: "center",
-            backgroundColor: "yellow",
-            color: "#000",
-            fontWeight: "bold",
-          }}
-        />
-        <Column
-          footer={calculateOverallTotalInsurance2}
-          footerStyle={{
-            // textAlign: "center",
-            backgroundColor: "yellow",
-            color: "#000",
-            fontWeight: "bold",
-          }}
-        />
-        <Column
-          footer={calculateOverallTotalReceived}
-          footerStyle={{
-            // textAlign: "center",
-            backgroundColor: "yellow",
-            color: "#000",
-            fontWeight: "bold",
-          }}
-        />
-        <Column
-          colSpan={2}
-          footerStyle={{
-            backgroundColor: "#fff",
-          }}
-        />
-        <Column
-          footer={calculateOverallTotalPRTotal}
           footerStyle={{
             // textAlign: "center",
             backgroundColor: "yellow",
@@ -295,9 +243,9 @@ export default function AdminWorkersList() {
   return (
     <div className="w-full py-8 flex flex-col">
       <NavLink
-        to={`/admin/${id}/workers/create`}
+        to={`/mec/${id}/workers/create`}
         className="button mb-4 self-end"
-        disabled={user?.data.role !== "admin"}
+        disabled={user?.data.role !== "mec"}
       >
         Create Worker
       </NavLink>
@@ -320,7 +268,12 @@ export default function AdminWorkersList() {
             header="Name"
             style={{ width: "auto", whiteSpace: "nowrap" }}
           />
-          <Column field="job" header="Job" />
+          <Column
+            field="status"
+            header="Status"
+            style={{ width: "auto", whiteSpace: "nowrap" }}
+          />
+          <Column field="contract_days" header="Contract days" />
           <Column field="active_days" header="Active days" />
           <Column
             field="contract_salary"
@@ -332,28 +285,41 @@ export default function AdminWorkersList() {
             }
           />
           <Column
-            field="salary"
-            header="Salary"
+            field="labor_salary"
+            header="Labor Salary"
             body={(rowData) =>
-              rowData?.salary ? Number(rowData.salary).toLocaleString() : ""
+              rowData?.labor_salary
+                ? Number(rowData.labor_salary).toLocaleString()
+                : ""
             }
           />
           <Column
             header="Total Salary"
             body={(rowData) =>
-              rowData?.salary && rowData?.active_days
-                ? Number(rowData.salary * rowData.active_days).toLocaleString()
+              rowData?.labor_salary && rowData?.active_days
+                ? Number(
+                    rowData.labor_salary * rowData.active_days
+                  ).toLocaleString()
                 : ""
             }
           />
 
           <Column
-            header="Contract salary"
+            header="Total Cont sal"
             body={(rowData) =>
-              rowData?.contract_salary && rowData?.active_days
+              rowData?.contract_salary && rowData?.contract_days
                 ? Number(
-                    rowData.contract_salary * rowData.active_days
+                    rowData.contract_salary * rowData.contract_days
                   ).toLocaleString()
+                : ""
+            }
+          />
+          <Column
+            header="Insurance"
+            field="insurance"
+            body={(rowData) =>
+              rowData?.insurance
+                ? Number(rowData.insurance).toLocaleString()
                 : ""
             }
           />
@@ -368,58 +334,10 @@ export default function AdminWorkersList() {
             }
           />
           <Column
-            header="Insurance"
-            field="insurance"
+            header="PPE"
+            field="ppe"
             body={(rowData) =>
-              rowData?.insurance
-                ? Number(rowData.insurance).toLocaleString()
-                : ""
-            }
-          />
-          <Column header="PPE" field="ppe" />
-          <Column header="Rewards" field="rewards" />
-          <Column
-            header="Insurance"
-            field="insurance2"
-            body={(rowData) =>
-              rowData?.insurance2
-                ? Number(rowData.insurance2).toLocaleString()
-                : ""
-            }
-          />
-          <Column
-            header="Received"
-            body={(rowData) => {
-              const salary = Number(rowData?.salary) || 0;
-              const activeDays = Number(rowData?.active_days) || 0;
-              const insurance2 = Number(rowData?.insurance2) || 0;
-
-              return salary && activeDays
-                ? (salary * activeDays - insurance2).toLocaleString()
-                : "";
-            }}
-          />
-          <Column
-            header="PR Days"
-            body={(rowData) =>
-              rowData?.pr_days ? Number(rowData.pr_days).toLocaleString() : ""
-            }
-          />
-          <Column
-            header="PR Cost"
-            body={(rowData) =>
-              rowData?.pr_cost ? Number(rowData.pr_cost).toLocaleString() : ""
-            }
-          />
-          <Column
-            header="PR Total"
-            body={(rowData) =>
-              rowData?.pr_days && rowData?.pr_cost
-                ? (
-                    Number(rowData.pr_days) * Number(rowData.pr_cost) +
-                    Number(rowData.rewards)
-                  ).toLocaleString()
-                : ""
+              rowData?.ppe ? Number(rowData.ppe).toLocaleString() : ""
             }
           />
           <Column header="Actions" body={actionTemplate} />
