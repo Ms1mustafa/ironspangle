@@ -227,7 +227,7 @@ export default function CreateProjectWorker() {
             className="input"
             name="transport"
             onChange={handleChange}
-            value={inputs.name || ""}
+            value={inputs.transport || ""}
           />
           <p className="text-gray-600 text-xs italic"></p>
         </div>
