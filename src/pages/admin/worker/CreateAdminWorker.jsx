@@ -225,6 +225,7 @@ export default function CreateProjectWorker() {
           <input
             id="transport"
             className="input"
+            type="number"
             name="transport"
             onChange={handleChange}
             value={inputs.transport || ""}

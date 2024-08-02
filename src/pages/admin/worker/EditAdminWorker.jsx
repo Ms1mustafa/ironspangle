@@ -260,6 +260,7 @@ export default function EditProjectWorker() {
             id="transport"
             className="input"
             name="transport"
+            type="number"
             onChange={handleChange}
             value={inputs.transport}
           />
