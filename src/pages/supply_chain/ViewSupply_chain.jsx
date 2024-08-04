@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
-import GetAdmin from "../../API/admin/GetAdmin";
-import GetTotals from "../../API/admin/GetTotals";
+import GetSupply_chain from "../../API/supply_chain/GetSupply_chain";
+import GetTotals from "../../API/supply_chain/GetTotals";
 import { NavLink, Outlet, useNavigate, useParams } from "react-router-dom";
-import toast from "react-hot-toast";
 
 export default function View() {
   const { id } = useParams();
-  const [admin, setAdmin] = useState(null);
+  const [supply_chain, setSupply_chain] = useState(null);
   const [totals, setTotals] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -14,12 +13,16 @@ export default function View() {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const adminData = await GetAdmin(id, setLoading, navigate); // Await GetAdmin promise
+        const supply_chainData = await GetSupply_chain(
+          id,
+          setLoading,
+          navigate
+        ); // Await GetSupply_chain promise
         const totalsData = await GetTotals(id, setLoading, navigate); // Await GetTotals promise
-        setAdmin(adminData); // Set admin data in state
+        setSupply_chain(supply_chainData); // Set supply_chain data in state
         setTotals(totalsData); // Set totals data in state
       } catch (error) {
-        // toast.error("Failed to fetch admin."); // Display specific error message using toast
+        // toast.error("Failed to fetch supply_chain."); // Display specific error message using toast
       } finally {
         setLoading(false);
       }
@@ -29,15 +32,15 @@ export default function View() {
   }, [id, navigate]);
   return (
     <div className="w-full p-10">
-      <div className="flex flex-wrap w-64 -mx-3 mb-6">
+      <div className="flex flex-wrap w-72 -mx-3 mb-6">
         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <p className="text-gray-700">
-            PO: {Number(admin?.po).toLocaleString()}
+            PO: {Number(supply_chain?.po).toLocaleString()}
           </p>
         </div>
         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <p className="text-gray-700">
-            PR: {Number(admin?.pr).toLocaleString()}
+            PR: {Number(supply_chain?.pr).toLocaleString()}
           </p>
         </div>
       </div>
@@ -67,6 +70,9 @@ export default function View() {
             </span>
           </p>
         </div>
+      </div>
+
+      <div className="flex flex-wrap gap-4 -mx-3 mb-6">
         <div className="bg-[#00427f] text-white px-3 pr-0 border border-gray-800">
           <p className="flex items-center justify-between">
             Insurance:{" "}
@@ -75,9 +81,6 @@ export default function View() {
             </span>
           </p>
         </div>
-      </div>
-
-      <div className="flex flex-wrap gap-4 -mx-3 mb-6">
         <div className="bg-[#00427f] text-white px-3 pr-0 border border-gray-800">
           <p className="flex items-center justify-between">
             PPEs:{" "}
@@ -92,20 +95,11 @@ export default function View() {
             </span>
           </p>
         </div>
-        <div className="bg-[#00427f] text-white px-3 pr-0 border border-gray-800">
-          <p className="flex items-center justify-between">
-            PR days:{" "}
-            <span className="p-2">
-              {Number(totals?.pr_days).toLocaleString()}
-            </span>
-          </p>
-        </div>
       </div>
-
       <ul className="flex flex-wrap w-48 text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400">
         <li className="me-2">
           <NavLink
-            to={`/admin/${id}/workers`}
+            to={`/supply_chain/${id}/workers`}
             className={({ isActive }) =>
               isActive ? "tab text-blue-600 bg-slate-100" : "tab"
             }

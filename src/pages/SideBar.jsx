@@ -184,7 +184,7 @@ export default function SideBar({ logo }) {
             {/* Supply Chain Section */}
             <div className="pt-2">
               <NavLink
-                to="/supplychain"
+                to="/supply_chain"
                 className={({ isActive }) =>
                   isActive
                     ? "navLink bg-[#00427f] text-slate-50"

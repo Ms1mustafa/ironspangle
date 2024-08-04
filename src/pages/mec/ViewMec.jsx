@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import GetMec from "../../API/mec/GetMec";
-// import GetTotals from "../../API/mec/GetTotals";
+import GetTotals from "../../API/mec/GetTotals";
 import { NavLink, Outlet, useNavigate, useParams } from "react-router-dom";
 
 export default function View() {
@@ -14,9 +14,9 @@ export default function View() {
       setLoading(true);
       try {
         const mecData = await GetMec(id, setLoading, navigate); // Await GetMec promise
-        // const totalsData = await GetTotals(id, setLoading, navigate); // Await GetTotals promise
+        const totalsData = await GetTotals(id, setLoading, navigate); // Await GetTotals promise
         setMec(mecData); // Set mec data in state
-        // setTotals(totalsData); // Set totals data in state
+        setTotals(totalsData); // Set totals data in state
       } catch (error) {
         // toast.error("Failed to fetch mec."); // Display specific error message using toast
       } finally {
@@ -42,27 +42,71 @@ export default function View() {
       </div>
 
       <div className="flex flex-wrap gap-4 -mx-3 mb-6">
-        <div className="px-3 pr-0 border border-gray-800">
-          <p className="text-gray-700 flex items-center justify-between">
-            Total MEC Cost:{" "}
-            <span className="bg-[#FBBC04] p-2">
-              {Number(totals?.total_mec_cost).toLocaleString()}
+        <div className="bg-[#00427f] text-white px-3 pr-0 border border-gray-800">
+          <p className="flex items-center justify-between">
+            Total contract salary:{" "}
+            <span className="p-2">
+              {Number(totals?.total_contract_salary).toLocaleString()}
             </span>
           </p>
         </div>
-        <div className="px-3 pr-0 border border-gray-800">
-          <p className="text-gray-700 flex items-center justify-between">
-            Budget:{" "}
-            <span className="bg-[#990000] p-2 text-white">
-              {Number(mec?.budget).toLocaleString()}
+        <div className="bg-[#00427f] text-white px-3 pr-0 border border-gray-800">
+          <p className="flex items-center justify-between">
+            Total labor salary:{" "}
+            <span className="p-2">
+              {Number(totals?.total_labor_salary).toLocaleString()}
             </span>
           </p>
         </div>
-        <div className="px-3 pr-0 border border-gray-800">
-          <p className="text-gray-700 flex items-center justify-between">
-            Profit:{" "}
-            <span className="bg-[#1A5529] p-2 text-white">
-              {(mec?.budget - totals?.total_mec_cost).toLocaleString()}
+        <div className="bg-[#00427f] text-white px-3 pr-0 border border-gray-800">
+          <p className="flex items-center justify-between">
+            Transportation:{" "}
+            <span className="p-2">
+              {Number(totals?.transportation).toLocaleString()}
+            </span>
+          </p>
+        </div>
+        <div className="bg-[#00427f] text-white px-3 pr-0 border border-gray-800">
+          <p className="flex items-center justify-between">
+            Insurance:{" "}
+            <span className="p-2">
+              {Number(totals?.insurance).toLocaleString()}
+            </span>
+          </p>
+        </div>
+      </div>
+
+      <div className="flex flex-wrap gap-4 -mx-3 mb-6">
+        <div className="bg-[#00427f] text-white px-3 pr-0 border border-gray-800">
+          <p className="flex items-center justify-between">
+            PPEs:{" "}
+            <span className="p-2">{Number(totals?.ppe).toLocaleString()}</span>
+          </p>
+        </div>
+        <div className="bg-[#00427f] text-white px-3 pr-0 border border-gray-800">
+          <p className="flex items-center justify-between">
+            Fixed Invoice Cost:{" "}
+            <span className="p-2">
+              {Number(mec?.fixed_invoice_cost).toLocaleString()}
+            </span>
+          </p>
+        </div>
+        <div className="bg-[#00427f] text-white px-3 pr-0 border border-gray-800">
+          <p className="flex items-center justify-between">
+            Return to company:{" "}
+            <span className="p-2">
+              {(
+                Number(mec?.fixed_invoice_cost) -
+                Number(totals?.total_contract_salary)
+              ).toLocaleString()}
+            </span>
+          </p>
+        </div>
+        <div className="bg-[#00427f] text-white px-3 pr-0 border border-gray-800">
+          <p className="flex items-center justify-between">
+            Working days:{" "}
+            <span className="p-2">
+              {Number(totals?.working_days).toLocaleString()}
             </span>
           </p>
         </div>

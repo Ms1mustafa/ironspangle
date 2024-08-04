@@ -1,18 +1,18 @@
 import axios from "axios";
 import toast from "react-hot-toast";
 
-const Edit = (data, setLoading, navigate) => {
+const Create = (data, setLoading, navigate) => {
   setLoading(true);
   axios
-    .put(
-      `${import.meta.env.VITE_REACT_APP_API_URL}/expense/sd/create.php`,
+    .post(
+      `${import.meta.env.VITE_REACT_APP_API_URL}/supply_chain/create.php`,
       data
     )
     .then((response) => {
       setLoading(false);
       if (response.status === 200) {
         toast.success(response.data.message);
-        navigate(`/expenses/sd`, {
+        navigate(`/supply_chain`, {
           replace: true,
         });
       } else {
@@ -27,4 +27,4 @@ const Edit = (data, setLoading, navigate) => {
     });
 };
 
-export default Edit;
+export default Create;

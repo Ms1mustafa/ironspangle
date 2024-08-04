@@ -1,20 +1,24 @@
 import axios from "axios";
 import toast from "react-hot-toast";
 
-const Edit = (data, setLoading, navigate) => {
+const CreateWorker = (data, setLoading, navigate = null) => {
   setLoading(true);
   axios
-    .put(
-      `${import.meta.env.VITE_REACT_APP_API_URL}/expense/sd/create.php`,
+    .post(
+      `${
+        import.meta.env.VITE_REACT_APP_API_URL
+      }/supply_chain/worker/create.php`,
       data
     )
     .then((response) => {
       setLoading(false);
       if (response.status === 200) {
         toast.success(response.data.message);
-        navigate(`/expenses/sd`, {
-          replace: true,
-        });
+        if (navigate) {
+          navigate(`/supply_chain/${data.supply_chain_id}/workers`, {
+            replace: true,
+          });
+        }
       } else {
         toast.error(response.data.message);
       }
@@ -27,4 +31,4 @@ const Edit = (data, setLoading, navigate) => {
     });
 };
 
-export default Edit;
+export default CreateWorker;

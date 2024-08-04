@@ -33,6 +33,7 @@ import SDsList from "./pages/expenses/sd/SDsList.jsx";
 import ViewSD from "./pages/expenses/sd/ViewSD.jsx";
 import SDWorkersList from "./pages/expenses/sd/worker/SDWorkersList.jsx";
 import CreateSD from "./pages/expenses/sd/CreateSD.jsx";
+import EditSD from "./pages/expenses/sd/EditSD.jsx";
 import CreateSDWorker from "./pages/expenses/sd/worker/CreateSDWorker.jsx";
 import EditSDWorker from "./pages/expenses/sd/worker/EditSDWorker.jsx";
 
@@ -53,6 +54,15 @@ import ViewMEC from "./pages/mec/ViewMec.jsx";
 import MECWorkersList from "./pages/mec/worker/MecWorkersList.jsx";
 import CreateMECWorker from "./pages/mec/worker/CreateMecWorker.jsx";
 import EditMECWorker from "./pages/mec/worker/EditMECWorker.jsx";
+
+import CreateSupply_chain from "./pages/supply_chain/CreateSupply_chain.jsx";
+import CopySupply_chain from "./pages/supply_chain/CopySupply_chain.jsx";
+import Supply_chainList from "./pages/supply_chain/Supply_chainList.jsx";
+import EditSupply_chain from "./pages/supply_chain/EditSupply_chain.jsx";
+import ViewSupply_chain from "./pages/supply_chain/ViewSupply_chain.jsx";
+import Supply_chainWorkersList from "./pages/supply_chain/worker/Supply_chainWorkersList.jsx";
+import CreateSupply_chainWorker from "./pages/supply_chain/worker/CreateSupply_chainWorker.jsx";
+import EditSupply_chainWorker from "./pages/supply_chain/worker/EditSupply_chainWorker.jsx";
 
 const router = createBrowserRouter([
   {
@@ -168,6 +178,10 @@ const router = createBrowserRouter([
         element: <CreateSD />,
       },
       {
+        path: "/expenses/sd/:id/edit",
+        element: <EditSD />,
+      },
+      {
         path: "/expenses/sd/:id/workers/create",
         element: <CreateSDWorker />,
       },
@@ -245,6 +259,41 @@ const router = createBrowserRouter([
       {
         path: "/mec/:mec_id/workers/:worker_id/edit",
         element: <EditMECWorker />,
+      },
+      // supply_chain Routes
+      {
+        path: "/supply_chain/create",
+        element: <CreateSupply_chain />,
+      },
+      {
+        path: "/supply_chain/:id/edit",
+        element: <EditSupply_chain />,
+      },
+      {
+        path: "/supply_chain/:id/copy",
+        element: <CopySupply_chain />,
+      },
+      {
+        path: "/supply_chain/:id",
+        element: <ViewSupply_chain />,
+        children: [
+          {
+            path: "workers",
+            element: <Supply_chainWorkersList />,
+          },
+        ],
+      },
+      {
+        path: "/supply_chain",
+        element: <Supply_chainList />,
+      },
+      {
+        path: "/supply_chain/:id/workers/create",
+        element: <CreateSupply_chainWorker />,
+      },
+      {
+        path: "/supply_chain/:supply_chain_id/workers/:worker_id/edit",
+        element: <EditSupply_chainWorker />,
       },
     ],
   },

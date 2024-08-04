@@ -44,7 +44,7 @@ export default function SDsList() {
         <NavLink to={`/expenses/sd/${SDs.id}/workers`} className="button">
           View
         </NavLink>
-        <NavLink to={`/`} className="button">
+        <NavLink to={`/expenses/sd/${SDs.id}/edit`} className="button">
           Edit
         </NavLink>
         <Button
