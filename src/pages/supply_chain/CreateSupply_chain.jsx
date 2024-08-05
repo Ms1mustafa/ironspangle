@@ -33,13 +33,7 @@ export default function CreateSupply_chain() {
           <label htmlFor="po" className="input-label">
             PO <span className="text-red-500 text-sm">*</span>
           </label>
-          <input
-            id="po"
-            type="number"
-            className="input"
-            name="po"
-            onChange={handleChange}
-          />
+          <input id="po" className="input" name="po" onChange={handleChange} />
         </div>
         <div className="w-full md:w-1/2 px-3">
           <label htmlFor="pr" className="input-label">

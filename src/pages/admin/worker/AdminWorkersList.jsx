@@ -369,7 +369,6 @@ export default function AdminWorkersList() {
           />
           <Column
             header="Insurance"
-            field="insurance"
             body={(rowData) =>
               rowData?.insurance || 0
                 ? Number(rowData.insurance).toLocaleString()
@@ -377,10 +376,14 @@ export default function AdminWorkersList() {
             }
           />
           <Column header="PPE" field="ppe" />
-          <Column header="Rewards" field="rewards" />
+          <Column
+            header="Rewards"
+            body={(rowData) =>
+              rowData?.rewards ? Number(rowData.rewards).toLocaleString() : ""
+            }
+          />
           <Column
             header="Insurance"
-            field="insurance2"
             body={(rowData) =>
               rowData?.insurance2
                 ? Number(rowData.insurance2).toLocaleString()

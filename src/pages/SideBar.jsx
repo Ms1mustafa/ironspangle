@@ -14,6 +14,7 @@ export default function SideBar({ logo }) {
   const [sectionsOpen, setSectionsOpen] = useState({
     projects: false,
     applications: false,
+    contractor: false,
     admin: false,
     mec: false,
     supplyChain: false,
@@ -153,48 +154,87 @@ export default function SideBar({ logo }) {
               </div>
             </div>
 
-            {/* Admin Section */}
-            <div className="pt-2">
-              <NavLink
-                to="/admin"
-                className={({ isActive }) =>
-                  isActive
-                    ? "navLink bg-[#00427f] text-slate-50"
-                    : "navLink text-slate-400 hover:bg-gray-50"
-                }
+            <div className="block pt-5 pb-[.15rem]">
+              <div
+                className="px-4 py-[.65rem] cursor-pointer flex justify-between"
+                onClick={() => toggleSection("contractor")}
               >
-                Admin
-              </NavLink>
-            </div>
-
-            {/* MEC Section */}
-            <div className="pt-2">
-              <NavLink
-                to="/mec"
-                className={({ isActive }) =>
-                  isActive
-                    ? "navLink bg-[#00427f] text-slate-50"
-                    : "navLink text-slate-400 hover:bg-gray-50"
-                }
+                <span className="text-[#00427f] font-semibold text-[0.95rem] uppercase dark:text-neutral-500/80 text-secondary-dark">
+                  Contractor
+                </span>
+                <span>
+                  {sectionsOpen.contractor ? (
+                    <i className="pi pi-angle-up text-[#00427f] text-xs"></i>
+                  ) : (
+                    <i className="pi pi-angle-down text-[#00427f] text-xs"></i>
+                  )}
+                </span>
+              </div>
+              <div
+                className={`section-content ${
+                  sectionsOpen.contractor ? "open" : ""
+                }`}
               >
-                MEC
-              </NavLink>
-            </div>
-
-            {/* Supply Chain Section */}
-            <div className="pt-2">
-              <NavLink
-                to="/supply_chain"
-                className={({ isActive }) =>
-                  isActive
-                    ? "navLink bg-[#00427f] text-slate-50"
-                    : "navLink text-slate-400 hover:bg-gray-50"
-                }
+                <NavLink
+                  to="/summary"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "navLink bg-[#00427f] text-slate-50"
+                      : "navLink text-slate-400 hover:bg-gray-50"
+                  }
+                >
+                  Summary
+                </NavLink>
+              </div>
+              <div
+                className={`section-content ${
+                  sectionsOpen.contractor ? "open" : ""
+                }`}
               >
-                Supply Chain
-              </NavLink>
+                <NavLink
+                  to="/admin"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "navLink bg-[#00427f] text-slate-50"
+                      : "navLink text-slate-400 hover:bg-gray-50"
+                  }
+                >
+                  Admin
+                </NavLink>
+              </div>
+              <div
+                className={`section-content ${
+                  sectionsOpen.contractor ? "open" : ""
+                }`}
+              >
+                <NavLink
+                  to="/mec"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "navLink bg-[#00427f] text-slate-50"
+                      : "navLink text-slate-400 hover:bg-gray-50"
+                  }
+                >
+                  MEC
+                </NavLink>
+              </div>
+              <div
+                className={`section-content ${
+                  sectionsOpen.contractor ? "open" : ""
+                }`}
+              >
+                <NavLink
+                  to="/supply_chain"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "navLink bg-[#00427f] text-slate-50"
+                      : "navLink text-slate-400 hover:bg-gray-50"
+                  }
+                >
+                  Supply Chain
+                </NavLink>
+              </div>
             </div>
-
             <div className=" mt-6 px-4">
               <Button
                 className="bg-red-500 hover:bg-red-600 w-24"

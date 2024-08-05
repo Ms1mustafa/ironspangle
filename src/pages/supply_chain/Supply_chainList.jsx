@@ -113,12 +113,7 @@ export default function Supply_chainList() {
             minWidth: "50rem",
           }}
         >
-          <Column
-            header="PO"
-            body={(rowData) =>
-              rowData?.po ? Number(rowData.po).toLocaleString() : ""
-            }
-          ></Column>
+          <Column header="PO" field="po"></Column>
           <Column
             header="PR"
             body={(rowData) =>

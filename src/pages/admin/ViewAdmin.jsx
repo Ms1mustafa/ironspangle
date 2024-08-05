@@ -43,34 +43,34 @@ export default function View() {
       </div>
 
       <div className="flex flex-wrap gap-4 -mx-3 mb-6">
-        <div className="bg-[#00427f] text-white px-3 pr-0 border border-gray-800">
+        <div className="bg-white text-black px-3 pr-0 border border-gray-800">
           <p className="flex items-center justify-between">
-            Total contract salary:{" "}
-            <span className="p-2">
+            Total contract salary{" "}
+            <span className="p-2 bg-[#00427f] text-white font-bold">
               {Number(totals?.total_contract_salary).toLocaleString()}
             </span>
           </p>
         </div>
-        <div className="bg-[#00427f] text-white px-3 pr-0 border border-gray-800">
+        <div className="bg-white text-black px-3 pr-0 border border-gray-800">
           <p className="flex items-center justify-between">
-            Total labor salary:{" "}
-            <span className="p-2">
+            Total labor salary{" "}
+            <span className="p-2 bg-[#00427f] text-white font-bold">
               {Number(totals?.total_labor_salary).toLocaleString()}
             </span>
           </p>
         </div>
-        <div className="bg-[#00427f] text-white px-3 pr-0 border border-gray-800">
+        <div className="bg-white text-black px-3 pr-0 border border-gray-800">
           <p className="flex items-center justify-between">
-            Transportation:{" "}
-            <span className="p-2">
+            Transportation{" "}
+            <span className="p-2 bg-[#00427f] text-white font-bold">
               {Number(totals?.transportation).toLocaleString()}
             </span>
           </p>
         </div>
-        <div className="bg-[#00427f] text-white px-3 pr-0 border border-gray-800">
+        <div className="bg-white text-black px-3 pr-0 border border-gray-800">
           <p className="flex items-center justify-between">
-            Insurance:{" "}
-            <span className="p-2">
+            Insurance{" "}
+            <span className="p-2 bg-[#00427f] text-white font-bold">
               {Number(totals?.insurance).toLocaleString()}
             </span>
           </p>
@@ -78,24 +78,26 @@ export default function View() {
       </div>
 
       <div className="flex flex-wrap gap-4 -mx-3 mb-6">
-        <div className="bg-[#00427f] text-white px-3 pr-0 border border-gray-800">
+        <div className="bg-white text-black px-3 pr-0 border border-gray-800">
           <p className="flex items-center justify-between">
-            PPEs:{" "}
-            <span className="p-2">{Number(totals?.ppe).toLocaleString()}</span>
+            PPEs{" "}
+            <span className="p-2 bg-[#00427f] text-white font-bold">
+              {Number(totals?.ppe).toLocaleString()}
+            </span>
           </p>
         </div>
-        <div className="bg-[#00427f] text-white px-3 pr-0 border border-gray-800">
+        <div className="bg-white text-black px-3 pr-0 border border-gray-800">
           <p className="flex items-center justify-between">
-            Working days:{" "}
-            <span className="p-2">
+            Working days{" "}
+            <span className="p-2 bg-[#00427f] text-white font-bold">
               {Number(totals?.working_days).toLocaleString()}
             </span>
           </p>
         </div>
-        <div className="bg-[#00427f] text-white px-3 pr-0 border border-gray-800">
+        <div className="bg-white text-black px-3 pr-0 border border-gray-800">
           <p className="flex items-center justify-between">
-            PR days:{" "}
-            <span className="p-2">
+            PR days{" "}
+            <span className="p-2 bg-[#00427f] text-white font-bold">
               {Number(totals?.pr_days).toLocaleString()}
             </span>
           </p>
