@@ -10,6 +10,7 @@ export default function CreateUser() {
   const [inputs, setInputs] = useState({
     name: "",
     budget: "",
+    isg: "",
     po: "",
     pr: "",
     sd_id: "",
@@ -34,6 +35,7 @@ export default function CreateUser() {
             name: sdData.name || "",
             body: sdData.body || "",
             budget: sdData.budget || "",
+            isg: sdData.isg || "",
             po: sdData.po || "",
             pr: sdData.pr || "",
             sd_id: id, // Assuming id is correctly defined from useParams
@@ -93,7 +95,7 @@ export default function CreateUser() {
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full px-3">
           <label htmlFor="budget" className="input-label">
-            Budget <span className="text-red-500 text-sm">*</span>
+            PO cost <span className="text-red-500 text-sm">*</span>
           </label>
           <input
             id="budget"
@@ -102,6 +104,22 @@ export default function CreateUser() {
             name="budget"
             onChange={handleChange}
             value={inputs.budget}
+          />
+          <p className="text-gray-600 text-xs italic"></p>
+        </div>
+      </div>
+      <div className="flex flex-wrap -mx-3 mb-6">
+        <div className="w-full px-3">
+          <label htmlFor="isg" className="input-label">
+            ISG <span className="text-red-500 text-sm">*</span>
+          </label>
+          <input
+            id="isg"
+            type="number"
+            className="input"
+            name="isg"
+            onChange={handleChange}
+            value={inputs.isg}
           />
           <p className="text-gray-600 text-xs italic"></p>
         </div>

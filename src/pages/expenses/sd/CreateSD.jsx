@@ -48,13 +48,27 @@ export default function CreateUser() {
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full px-3">
           <label htmlFor="budget" className="input-label">
-            Budget
+            PO cost
           </label>
           <input
             id="budget"
             type="number"
             className="input"
             name="budget"
+            onChange={handleChange}
+          />
+        </div>
+      </div>
+      <div className="flex flex-wrap -mx-3 mb-6">
+        <div className="w-full px-3">
+          <label htmlFor="isg" className="input-label">
+            isg
+          </label>
+          <input
+            id="isg"
+            type="number"
+            className="input"
+            name="isg"
             onChange={handleChange}
           />
         </div>

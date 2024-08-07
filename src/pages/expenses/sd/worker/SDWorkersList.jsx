@@ -112,6 +112,14 @@ export default function SDWorkersList() {
       }, 0)
       .toLocaleString();
   };
+  const calculateOverallTotalSalary = () => {
+    return workers
+      .reduce((total, workers) => {
+        const { days, day_salary } = workers;
+        return total + Number(day_salary * days);
+      }, 0)
+      .toLocaleString();
+  };
 
   const footerGroup = workers.length > 0 && (
     <ColumnGroup>
@@ -140,9 +148,15 @@ export default function SDWorkersList() {
           }}
         />
         <Column
-          colSpan={2}
+          colSpan={1}
           footerStyle={{
             backgroundColor: "#fff",
+          }}
+        />
+        <Column
+          footer={calculateOverallTotalSalary}
+          footerStyle={{
+            backgroundColor: "yellow",
           }}
         />
         <Column

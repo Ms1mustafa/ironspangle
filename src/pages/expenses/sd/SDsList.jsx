@@ -95,7 +95,7 @@ export default function SDsList() {
           }}
         >
           <Column field="name" header="Name"></Column>
-          <Column field="budget" header="Budget"></Column>
+          <Column field="budget" header="PO cost"></Column>
           <Column field="po" header="PO"></Column>
           <Column field="pr" header="PR"></Column>
           <Column header="Actions" body={actionTemplate}></Column>

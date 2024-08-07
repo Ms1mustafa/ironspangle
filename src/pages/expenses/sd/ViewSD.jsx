@@ -30,7 +30,6 @@ export default function ViewSD() {
   return (
     <div className="w-full p-10">
       <h1 className="text-gray-700 mb-3 text-3xl">{SD?.name}</h1>
-      <p className="text-gray-700 mb-5">Budget: {SD?.budget}</p>
       <div className="flex flex-wrap w-60 -mx-3 mb-6">
         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <p className="text-gray-700">PO: {SD?.po}</p>
@@ -43,17 +42,17 @@ export default function ViewSD() {
       <div className="flex flex-wrap gap-4 -mx-3 mb-6">
         <div className="px-3 pr-0 border border-gray-800">
           <p className="text-gray-700 flex items-center justify-between">
-            Total SD Cost:{" "}
-            <span className="bg-[#FBBC04] p-2">
-              {Number(totals?.total_sd_cost).toLocaleString()}
+            PO cost:{" "}
+            <span className="bg-[#990000] p-2 text-white">
+              {Number(SD?.budget).toLocaleString()}
             </span>
           </p>
         </div>
         <div className="px-3 pr-0 border border-gray-800">
           <p className="text-gray-700 flex items-center justify-between">
-            Budget:{" "}
-            <span className="bg-[#990000] p-2 text-white">
-              {Number(SD?.budget).toLocaleString()}
+            ISG:{" "}
+            <span className="bg-[#262b27] p-2 text-white">
+              {Number(SD?.isg).toLocaleString()}
             </span>
           </p>
         </div>
@@ -62,6 +61,22 @@ export default function ViewSD() {
             Profit:{" "}
             <span className="bg-[#1A5529] p-2 text-white">
               {(SD?.budget - totals?.total_sd_cost).toLocaleString()}
+            </span>
+          </p>
+        </div>
+        <div className="px-3 pr-0 border border-gray-800">
+          <p className="text-gray-700 flex items-center justify-between">
+            Total SD Cost:{" "}
+            <span className="bg-[#FBBC04] p-2">
+              {Number(totals?.total_sd_cost).toLocaleString()}
+            </span>
+          </p>
+        </div>
+        <div className="px-3 pr-0 border border-gray-800">
+          <p className="text-gray-700 flex items-center justify-between">
+            Lafarge:{" "}
+            <span className="bg-[#1A5529] p-2 text-white">
+              {Number(SD?.po - SD?.isg).toLocaleString()}
             </span>
           </p>
         </div>

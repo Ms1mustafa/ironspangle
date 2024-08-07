@@ -35,7 +35,7 @@ export default function SideBar({ logo }) {
 
   return (
     <>
-      <aside className="no-scrollbar relative flex flex-col h-screen overflow-y-scroll pb-8 lg:w-[250px] w-[250px] transition-all duration-300 ease-in-out m-0 z-40 inset-y-0 left-0 border-r border-r-dashed border-r-neutral-200 sidenav fixed-start loopple-fixed-start">
+      <aside className="relative flex flex-col h-screen overflow-y-scroll pb-8 lg:w-[250px] w-[250px] transition-all duration-300 ease-in-out m-0 z-40 inset-y-0 left-0 border-r border-r-dashed border-r-neutral-200 sidenav fixed-start loopple-fixed-start">
         <div className="relative">
           <div className="flex flex-col w-full font-medium">
             <div className="flex flex-row gap-3 items-center border-b-2 ">
