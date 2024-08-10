@@ -396,9 +396,10 @@ export default function AdminWorkersList() {
               const salary = Number(rowData?.salary) || 0;
               const activeDays = Number(rowData?.active_days) || 0;
               const insurance2 = Number(rowData?.insurance2) || 0;
+              const rewards = Number(rowData?.rewards) || 0;
 
               return salary && activeDays
-                ? (salary * activeDays - insurance2).toLocaleString()
+                ? (salary * activeDays - insurance2 + rewards).toLocaleString()
                 : "";
             }}
           />
