@@ -8,7 +8,7 @@ export default function View() {
   const { id } = useParams();
   const [admin, setAdmin] = useState(null);
   const [totals, setTotals] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [, setLoading] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
     const fetchData = async () => {

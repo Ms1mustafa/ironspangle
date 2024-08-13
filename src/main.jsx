@@ -37,6 +37,10 @@ import EditSD from "./pages/expenses/sd/EditSD.jsx";
 import CreateSDWorker from "./pages/expenses/sd/worker/CreateSDWorker.jsx";
 import EditSDWorker from "./pages/expenses/sd/worker/EditSDWorker.jsx";
 
+import CreateEmployee_company from "./pages/employee_company/CreateEmployee_company.jsx";
+import EditEmployee_company from "./pages/employee_company/EditEmployee_company.jsx";
+import Employee_companyList from "./pages/employee_company/Employee_companyList.jsx";
+
 import CreateAdmin from "./pages/admin/CreateAdmin.jsx";
 import CopyAdmin from "./pages/admin/CopyAdmin.jsx";
 import AdminList from "./pages/admin/AdminList.jsx";
@@ -63,6 +67,8 @@ import ViewSupply_chain from "./pages/supply_chain/ViewSupply_chain.jsx";
 import Supply_chainWorkersList from "./pages/supply_chain/worker/Supply_chainWorkersList.jsx";
 import CreateSupply_chainWorker from "./pages/supply_chain/worker/CreateSupply_chainWorker.jsx";
 import EditSupply_chainWorker from "./pages/supply_chain/worker/EditSupply_chainWorker.jsx";
+
+import Summary from "./pages/summary/Summary.jsx";
 
 const router = createBrowserRouter([
   {
@@ -188,6 +194,25 @@ const router = createBrowserRouter([
       {
         path: "/expenses/sd/:sd_id/workers/:workerId/edit",
         element: <EditSDWorker />,
+      },
+      //summary
+      {
+        path: "/summary",
+        element: <Summary />,
+      },
+
+      //employee_company
+      {
+        path: "/employee_company",
+        element: <Employee_companyList />,
+      },
+      {
+        path: "/employee_company/create",
+        element: <CreateEmployee_company />,
+      },
+      {
+        path: "/employee_company/:id/edit",
+        element: <EditEmployee_company />,
       },
       // Admin Routes
       {

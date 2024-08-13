@@ -192,6 +192,22 @@ export default function SideBar({ logo }) {
                 }`}
               >
                 <NavLink
+                  to="/employee_company"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "navLink bg-[#00427f] text-slate-50"
+                      : "navLink text-slate-400 hover:bg-gray-50"
+                  }
+                >
+                  employee company
+                </NavLink>
+              </div>
+              <div
+                className={`section-content ${
+                  sectionsOpen.contractor ? "open" : ""
+                }`}
+              >
+                <NavLink
                   to="/admin"
                   className={({ isActive }) =>
                     isActive
