@@ -18,6 +18,7 @@ export default function SideBar({ logo }) {
     admin: false,
     mec: false,
     supplyChain: false,
+    accounting: false,
   });
 
   // Function to toggle section visibility
@@ -248,6 +249,55 @@ export default function SideBar({ logo }) {
                   }
                 >
                   Supply Chain
+                </NavLink>
+              </div>
+            </div>
+            <div className="block pt-5 pb-[.15rem]">
+              <div
+                className="px-4 py-[.65rem] cursor-pointer flex justify-between"
+                onClick={() => toggleSection("accounting")}
+              >
+                <span className="text-[#00427f] font-semibold text-[0.95rem] uppercase dark:text-neutral-500/80 text-secondary-dark">
+                  Accounting
+                </span>
+                <span>
+                  {sectionsOpen.accounting ? (
+                    <i className="pi pi-angle-up text-[#00427f] text-xs"></i>
+                  ) : (
+                    <i className="pi pi-angle-down text-[#00427f] text-xs"></i>
+                  )}
+                </span>
+              </div>
+              <div
+                className={`section-content ${
+                  sectionsOpen.accounting ? "open" : ""
+                }`}
+              >
+                <NavLink
+                  to="/po"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "navLink bg-[#00427f] text-slate-50"
+                      : "navLink text-slate-400 hover:bg-gray-50"
+                  }
+                >
+                  PO
+                </NavLink>
+              </div>
+              <div
+                className={`section-content ${
+                  sectionsOpen.accounting ? "open" : ""
+                }`}
+              >
+                <NavLink
+                  to="/swift"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "navLink bg-[#00427f] text-slate-50"
+                      : "navLink text-slate-400 hover:bg-gray-50"
+                  }
+                >
+                  Swift
                 </NavLink>
               </div>
             </div>

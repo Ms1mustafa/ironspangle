@@ -9,26 +9,31 @@ import "primereact/resources/primereact.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 
 import Login from "./pages/Login.jsx";
+import NotFound from "./pages/NotFound.jsx";
+
 import CreateProject from "./pages/project/CreateProject.jsx";
 import EditProject from "./pages/project/EditProject.jsx";
 import ProjectsList from "./pages/project/ProjectsList.jsx";
 import CreateProjectItem from "./pages/project/item/CreateProjectItem.jsx";
 import EditProjectItem from "./pages/project/item/EditProjectItem.jsx";
 import EditProjectWorker from "./pages/project/worker/EditProjectWorker.jsx";
-import NotFound from "./pages/NotFound.jsx";
 import CreateProjectWorker from "./pages/project/worker/CreateProjectWorker.jsx";
 import View from "./pages/project/ViewProject.jsx";
 import ItemsList from "./pages/project/item/ItemsList.jsx";
 import WorkersList from "./pages/project/worker/WorkersList.jsx";
+
 import Company_expensesList from "./pages/expenses/company/ExpensesList.jsx";
 import CreateExpense from "./pages/expenses/company/CreateExpense.jsx";
 import EditExpense from "./pages/expenses/company/EditExpense.jsx";
+
 import CreateLafargeExpense from "./pages/expenses/lafarge/CreateExpense.jsx";
 import EditLafargeExpense from "./pages/expenses/lafarge/EditExpense.jsx";
 import Lafarge_expensesList from "./pages/expenses/lafarge/ExpensesList.jsx";
+
 import CreatePPEExpense from "./pages/expenses/ppe/CreateExpense.jsx";
 import EditPPEExpense from "./pages/expenses/ppe/EditExpense.jsx";
 import PPE_expensesList from "./pages/expenses/ppe/ExpensesList.jsx";
+
 import SDsList from "./pages/expenses/sd/SDsList.jsx";
 import ViewSD from "./pages/expenses/sd/ViewSD.jsx";
 import SDWorkersList from "./pages/expenses/sd/worker/SDWorkersList.jsx";
@@ -69,6 +74,18 @@ import CreateSupply_chainWorker from "./pages/supply_chain/worker/CreateSupply_c
 import EditSupply_chainWorker from "./pages/supply_chain/worker/EditSupply_chainWorker.jsx";
 
 import Summary from "./pages/summary/Summary.jsx";
+
+import CreatePO from "./pages/po/CreatePO.jsx";
+import EditPO from "./pages/po/EditPO.jsx";
+import POList from "./pages/po/POList.jsx";
+
+import CreateSwift from "./pages/swift/CreateSwift.jsx";
+import EditSwift from "./pages/swift/EditSwift.jsx";
+import SwiftList from "./pages/swift/SwiftList.jsx";
+
+import CreateSwiftInvoice from "./pages/swift/invoice/CreateSwiftInvoice.jsx";
+// import EditSwift from "./pages/swift/EditSwift.jsx";
+// import SwiftList from "./pages/swift/SwiftList.jsx";
 
 const router = createBrowserRouter([
   {
@@ -319,6 +336,38 @@ const router = createBrowserRouter([
       {
         path: "/supply_chain/:supply_chain_id/workers/:worker_id/edit",
         element: <EditSupply_chainWorker />,
+      },
+
+      //po
+      {
+        path: "/po",
+        element: <POList />,
+      },
+      {
+        path: "/po/create",
+        element: <CreatePO />,
+      },
+      {
+        path: "/po/:id/edit",
+        element: <EditPO />,
+      },
+
+      //swift
+      {
+        path: "/swift",
+        element: <SwiftList />,
+      },
+      {
+        path: "/swift/create",
+        element: <CreateSwift />,
+      },
+      {
+        path: "/swift/:id/edit",
+        element: <EditSwift />,
+      },
+      {
+        path: "/swift/:id/invoice/create",
+        element: <CreateSwiftInvoice />,
       },
     ],
   },
