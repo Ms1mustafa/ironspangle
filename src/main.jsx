@@ -84,8 +84,8 @@ import EditSwift from "./pages/swift/EditSwift.jsx";
 import SwiftList from "./pages/swift/SwiftList.jsx";
 
 import CreateSwiftInvoice from "./pages/swift/invoice/CreateSwiftInvoice.jsx";
-// import EditSwift from "./pages/swift/EditSwift.jsx";
-// import SwiftList from "./pages/swift/SwiftList.jsx";
+import EditSwiftInvoice from "./pages/swift/invoice/EditSwiftInvoice.jsx";
+import SwiftInvoiceList from "./pages/swift/invoice/SwiftInvoiceList.jsx";
 
 const router = createBrowserRouter([
   {
@@ -366,8 +366,16 @@ const router = createBrowserRouter([
         element: <EditSwift />,
       },
       {
+        path: "/swift/:id/invoice",
+        element: <SwiftInvoiceList />,
+      },
+      {
         path: "/swift/:id/invoice/create",
         element: <CreateSwiftInvoice />,
+      },
+      {
+        path: "/swift/:id/invoice/:invoice_id/edit",
+        element: <EditSwiftInvoice />,
       },
     ],
   },

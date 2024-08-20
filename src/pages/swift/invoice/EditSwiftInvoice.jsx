@@ -1,60 +1,117 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import Edit from "../../../API/swift/invoice/Edit";
 import AuthCheck from "../../../API/account/AuthCheck";
 import LaddaButton, { EXPAND_LEFT } from "react-ladda-button";
 import "react-ladda-button/dist/ladda-themeless.min.css";
 import { useNavigate, useParams } from "react-router-dom";
-import GetSwift from "../../../API/swift/GetSwift";
-import CreateInvoice from "../../../API/swift/invoice/CreateInvoice";
+import GetInvoice from "../../../API/swift/invoice/GetInvoice";
 
-export default function CreateSwiftInvoice() {
-  const [inputs, setInputs] = useState({});
+export default function EditSwiftInvoice() {
+  const [inputs, setInputs] = useState({
+    description: "",
+    status: "in progress",
+    invoice_id: "",
+    pr_no: "",
+    pr_date: "",
+    po_no: "",
+    po_date: "",
+    invoice_no: "",
+    invoice_date: "",
+    invoice_send: false,
+    invoice_store: false,
+    invoice_pru: false,
+    invoice_accounting: false,
+    s_no: "",
+    s_date: "",
+    cost: "",
+    p_and_lc: "LC",
+    guarantee: "",
+    tax: "",
+    publish: "",
+    fines: "",
+  });
   const [loading, setLoading] = useState(false);
-  const [swift, setSwift] = useState(null);
+  const [invoice, setInvoice] = useState({});
   const navigate = useNavigate();
   const user = AuthCheck();
-  const { id } = useParams();
+  const { id, invoice_id } = useParams();
 
+  // Fetch project data on component mount
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const invoiceData = await GetSwift(id, setLoading, navigate); // Await GetSwift promise
-        setSwift(invoiceData); // Set invoice data in state
+        const invoiceData = await GetInvoice(
+          { invoice_id: invoice_id, id: id },
+          setLoading,
+          navigate
+        );
+        setInvoice(invoiceData); // Set project data in state
+        // Update inputs with project data
+        if (invoiceData) {
+          setInputs((prevInputs) => ({
+            ...prevInputs,
+            description: invoiceData.description || "",
+            status: invoiceData.status || "",
+            pr_no: invoiceData.pr_no || "",
+            pr_date: invoiceData.pr_date || "",
+            po_no: invoiceData.po_no || "",
+            po_date: invoiceData.po_date || "",
+            invoice_no: invoiceData.invoice_no || "",
+            invoice_date: invoiceData.invoice_date || "",
+            invoice_send: invoiceData.invoice_send || false,
+            invoice_store: invoiceData.invoice_store || false,
+            invoice_pru: invoiceData.invoice_pru || false,
+            invoice_accounting: invoiceData.invoice_accounting || false,
+            s_no: invoiceData.s_no || "",
+            s_date: invoiceData.s_date || "",
+            cost: invoiceData.cost || "",
+            p_and_lc: invoiceData.p_and_lc || "LC",
+            guarantee: invoiceData.guarantee || "",
+            tax: invoiceData.tax || "",
+            publish: invoiceData.publish || "",
+            fines: invoiceData.fines || "",
+            swift_id: id,
+            id: invoice_id,
+          }));
+        }
       } catch (error) {
-        // toast.error(error.message); // Display specific error message using toast
+        console.error("Error fetching project:", error);
+        // Handle error or display message
       } finally {
         setLoading(false);
       }
     };
 
     fetchData();
+  }, [id, invoice_id, navigate]);
 
-    setInputs((values) => ({ ...values, swift_id: id }));
-  }, [id, navigate]); // Fetch data whenever id changes
-
+  // Handle input changes
   const handleChange = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    setInputs((values) => ({ ...values, [name]: value }));
+    const { name, value } = event.target;
+    setInputs((prevInputs) => ({
+      ...prevInputs,
+      [name]: value,
+    }));
   };
 
-  function handleSubmit(e) {
+  // Handle form submission
+  const handleSubmit = async (e) => {
     e.preventDefault();
-  }
-
-  function Create() {
-    CreateInvoice(inputs, setLoading, navigate);
-  }
-
-  function CreateAnother() {
-    CreateInvoice(inputs, setLoading);
-    //empty inputs
-    setInputs({ invoice_id: id });
-  }
+    try {
+      await Edit(inputs, setLoading, navigate);
+      console.log("Project updated successfully:", inputs);
+      // Optionally, you can navigate to another page or show a success message
+    } catch (error) {
+      console.error("Error updating project:", error);
+      // Handle error or display message
+    }
+  };
 
   return (
     <form className="w-full p-10 max-w-lg" onSubmit={handleSubmit}>
-      <h1 className="text-3xl text-gray-600 font-bold mb-10">Create invoice</h1>
+      <h1 className="text-3xl text-gray-600 font-bold mb-10">Edit Invoice</h1>
+
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full px-3">
           <label htmlFor="description" className="input-label">
@@ -165,7 +222,7 @@ export default function CreateSwiftInvoice() {
             className=""
             name="invoice_send"
             onChange={handleChange}
-            value={inputs.invoice_send || ""}
+            checked={Number(inputs.invoice_send) || ""}
           />
         </div>
         <div className="px-3">
@@ -178,7 +235,7 @@ export default function CreateSwiftInvoice() {
             className=""
             name="invoice_store"
             onChange={handleChange}
-            value={inputs.invoice_store || ""}
+            checked={Number(inputs.invoice_store) || ""}
           />
         </div>
         <div className="px-3 mb-6 md:mb-0">
@@ -191,7 +248,7 @@ export default function CreateSwiftInvoice() {
             className=""
             name="invoice_pru"
             onChange={handleChange}
-            value={inputs.invoice_pru || ""}
+            checked={Number(inputs.invoice_pru) || ""}
           />
         </div>
         <div className="px-3">
@@ -204,7 +261,7 @@ export default function CreateSwiftInvoice() {
             className=""
             name="invoice_accounting"
             onChange={handleChange}
-            value={inputs.invoice_accounting || ""}
+            checked={Number(inputs.invoice_accounting) || ""}
           />
         </div>
       </div>
@@ -261,9 +318,7 @@ export default function CreateSwiftInvoice() {
             className="input"
             defaultValue={"in progress"}
           >
-            <option value="in progress" selected>
-              in progress
-            </option>
+            <option value="in progress">in progress</option>
             <option value="recived in bank">recived in bank</option>
           </select>
         </div>
@@ -280,9 +335,7 @@ export default function CreateSwiftInvoice() {
             className="input"
             defaultValue={"LC"}
           >
-            <option value="LC" selected>
-              LC
-            </option>
+            <option value="LC">LC</option>
             <option value="P">P</option>
           </select>
           <p className="text-gray-600 text-xs italic"></p>
@@ -344,24 +397,15 @@ export default function CreateSwiftInvoice() {
           />
         </div>
       </div>
-      <div className="flex flex-wrap gap-5 -mx-3 mb-6">
-        <LaddaButton
-          className="button"
-          data-style={EXPAND_LEFT}
-          loading={loading}
-          onClick={Create}
-        >
-          Create
-        </LaddaButton>
-        <LaddaButton
-          className="button bg-cyan-700 hover:bg-cyan-600"
-          data-style={EXPAND_LEFT}
-          loading={loading}
-          onClick={CreateAnother}
-        >
-          Create & add another
-        </LaddaButton>
-      </div>
+
+      <LaddaButton
+        className="button"
+        data-style={EXPAND_LEFT}
+        loading={loading}
+        type="submit"
+      >
+        Update Invoice
+      </LaddaButton>
     </form>
   );
 }

@@ -9,7 +9,7 @@ const Edit = (data, setLoading, navigate) => {
       setLoading(false);
       if (response.status === 200) {
         toast.success(response.data.message);
-        navigate(`/swift/${data.swift_id}/invoices`, {
+        navigate(`/swift/${data.swift_id}/invoice`, {
           replace: true,
         });
       } else {

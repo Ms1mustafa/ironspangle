@@ -41,6 +41,9 @@ export default function SwiftList() {
   const actionTemplate = (swift) => {
     return (
       <div className="flex gap-2">
+        <NavLink to={`/swift/${swift.id}/invoice`} className="button">
+          View
+        </NavLink>
         <NavLink to={`/swift/${swift.id}/edit`} className="button">
           Edit
         </NavLink>

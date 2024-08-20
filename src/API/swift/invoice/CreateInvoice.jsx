@@ -4,16 +4,13 @@ import toast from "react-hot-toast";
 const CreateInvoice = (data, setLoading, navigate = null) => {
   setLoading(true);
   axios
-    .post(
-      `${import.meta.env.VITE_REACT_APP_API_URL}/invoice/create.php`,
-      data
-    )
+    .post(`${import.meta.env.VITE_REACT_APP_API_URL}/invoice/create.php`, data)
     .then((response) => {
       setLoading(false);
       if (response.status === 200) {
         toast.success(response.data.message);
         if (navigate) {
-          navigate(`/swift/${data.swift_id}/invoices`, {
+          navigate(`/swift/${data.swift_id}/invoic`, {
             replace: true,
           });
         }
