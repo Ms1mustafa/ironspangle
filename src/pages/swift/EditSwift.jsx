@@ -83,6 +83,34 @@ export default function EditSwift() {
           <p className="text-gray-600 text-xs italic"></p>
         </div>
       </div>
+      <div className="flex flex-wrap -mx-3 mb-6">
+        <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+          <label htmlFor="date" className="input-label">
+            date
+          </label>
+          <input
+            id="date"
+            type="date"
+            className="input"
+            name="date"
+            onChange={handleChange}
+            value={inputs.date || ""}
+          />
+        </div>
+        <div className="w-full md:w-1/2 px-3">
+          <label htmlFor="receive_at_bank" className="input-label">
+            receive at bank
+          </label>
+          <input
+            id="receive_at_bank"
+            type="date"
+            className="input"
+            name="receive_at_bank"
+            onChange={handleChange}
+            value={inputs.receive_at_bank || ""}
+          />
+        </div>
+      </div>
 
       <LaddaButton
         className="button"
