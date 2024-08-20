@@ -215,7 +215,7 @@ export default function SwiftInvoiceList() {
             style={{ width: "auto", whiteSpace: "nowrap" }}
           />
 
-          <Column
+          {/* <Column
             field="guarantee"
             header="Guarantee"
             style={{ width: "auto", whiteSpace: "nowrap" }}
@@ -237,7 +237,7 @@ export default function SwiftInvoiceList() {
             field="fines"
             header="Fines"
             style={{ width: "auto", whiteSpace: "nowrap" }}
-          />
+          /> */}
 
           <Column header="Actions" body={actionTemplate} />
         </DataTable>
