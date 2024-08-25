@@ -1,19 +1,24 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import Button from "../components/Button";
 import { useCookies } from "react-cookie";
-import AuthCheck from "../API/account/AuthCheck";
 import "primeicons/primeicons.css";
+import {
+  AlignEndVertical,
+  FolderKanban,
+  House,
+  LogOut,
+  UsersRound,
+  WalletMinimal,
+} from "lucide-react";
 
 export default function SideBar({ logo }) {
   const navigate = useNavigate();
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
-  const user = AuthCheck(); // Assuming AuthCheck returns user info
 
   // State to manage section visibility
   const [sectionsOpen, setSectionsOpen] = useState({
     projects: false,
-    applications: false,
+    expenses: false,
     contractor: false,
     admin: false,
     mec: false,
@@ -36,281 +41,331 @@ export default function SideBar({ logo }) {
 
   return (
     <>
-      <aside className="relative flex flex-col h-screen overflow-y-scroll pb-8 lg:w-[250px] w-[250px] transition-all duration-300 ease-in-out m-0 z-40 inset-y-0 left-0 border-r border-r-dashed border-r-neutral-200 sidenav fixed-start loopple-fixed-start">
-        <div className="relative">
-          <div className="flex flex-col w-full font-medium">
-            <div className="flex flex-row gap-3 items-center border-b-2 ">
-              <img src={logo} alt="logo" className="w-32" />
-            </div>
-            <div className="pt-5">
-              <NavLink
-                to="/"
-                className={({ isActive }) =>
+      <aside className="flex flex-col h-screen p-8 pr-1 lg:w-[270px] w-[250px] transition-all duration-300 ease-in-out m-0 z-40 inset-y-0 left-0 rounded-2xl">
+        <div className="flex flex-col no-scrollbar bg-white overflow-y-auto rounded-3xl h-full w-full p-5 font-medium">
+          <div className="flex flex-row gap-3 items-center justify-center">
+            <img src={logo} alt="logo" className="w-28" />
+          </div>
+          <div>
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                `navLink rounded-lg text-md font-normal flex items-center place-content-around ${
                   isActive
-                    ? "navLink bg-[#00427f] text-slate-50"
-                    : "navLink text-slate-400 hover:bg-gray-50"
+                    ? "bg-main text-slate-50"
+                    : "text-slate-400 hover:bg-gray-100"
+                }`
+              }
+            >
+              <House />
+              <span>Dashboard</span>
+              <span>
+                <i className="pi pi-angle-down text-[#a5a8ae] text-xs"></i>
+              </span>
+            </NavLink>
+          </div>
+
+          {/* Projects Section */}
+          <div
+            className={`block py-2 pb-[.15rem] rounded-lg transition-all duration-300 ease-out ${
+              sectionsOpen.projects ? "hover:bg-slate-50" : ""
+            }`}
+          >
+            <div
+              className="text-[#a5a8ae] px-4 py-[.65rem] cursor-pointer flex place-content-around"
+              onClick={() => toggleSection("projects")}
+            >
+              <FolderKanban />
+              <span className="text-md font-normal uppercase dark:text-neutral-500/80 text-secondary-dark">
+                Projects
+              </span>
+              <span>
+                {sectionsOpen.projects ? (
+                  <i className="pi pi-angle-up text-[#a5a8ae] text-xs"></i>
+                ) : (
+                  <i className="pi pi-angle-down text-[#a5a8ae] text-xs"></i>
+                )}
+              </span>
+            </div>
+            <div
+              className={`section-content ${
+                sectionsOpen.projects ? "open" : ""
+              }`}
+            >
+              <NavLink
+                to="/projects"
+                className={({ isActive }) =>
+                  `navLink rounded-lg text-sm font-light ${
+                    isActive
+                      ? "bg-main text-slate-50"
+                      : "text-slate-400 hover:bg-gray-100"
+                  }`
                 }
               >
-                Dashboard
+                Projects List
               </NavLink>
             </div>
+          </div>
 
-            {/* Projects Section */}
-            <div className="block pt-5 pb-[.15rem]">
-              <div
-                className="px-4 py-[.65rem] cursor-pointer flex justify-between"
-                onClick={() => toggleSection("projects")}
-              >
-                <span className="text-[#00427f] font-semibold text-[0.95rem] uppercase dark:text-neutral-500/80 text-secondary-dark">
-                  Projects
-                </span>
-                <span>
-                  {sectionsOpen.projects ? (
-                    <i className="pi pi-angle-up text-[#00427f] text-xs"></i>
-                  ) : (
-                    <i className="pi pi-angle-down text-[#00427f] text-xs"></i>
-                  )}
-                </span>
-              </div>
-              <div
-                className={`section-content ${
-                  sectionsOpen.projects ? "open" : ""
-                }`}
-              >
-                <NavLink
-                  to="/projects"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "navLink bg-[#00427f] text-slate-50"
-                      : "navLink text-slate-400 hover:bg-gray-50"
-                  }
-                >
-                  Projects List
-                </NavLink>
-              </div>
+          {/* expenses Section */}
+          <div
+            className={`block py-2 pb-[.15rem] rounded-lg transition-all duration-300 ease-out ${
+              sectionsOpen.expenses ? "hover:bg-slate-50" : ""
+            }`}
+          >
+            <div
+              className="text-[#a5a8ae] px-4 py-[.65rem] cursor-pointer flex place-content-around"
+              onClick={() => toggleSection("expenses")}
+            >
+              <AlignEndVertical />
+              <span className="text-md font-normal uppercase dark:text-neutral-500/80 text-secondary-dark">
+                Expenses
+              </span>
+              <span>
+                {sectionsOpen.expenses ? (
+                  <i className="pi pi-angle-up text-[#a5a8ae] text-xs"></i>
+                ) : (
+                  <i className="pi pi-angle-down text-[#a5a8ae] text-xs"></i>
+                )}
+              </span>
             </div>
-
-            {/* Applications Section */}
-            <div className="block pt-5 pb-[.15rem]">
-              <div
-                className="px-4 py-[.65rem] cursor-pointer flex justify-between"
-                onClick={() => toggleSection("applications")}
-              >
-                <span className="text-[#00427f] font-semibold text-[0.95rem] uppercase dark:text-neutral-500/80 text-secondary-dark">
-                  Expenses
-                </span>
-                <span>
-                  {sectionsOpen.applications ? (
-                    <i className="pi pi-angle-up text-[#00427f] text-xs"></i>
-                  ) : (
-                    <i className="pi pi-angle-down text-[#00427f] text-xs"></i>
-                  )}
-                </span>
-              </div>
-              <div
-                className={`section-content ${
-                  sectionsOpen.applications ? "open" : ""
-                }`}
-              >
-                <NavLink
-                  to="/expenses/company"
-                  className={({ isActive }) =>
+            <div
+              className={`section-content rounded-lg ${
+                sectionsOpen.expenses ? "open" : ""
+              }`}
+            >
+              <NavLink
+                to="/expenses/company"
+                className={({ isActive }) =>
+                  `navLink rounded-lg text-sm font-light ${
                     isActive
-                      ? "navLink bg-[#00427f] text-slate-50"
-                      : "navLink text-slate-400 hover:bg-gray-50"
-                  }
-                >
-                  Company Expenses
-                </NavLink>
-                <NavLink
-                  to="/expenses/lafarge"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "navLink bg-[#00427f] text-slate-50"
-                      : "navLink text-slate-400 hover:bg-gray-50"
-                  }
-                >
-                  Lafarge Expenses
-                </NavLink>
-                <NavLink
-                  to="/expenses/ppe"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "navLink bg-[#00427f] text-slate-50"
-                      : "navLink text-slate-400 hover:bg-gray-50"
-                  }
-                >
-                  PPE
-                </NavLink>
-                <NavLink
-                  to="/expenses/sd"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "navLink bg-[#00427f] text-slate-50"
-                      : "navLink text-slate-400 hover:bg-gray-50"
-                  }
-                >
-                  SD
-                </NavLink>
-              </div>
-            </div>
-
-            <div className="block pt-5 pb-[.15rem]">
-              <div
-                className="px-4 py-[.65rem] cursor-pointer flex justify-between"
-                onClick={() => toggleSection("contractor")}
+                      ? "bg-main text-slate-50"
+                      : "text-slate-400 hover:bg-gray-100"
+                  }`
+                }
               >
-                <span className="text-[#00427f] font-semibold text-[0.95rem] uppercase dark:text-neutral-500/80 text-secondary-dark">
-                  Contractor
-                </span>
-                <span>
-                  {sectionsOpen.contractor ? (
-                    <i className="pi pi-angle-up text-[#00427f] text-xs"></i>
-                  ) : (
-                    <i className="pi pi-angle-down text-[#00427f] text-xs"></i>
-                  )}
-                </span>
-              </div>
-              <div
-                className={`section-content ${
-                  sectionsOpen.contractor ? "open" : ""
-                }`}
-              >
-                <NavLink
-                  to="/summary"
-                  className={({ isActive }) =>
+                Company Expenses
+              </NavLink>
+              <NavLink
+                to="/expenses/lafarge"
+                className={({ isActive }) =>
+                  `navLink rounded-lg text-sm font-light ${
                     isActive
-                      ? "navLink bg-[#00427f] text-slate-50"
-                      : "navLink text-slate-400 hover:bg-gray-50"
-                  }
-                >
-                  Summary
-                </NavLink>
-              </div>
-              <div
-                className={`section-content ${
-                  sectionsOpen.contractor ? "open" : ""
-                }`}
+                      ? "bg-main text-slate-50"
+                      : "text-slate-400 hover:bg-gray-100"
+                  }`
+                }
               >
-                <NavLink
-                  to="/employee_company"
-                  className={({ isActive }) =>
+                Lafarge Expenses
+              </NavLink>
+              <NavLink
+                to="/expenses/ppe"
+                className={({ isActive }) =>
+                  `navLink rounded-lg text-sm font-light ${
                     isActive
-                      ? "navLink bg-[#00427f] text-slate-50"
-                      : "navLink text-slate-400 hover:bg-gray-50"
-                  }
-                >
-                  employee company
-                </NavLink>
-              </div>
-              <div
-                className={`section-content ${
-                  sectionsOpen.contractor ? "open" : ""
-                }`}
+                      ? "bg-main text-slate-50"
+                      : "text-slate-400 hover:bg-gray-100"
+                  }`
+                }
               >
-                <NavLink
-                  to="/admin"
-                  className={({ isActive }) =>
+                PPE
+              </NavLink>
+              <NavLink
+                to="/expenses/sd"
+                className={({ isActive }) =>
+                  `navLink rounded-lg text-sm font-light ${
                     isActive
-                      ? "navLink bg-[#00427f] text-slate-50"
-                      : "navLink text-slate-400 hover:bg-gray-50"
-                  }
-                >
-                  Admin
-                </NavLink>
-              </div>
-              <div
-                className={`section-content ${
-                  sectionsOpen.contractor ? "open" : ""
-                }`}
+                      ? "bg-main text-slate-50"
+                      : "text-slate-400 hover:bg-gray-100"
+                  }`
+                }
               >
-                <NavLink
-                  to="/mec"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "navLink bg-[#00427f] text-slate-50"
-                      : "navLink text-slate-400 hover:bg-gray-50"
-                  }
-                >
-                  MEC
-                </NavLink>
-              </div>
-              <div
-                className={`section-content ${
-                  sectionsOpen.contractor ? "open" : ""
-                }`}
-              >
-                <NavLink
-                  to="/supply_chain"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "navLink bg-[#00427f] text-slate-50"
-                      : "navLink text-slate-400 hover:bg-gray-50"
-                  }
-                >
-                  Supply Chain
-                </NavLink>
-              </div>
-            </div>
-            <div className="block pt-5 pb-[.15rem]">
-              <div
-                className="px-4 py-[.65rem] cursor-pointer flex justify-between"
-                onClick={() => toggleSection("accounting")}
-              >
-                <span className="text-[#00427f] font-semibold text-[0.95rem] uppercase dark:text-neutral-500/80 text-secondary-dark">
-                  Accounting
-                </span>
-                <span>
-                  {sectionsOpen.accounting ? (
-                    <i className="pi pi-angle-up text-[#00427f] text-xs"></i>
-                  ) : (
-                    <i className="pi pi-angle-down text-[#00427f] text-xs"></i>
-                  )}
-                </span>
-              </div>
-              <div
-                className={`section-content ${
-                  sectionsOpen.accounting ? "open" : ""
-                }`}
-              >
-                <NavLink
-                  to="/po"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "navLink bg-[#00427f] text-slate-50"
-                      : "navLink text-slate-400 hover:bg-gray-50"
-                  }
-                >
-                  PO
-                </NavLink>
-              </div>
-              <div
-                className={`section-content ${
-                  sectionsOpen.accounting ? "open" : ""
-                }`}
-              >
-                <NavLink
-                  to="/swift"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "navLink bg-[#00427f] text-slate-50"
-                      : "navLink text-slate-400 hover:bg-gray-50"
-                  }
-                >
-                  Swift
-                </NavLink>
-              </div>
-            </div>
-            <div className=" mt-6 px-4">
-              <Button
-                className="bg-red-500 hover:bg-red-600 w-24"
-                onClick={handleLogout}
-              >
-                logout
-              </Button>
+                SD
+              </NavLink>
             </div>
           </div>
+
+          <div
+            className={`block py-2 pb-[.15rem] rounded-lg transition-all duration-300 ease-out ${
+              sectionsOpen.contractor ? "hover:bg-slate-50" : ""
+            }`}
+          >
+            <div
+              className="text-[#a5a8ae] px-4 py-[.65rem] cursor-pointer flex place-content-around"
+              onClick={() => toggleSection("contractor")}
+            >
+              <UsersRound />
+              <span className="text-md font-normal uppercase dark:text-neutral-500/80 text-secondary-dark">
+                Contract
+              </span>
+              <span>
+                {sectionsOpen.contractor ? (
+                  <i className="pi pi-angle-up text-[#a5a8ae] text-xs"></i>
+                ) : (
+                  <i className="pi pi-angle-down text-[#a5a8ae] text-xs"></i>
+                )}
+              </span>
+            </div>
+            <div
+              className={`section-content ${
+                sectionsOpen.contractor ? "open" : ""
+              }`}
+            >
+              <NavLink
+                to="/summary"
+                className={({ isActive }) =>
+                  `navLink rounded-lg text-sm font-light ${
+                    isActive
+                      ? "bg-main text-slate-50"
+                      : "text-slate-400 hover:bg-gray-100"
+                  }`
+                }
+              >
+                Summary
+              </NavLink>
+            </div>
+            <div
+              className={`section-content ${
+                sectionsOpen.contractor ? "open" : ""
+              }`}
+            >
+              <NavLink
+                to="/employee_company"
+                className={({ isActive }) =>
+                  `navLink rounded-lg text-sm font-light ${
+                    isActive
+                      ? "bg-main text-slate-50"
+                      : "text-slate-400 hover:bg-gray-100"
+                  }`
+                }
+              >
+                employee company
+              </NavLink>
+            </div>
+            <div
+              className={`section-content ${
+                sectionsOpen.contractor ? "open" : ""
+              }`}
+            >
+              <NavLink
+                to="/admin"
+                className={({ isActive }) =>
+                  `navLink rounded-lg text-sm font-light ${
+                    isActive
+                      ? "bg-main text-slate-50"
+                      : "text-slate-400 hover:bg-gray-100"
+                  }`
+                }
+              >
+                Admin
+              </NavLink>
+            </div>
+            <div
+              className={`section-content ${
+                sectionsOpen.contractor ? "open" : ""
+              }`}
+            >
+              <NavLink
+                to="/mec"
+                className={({ isActive }) =>
+                  `navLink rounded-lg text-sm font-light ${
+                    isActive
+                      ? "bg-main text-slate-50"
+                      : "text-slate-400 hover:bg-gray-100"
+                  }`
+                }
+              >
+                MEC
+              </NavLink>
+            </div>
+            <div
+              className={`section-content ${
+                sectionsOpen.contractor ? "open" : ""
+              }`}
+            >
+              <NavLink
+                to="/supply_chain"
+                className={({ isActive }) =>
+                  `navLink rounded-lg text-sm font-light ${
+                    isActive
+                      ? "bg-main text-slate-50"
+                      : "text-slate-400 hover:bg-gray-100"
+                  }`
+                }
+              >
+                Supply Chain
+              </NavLink>
+            </div>
+          </div>
+          <div
+            className={`block py-2 pb-[.15rem] rounded-lg transition-all duration-200 ease-out ${
+              sectionsOpen.accounting ? "hover:bg-slate-50" : ""
+            }`}
+          >
+            <div
+              className="text-[#a5a8ae] px-4 py-[.65rem] cursor-pointer flex place-content-around"
+              onClick={() => toggleSection("accounting")}
+            >
+              <WalletMinimal />
+              <span className="text-md font-normal uppercase dark:text-neutral-500/80 text-secondary-dark">
+                Account
+              </span>
+              <span>
+                {sectionsOpen.accounting ? (
+                  <i className="pi pi-angle-up text-[#a5a8ae] text-xs"></i>
+                ) : (
+                  <i className="pi pi-angle-down text-[#a5a8ae] text-xs"></i>
+                )}
+              </span>
+            </div>
+            <div
+              className={`section-content ${
+                sectionsOpen.accounting ? "open" : ""
+              }`}
+            >
+              <NavLink
+                to="/po"
+                className={({ isActive }) =>
+                  `navLink rounded-lg text-sm font-light ${
+                    isActive
+                      ? "bg-main text-slate-50"
+                      : "text-slate-400 hover:bg-gray-100"
+                  }`
+                }
+              >
+                PO
+              </NavLink>
+            </div>
+            <div
+              className={`section-content ${
+                sectionsOpen.accounting ? "open" : ""
+              }`}
+            >
+              <NavLink
+                to="/swift"
+                className={({ isActive }) =>
+                  `navLink rounded-lg text-sm font-light ${
+                    isActive
+                      ? "bg-main text-slate-50"
+                      : "text-slate-400 hover:bg-gray-100"
+                  }`
+                }
+              >
+                Swift
+              </NavLink>
+            </div>
+          </div>
+          <div className="mt-6 px-4">
+            <button
+              className="w-24 px-2 py-3 rounded-lg text-main hover:bg-main hover:text-white flex items-center place-content-evenly"
+              onClick={handleLogout}
+            >
+              <LogOut size={15} />
+              <span>Log out</span>
+            </button>
+          </div>
         </div>
+        {/* </div> */}
       </aside>
     </>
   );

@@ -126,6 +126,8 @@ export default function SwiftInvoiceList() {
           paginator
           rows={5}
           showGridlines
+          rowGroupMode="rowspan"
+          groupRowsBy="pr_no"
           footerColumnGroup={footerGroup}
           rowsPerPageOptions={[5, 10, 25, 50]}
           emptyMessage="No invoices found."

@@ -72,7 +72,7 @@ export default function CopyMec() {
   };
 
   return (
-    <form className="w-full p-10 max-w-lg" onSubmit={handleSubmit}>
+    <form className="form w-full p-10 max-w-lg" onSubmit={handleSubmit}>
       <h1 className="text-3xl text-gray-600 font-bold mb-10">Copy MEC</h1>
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full px-3">

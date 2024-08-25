@@ -10,6 +10,7 @@ import SweetAlert from "../../../components/SweetAlert";
 import Delete from "../../../API/supply_chain/worker/Delete";
 import { ColumnGroup } from "primereact/columngroup";
 import { Row } from "primereact/row";
+import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/react";
 
 export default function Supply_chainWorkersList() {
   const user = AuthCheck();
@@ -46,30 +47,48 @@ export default function Supply_chainWorkersList() {
   const actionTemplate = (rowData) => {
     return (
       <div className="flex gap-2">
-        <NavLink
-          to={`/supply_chain/${id}/workers/${rowData.id}/edit`}
-          className="button"
-        >
-          Edit
-        </NavLink>
-        <Button
-          className="button bg-red-500 hover:bg-red-600"
-          onClick={() =>
-            SweetAlert({
-              props: {
-                title: "Are you sure?",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonText: "Delete",
-                onConfirm: () => {
-                  handleDelete(rowData.id);
-                },
-              },
-            })
-          }
-        >
-          Delete
-        </Button>
+        <Menu as="div" className="absolute place-self-center">
+          <div>
+            <MenuButton className="flex items-center space-x-2 rounded-full focus:outline-none">
+              <span className="hidden sm:inline ml-2 text-lg font-bold">
+                ...
+              </span>
+            </MenuButton>
+          </div>
+          <MenuItems
+            transition
+            className="absolute right-0 z-40 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+          >
+            <MenuItem>
+              <NavLink
+                to={`/supply_chain/${id}/workers/${rowData.id}/edit`}
+                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+              >
+                Edit
+              </NavLink>
+            </MenuItem>
+            <MenuItem>
+              <NavLink
+                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                onClick={() =>
+                  SweetAlert({
+                    props: {
+                      title: "Are you sure?",
+                      icon: "warning",
+                      showCancelButton: true,
+                      confirmButtonText: "Delete",
+                      onConfirm: () => {
+                        handleDelete(rowData.id);
+                      },
+                    },
+                  })
+                }
+              >
+                Delete
+              </NavLink>
+            </MenuItem>
+          </MenuItems>
+        </Menu>
       </div>
     );
   };
@@ -151,8 +170,7 @@ export default function Supply_chainWorkersList() {
           footer={calculateOverallTotalContract}
           footerStyle={{
             // textAlign: "center",
-            backgroundColor: "yellow",
-            color: "#000",
+            color: "#ff8e29",
             fontWeight: "bold",
           }}
         />
@@ -166,8 +184,7 @@ export default function Supply_chainWorkersList() {
           footer={calculateOverallTotalSalary}
           footerStyle={{
             // textAlign: "center",
-            backgroundColor: "yellow",
-            color: "#000",
+            color: "#ff8e29",
             fontWeight: "bold",
           }}
         />
@@ -175,8 +192,7 @@ export default function Supply_chainWorkersList() {
           footer={calculateOverallTotalTransportation}
           footerStyle={{
             // textAlign: "center",
-            backgroundColor: "yellow",
-            color: "#000",
+            color: "#ff8e29",
             fontWeight: "bold",
           }}
         />
@@ -184,8 +200,7 @@ export default function Supply_chainWorkersList() {
           footer={calculateOverallTotalInsurance}
           footerStyle={{
             // textAlign: "center",
-            backgroundColor: "yellow",
-            color: "#000",
+            color: "#ff8e29",
             fontWeight: "bold",
           }}
         />
@@ -193,8 +208,7 @@ export default function Supply_chainWorkersList() {
           footer={calculateOverallTotalPPE}
           footerStyle={{
             // textAlign: "center",
-            backgroundColor: "yellow",
-            color: "#000",
+            color: "#ff8e29",
             fontWeight: "bold",
           }}
         />
@@ -202,8 +216,7 @@ export default function Supply_chainWorkersList() {
           footer={calculateOverallTotalInsurance2}
           footerStyle={{
             // textAlign: "center",
-            backgroundColor: "yellow",
-            color: "#000",
+            color: "#ff8e29",
             fontWeight: "bold",
           }}
         />
@@ -229,10 +242,12 @@ export default function Supply_chainWorkersList() {
           footerColumnGroup={footerGroup}
           rowsPerPageOptions={[5, 10, 25, 50]}
           emptyMessage="No Workers found."
-          paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
-          currentPageReportTemplate="{first} to {last} of {totalRecords}"
           loading={loading}
-          tableStyle={{ minWidth: "50rem", fontSize: "14px" }}
+          tableStyle={{
+            minWidth: "50rem",
+            fontSize: "14px",
+            backgroundColor: "white",
+          }}
         >
           <Column
             field="name"

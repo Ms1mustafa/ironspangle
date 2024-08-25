@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Edit from "../../../API/expenses/company/Edit";
-import AuthCheck from "../../../API/account/AuthCheck";
 import LaddaButton, { EXPAND_LEFT } from "react-ladda-button";
 import "react-ladda-button/dist/ladda-themeless.min.css";
 import { useNavigate, useParams } from "react-router-dom";
@@ -18,7 +17,6 @@ export default function EditExpense() {
   const [loading, setLoading] = useState(false);
   const [expense, setExpense] = useState({});
   const navigate = useNavigate();
-  const user = AuthCheck();
   const { id } = useParams();
 
   // Fetch Expense data on component mount
@@ -74,7 +72,7 @@ export default function EditExpense() {
   };
 
   return (
-    <form className="w-full p-10 max-w-lg" onSubmit={handleSubmit}>
+    <form className="form w-full p-10 max-w-lg" onSubmit={handleSubmit}>
       <h1 className="text-3xl text-gray-600 font-bold mb-10">
         Edit Company Expense
       </h1>

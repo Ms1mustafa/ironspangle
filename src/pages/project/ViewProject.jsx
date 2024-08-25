@@ -3,6 +3,7 @@ import GetProject from "../../API/project/GetProject";
 import GetTotals from "../../API/project/GetTotals";
 import { NavLink, Outlet, useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
+import { Banknote, CircleDollarSign, ReceiptText } from "lucide-react";
 
 export default function View() {
   const { id } = useParams();
@@ -40,30 +41,40 @@ export default function View() {
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-4 -mx-3 mb-6">
-        <div className="px-3 pr-0 border border-gray-800">
-          <p className="text-gray-700 flex items-center justify-between">
-            Total Project Cost:{" "}
-            <span className="bg-[#FBBC04] p-2">
-              {Number(totals?.total_project_cost).toLocaleString()}
-            </span>
-          </p>
+      <div className="flex gap-4 -mx-3 mb-6">
+        <div className="count-card">
+          <div className="count-card-inner">
+            <Banknote size={55} className="count-card-icon bg-[#f54f5f]" />
+            <div className="count-card-info">
+              <p>Total Project Cost</p>
+              <span>{Number(totals?.total_project_cost).toLocaleString()}</span>
+            </div>
+          </div>
         </div>
-        <div className="px-3 pr-0 border border-gray-800">
-          <p className="text-gray-700 flex items-center justify-between">
-            Budget:{" "}
-            <span className="bg-[#990000] p-2 text-white">
-              {Number(project?.budget).toLocaleString()}
-            </span>
-          </p>
+        <div className="count-card">
+          <div className="count-card-inner">
+            <ReceiptText size={55} className="count-card-icon bg-[#67cadf]" />
+            <div className="count-card-info">
+              <p>Budget</p>
+              <span>{Number(project?.budget).toLocaleString()}</span>
+            </div>
+          </div>
         </div>
-        <div className="px-3 pr-0 border border-gray-800">
-          <p className="text-gray-700 flex items-center justify-between">
-            Profit:{" "}
-            <span className="bg-[#1A5529] p-2 text-white">
-              {(project?.budget - totals?.total_project_cost).toLocaleString()}
-            </span>
-          </p>
+        <div className="count-card">
+          <div className="count-card-inner">
+            <CircleDollarSign
+              size={55}
+              className="count-card-icon bg-[#27d095]"
+            />
+            <div className="count-card-info">
+              <p>Profit</p>
+              <span>
+                {(
+                  project?.budget - totals?.total_project_cost
+                ).toLocaleString()}
+              </span>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -72,7 +83,7 @@ export default function View() {
           <NavLink
             to={`/projects/${id}/items`}
             className={({ isActive }) =>
-              isActive ? "tab text-blue-600 bg-slate-100" : "tab"
+              isActive ? "tab text-main bg-main bg-opacity-10" : "tab"
             }
           >
             Items
@@ -82,7 +93,7 @@ export default function View() {
           <NavLink
             to={`/projects/${id}/workers`}
             className={({ isActive }) =>
-              isActive ? "tab text-blue-600 bg-slate-100" : "tab"
+              isActive ? "tab text-main bg-main bg-opacity-5" : "tab"
             }
           >
             Workers

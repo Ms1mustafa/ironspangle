@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import GetSupply_chain from "../../API/supply_chain/GetSupply_chain";
 import GetTotals from "../../API/supply_chain/GetTotals";
 import { NavLink, Outlet, useNavigate, useParams } from "react-router-dom";
+import { Banknote, CalendarClock, Car, HandCoins, Layers3 } from "lucide-react";
 
 export default function View() {
   const { id } = useParams();
@@ -46,56 +47,68 @@ export default function View() {
       </div>
 
       <div className="flex flex-wrap gap-4 -mx-3 mb-6">
-        <div className="bg-white text-black px-3 pr-0 border border-gray-800">
-          <p className="flex items-center justify-between">
-            Total contract salary{" "}
-            <span className="p-2 bg-[#00427f] text-white font-bold">
-              {Number(totals?.total_contract_salary).toLocaleString()}
-            </span>
-          </p>
-        </div>
-        <div className="bg-white text-black px-3 pr-0 border border-gray-800">
-          <p className="flex items-center justify-between">
-            Total labor salary{" "}
-            <span className="p-2 bg-[#00427f] text-white font-bold">
-              {Number(totals?.total_labor_salary).toLocaleString()}
-            </span>
-          </p>
-        </div>
-        <div className="bg-white text-black px-3 pr-0 border border-gray-800">
-          <p className="flex items-center justify-between">
-            Transportation{" "}
-            <span className="p-2 bg-[#00427f] text-white font-bold">
-              {Number(totals?.transportation).toLocaleString()}
-            </span>
-          </p>
-        </div>
-      </div>
-
-      <div className="flex flex-wrap gap-4 -mx-3 mb-6">
-        <div className="bg-white text-black px-3 pr-0 border border-gray-800">
-          <p className="flex items-center justify-between">
-            Insurance{" "}
-            <span className="p-2 bg-[#00427f] text-white font-bold">
-              {Number(totals?.insurance).toLocaleString()}
-            </span>
-          </p>
-        </div>
-        <div className="bg-white text-black px-3 pr-0 border border-gray-800">
-          <p className="flex items-center justify-between">
-            PPEs{" "}
-            <span className="p-2 bg-[#00427f] text-white font-bold">
-              {Number(totals?.ppe).toLocaleString()}
-            </span>
-          </p>
-        </div>
-        <div className="bg-white text-black px-3 pr-0 border border-gray-800">
-          <p className="flex items-center justify-between">
-            Working days{" "}
-            <span className="p-2 bg-[#00427f] text-white font-bold">
-              {Number(totals?.working_days).toLocaleString()}
-            </span>
-          </p>
+        <div className="flex flex-wrap gap-4 -mx-3 mb-6">
+          <div className="count-card">
+            <div className="count-card-inner">
+              <Banknote size={55} className="count-card-icon bg-[#f54f5f]" />
+              <div className="count-card-info">
+                <p>Total contract salary</p>
+                <span>
+                  {Number(totals?.total_contract_salary).toLocaleString()}
+                </span>
+              </div>
+            </div>
+          </div>
+          <div className="count-card">
+            <div className="count-card-inner">
+              <Banknote size={55} className="count-card-icon bg-[#f54f5f]" />
+              <div className="count-card-info">
+                <p>Total labor salary</p>
+                <span>
+                  {Number(totals?.total_labor_salary).toLocaleString()}
+                </span>
+              </div>
+            </div>
+          </div>
+          <div className="count-card">
+            <div className="count-card-inner">
+              <Car size={55} className="count-card-icon bg-[#67cadf]" />
+              <div className="count-card-info">
+                <p>Transportation</p>
+                <span>{Number(totals?.transportation).toLocaleString()}</span>
+              </div>
+            </div>
+          </div>
+          <div className="count-card">
+            <div className="count-card-inner">
+              <HandCoins size={55} className="count-card-icon bg-[#27d095]" />
+              <div className="count-card-info">
+                <p>Insurance</p>
+                <span>{Number(totals?.insurance).toLocaleString()}</span>
+              </div>
+            </div>
+          </div>
+          <div className="count-card">
+            <div className="count-card-inner">
+              <Layers3 size={55} className="count-card-icon bg-[#4f65f5]" />
+              <div className="count-card-info">
+                <p>PPEs</p>
+                <span>{Number(totals?.ppe).toLocaleString()}</span>
+              </div>
+            </div>
+          </div>
+          <div className="count-card">
+            <div className="count-card-inner">
+              <CalendarClock
+                size={55}
+                className="count-card-icon bg-[#ffbc56]"
+              />
+              <div className="count-card-info">
+                <p>Working days</p>
+                <span>{Number(totals?.working_days).toLocaleString()}</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <ul className="flex flex-wrap w-48 text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400">
@@ -103,7 +116,7 @@ export default function View() {
           <NavLink
             to={`/supply_chain/${id}/workers`}
             className={({ isActive }) =>
-              isActive ? "tab text-blue-600 bg-slate-100" : "tab"
+              isActive ? "tab text-main bg-main bg-opacity-5" : "tab"
             }
           >
             Workers

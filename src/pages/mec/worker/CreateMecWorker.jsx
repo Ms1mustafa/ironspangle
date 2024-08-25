@@ -58,7 +58,7 @@ export default function CreateMecWorker() {
   }
 
   return (
-    <form className="w-full p-10 max-w-lg" onSubmit={handleSubmit}>
+    <form className="form w-full p-10 max-w-lg" onSubmit={handleSubmit}>
       <h1 className="text-3xl text-gray-600 font-bold mb-10">
         Create MEC Worker
       </h1>
@@ -201,7 +201,7 @@ export default function CreateMecWorker() {
           Create
         </LaddaButton>
         <LaddaButton
-          className="button bg-cyan-700 hover:bg-cyan-600"
+          className="button bg-transparent text-main hover:bg-main hover:text-white"
           data-style={EXPAND_LEFT}
           loading={loading}
           onClick={CreateAnother}

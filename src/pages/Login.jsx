@@ -61,37 +61,45 @@ export default function Login() {
   }
 
   return (
-    <>
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+    <div className="bg-[#fff4ea] w-screen h-screen content-center">
+      <div className="bg-white m-auto flex w-1/4 min-w-80 flex-1 flex-col justify-center rounded-xl pb-12 shadow-sm">
+        <div>
+          <img
+            src={import.meta.env.VITE_REACT_APP_PUBLIC_URL}
+            className="w-24"
+            alt=""
+          />
+        </div>
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Sign in to your account
+          <h2 className="mt-5 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+            Login
           </h2>
         </div>
 
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <div className="mt-5  px-6">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium leading-6 text-gray-900"
+                className="block text-sm font-medium leading-6 text-gray-400"
               >
                 Email
               </label>
               <div className="mt-2">
-                <Input name="email" onChange={handleChange} />
+                <Input className="input" name="email" onChange={handleChange} />
               </div>
             </div>
 
             <div>
               <label
                 htmlFor="password"
-                className="block text-sm font-medium leading-6 text-gray-900"
+                className="block text-sm font-medium leading-6 text-gray-400"
               >
                 Password
               </label>
               <div className="mt-2">
                 <Input
+                  className="input"
                   name="password"
                   type="password"
                   onChange={handleChange}
@@ -101,11 +109,11 @@ export default function Login() {
 
             <div>
               <LaddaButton
-                className="button"
+                className="button w-full"
                 data-style={EXPAND_LEFT}
                 loading={loading}
               >
-                Sign in
+                Log in
               </LaddaButton>
             </div>
 
@@ -113,6 +121,6 @@ export default function Login() {
           </form>
         </div>
       </div>
-    </>
+    </div>
   );
 }

@@ -8,6 +8,7 @@ import AuthCheck from "../../API/account/AuthCheck";
 import Button from "../../components/Button";
 import SweetAlert from "../../components/SweetAlert";
 import Delete from "../../API/admin/Delete";
+import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/react";
 
 export default function AdminList() {
   const user = AuthCheck();
@@ -42,35 +43,65 @@ export default function AdminList() {
   const actionTemplate = (admin) => {
     return (
       <div className="flex gap-2">
-        <NavLink to={`/admin/${admin.id}/workers`} className="button">
-          View
-        </NavLink>
-        <NavLink to={`/admin/${admin.id}/edit`} className="button">
-          Edit
-        </NavLink>
-        <Button
-          to={`/admin/${admin.id}/items`}
-          className="button bg-red-500 hover:bg-red-600"
-          onClick={() =>
-            SweetAlert({
-              props: {
-                title:
-                  "By deleting this Admin, all associated workers will also be deleted. Are you sure?",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonText: "Delete",
-                onConfirm: () => {
-                  Delete(admin.id, setLoading, refreshadmin);
-                },
-              },
-            })
-          }
-        >
-          Delete
-        </Button>
-        <NavLink to={`/admin/${admin.id}/copy`} className="button">
-          Copy
-        </NavLink>
+        <Menu as="div" className="absolute place-self-center">
+          <div>
+            <MenuButton className="flex items-center space-x-2 rounded-full focus:outline-none">
+              <span className="hidden sm:inline ml-2 text-lg font-bold">
+                ...
+              </span>
+            </MenuButton>
+          </div>
+          <MenuItems
+            transition
+            className="absolute right-0 z-40 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+          >
+            <MenuItem>
+              <NavLink
+                to={`/admin/${admin.id}/workers`}
+                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+              >
+                View
+              </NavLink>
+            </MenuItem>
+            <MenuItem>
+              <NavLink
+                to={`/admin/${admin.id}/edit`}
+                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+              >
+                Edit
+              </NavLink>
+            </MenuItem>
+            <MenuItem>
+              <NavLink
+                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                onClick={() =>
+                  SweetAlert({
+                    props: {
+                      title:
+                        "By deleting this Admin, all associated workers will also be deleted. Are you sure?",
+                      icon: "warning",
+                      showCancelButton: true,
+                      confirmButtonText: "Delete",
+                      onConfirm: () => {
+                        Delete(admin.id, setLoading, refreshadmin);
+                      },
+                    },
+                  })
+                }
+              >
+                Delete
+              </NavLink>
+            </MenuItem>
+            <MenuItem>
+              <NavLink
+                to={`/admin/${admin.id}/copy`}
+                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+              >
+                Copy
+              </NavLink>
+            </MenuItem>
+          </MenuItems>
+        </Menu>
       </div>
     );
   };
@@ -82,7 +113,7 @@ export default function AdminList() {
           type="month"
           value={date}
           onChange={(e) => setDate(e.target.value)}
-          className="input w-fit mb-4 self-start"
+          className="input bg-white w-fit mb-4 self-start"
         />
         <NavLink
           to="/admin/create"
