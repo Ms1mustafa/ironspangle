@@ -85,6 +85,31 @@ layer(primereact);
     /* Firefox */
   }
 
+  /* WebKit browsers (Chrome, Safari) */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 5px;
+    /* Width of the scrollbar */
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+    /* Background of the track (space where thumb slides) */
+    border-radius: 10px;
+    /* Rounded corners for the track */
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #dfdfdf;
+    /* Color of the scrollbar thumb */
+    border-radius: 10px;
+    /* Rounded corners for the thumb */
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #b0b0b0;
+    /* Color of the thumb on hover */
+  }
+
   .section-content {
     max-height: 0;
     overflow-y: hidden;

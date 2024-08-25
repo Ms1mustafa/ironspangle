@@ -110,7 +110,16 @@ export default function ItemsList() {
   const footerGroup = items.length > 0 && (
     <ColumnGroup>
       <Row>
-        <Column colSpan={6} />
+        <Column
+          colSpan={6}
+          footer="T o t a l"
+          footerStyle={{
+            fontWeight: "bold",
+            fontSize: "16px",
+            textAlign: "center",
+            color: "#000",
+          }}
+        />
         <Column
           footer={calculateTotalCost}
           footerStyle={{ color: "#ff8e29", fontWeight: "bold" }}

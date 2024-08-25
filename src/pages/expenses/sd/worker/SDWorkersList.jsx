@@ -143,7 +143,15 @@ export default function SDWorkersList() {
   const footerGroup = workers.length > 0 && (
     <ColumnGroup>
       <Row>
-        <Column />
+        <Column
+          footer="T o t a l"
+          footerStyle={{
+            fontWeight: "bold",
+            fontSize: "16px",
+            textAlign: "center",
+            color: "#000",
+          }}
+        />
         <Column
           footer={calculateOverallTotalDays}
           footerStyle={{

@@ -189,7 +189,16 @@ export default function MecWorkersList() {
   const footerGroup = workers.length > 0 && (
     <ColumnGroup>
       <Row>
-        <Column colSpan={3} />
+        <Column
+          colSpan={3}
+          footer="T o t a l"
+          footerStyle={{
+            fontWeight: "bold",
+            fontSize: "16px",
+            textAlign: "center",
+            color: "#000",
+          }}
+        />
         <Column
           footer={calculateOverallTotalActiveDays}
           footerStyle={{

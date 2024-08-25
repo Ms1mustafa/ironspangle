@@ -42,7 +42,7 @@ export default function SideBar({ logo }) {
   return (
     <>
       <aside className="flex flex-col h-screen p-8 pr-1 lg:w-[270px] w-[250px] transition-all duration-300 ease-in-out m-0 z-40 inset-y-0 left-0 rounded-2xl">
-        <div className="flex flex-col no-scrollbar bg-white overflow-y-auto rounded-3xl h-full w-full p-5 font-medium">
+        <div className="flex flex-col custom-scrollbar bg-white overflow-y-auto rounded-3xl h-full w-full p-5 font-medium">
           <div className="flex flex-row gap-3 items-center justify-center">
             <img src={logo} alt="logo" className="w-28" />
           </div>

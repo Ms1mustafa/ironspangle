@@ -183,19 +183,15 @@ export default function WorkersList() {
     <ColumnGroup>
       <Row>
         <Column
-          footer="Total"
+          colSpan={6}
+          footer="T o t a l"
           footerStyle={{
-            // textAlign: "center",
-            backgroundColor: "#ff8e29",
-            color: "#fff",
             fontWeight: "bold",
+            fontSize: "16px",
+            textAlign: "center",
+            color: "#000",
           }}
         />
-        <Column />
-        <Column />
-        <Column />
-        <Column />
-        <Column />
         <Column
           footer={calculateOverallTotalSalary}
           footerStyle={{

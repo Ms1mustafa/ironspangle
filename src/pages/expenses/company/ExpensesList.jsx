@@ -104,7 +104,16 @@ export default function Company_expensesList() {
   const footerGroup = expenses.length > 0 && (
     <ColumnGroup>
       <Row>
-        <Column colSpan={4} />
+        <Column
+          colSpan={4}
+          footer="T o t a l"
+          footerStyle={{
+            fontWeight: "bold",
+            fontSize: "16px",
+            textAlign: "center",
+            color: "#000",
+          }}
+        />
         <Column
           footer={calculateOverallTotalPriceTotal}
           footerStyle={{

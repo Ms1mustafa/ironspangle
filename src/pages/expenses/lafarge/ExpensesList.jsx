@@ -104,7 +104,15 @@ export default function Lafarge_expensesList() {
   const footerGroup = expenses.length > 0 && (
     <ColumnGroup>
       <Row>
-        <Column />
+        <Column
+          footer="T o t a l"
+          footerStyle={{
+            fontWeight: "bold",
+            fontSize: "16px",
+            textAlign: "center",
+            color: "#000",
+          }}
+        />
         <Column
           footer={calculateOverallTotalPriceTotal}
           footerStyle={{

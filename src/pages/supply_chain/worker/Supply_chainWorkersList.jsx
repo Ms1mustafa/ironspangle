@@ -162,8 +162,12 @@ export default function Supply_chainWorkersList() {
       <Row>
         <Column
           colSpan={4}
+          footer="T o t a l"
           footerStyle={{
-            backgroundColor: "#fff",
+            fontWeight: "bold",
+            fontSize: "16px",
+            textAlign: "center",
+            color: "#000",
           }}
         />
         <Column

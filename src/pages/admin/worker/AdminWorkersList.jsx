@@ -214,7 +214,16 @@ export default function AdminWorkersList() {
   const footerGroup = workers.length > 0 && (
     <ColumnGroup>
       <Row>
-        <Column colSpan={5} />
+        <Column
+          colSpan={5}
+          footer="T o t a l"
+          footerStyle={{
+            fontWeight: "bold",
+            fontSize: "16px",
+            textAlign: "center",
+            color: "#000",
+          }}
+        />
         <Column
           footer={calculateOverallTotalSalary}
           footerStyle={{
