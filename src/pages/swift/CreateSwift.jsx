@@ -9,6 +9,7 @@ export default function CreateUser() {
   const [inputs, setInputs] = useState({});
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const user = AuthCheck();
 
   //add user name to inputs
   useEffect(() => {
