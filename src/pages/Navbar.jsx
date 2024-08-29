@@ -7,22 +7,32 @@ import {
   MenuItems,
   MenuItem,
 } from "@headlessui/react";
-import { useLocation, Link, NavLink } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import Input from "../components/Input";
 import AuthCheck from "../API/account/AuthCheck";
-import { useState } from "react";
+import { Children, useState } from "react";
+import { AutoComplete } from "primereact/autocomplete";
+import { useNavigate } from "react-router-dom";
 
 // Define navigation items with routes
 const navigation = [
-  { name: "Dashboard", href: "/", current: true },
-  { name: "Projects", href: "/projects", current: false },
-  // Add more navigation items as needed
-];
-
-const sidebar = [
-  { name: "Dashboard", href: "/", current: true },
-  { name: "Projects", href: "/projects", current: false },
-  { name: "Expenses", href: "/expenses", current: false },
+  { name: "Dashboard", href: "/" },
+  { name: "Projects", href: "/projects" },
+  //expenses: company, Lafarge, ppe, sd
+  { name: "Company Expenses", href: "/expenses/company" },
+  { name: "Lafarge expenses", href: "/expenses/lafarge" },
+  { name: "PPE expenses", href: "/expenses/ppe" },
+  { name: "SD expenses", href: "/expenses/sd" },
+  // contracts: summary, employee company, admin, mec, supplay chain
+  { name: "Summary", href: "/summary" },
+  { name: "Employee company", href: "/employee_company" },
+  { name: "Admin", href: "/admin" },
+  { name: "Mec", href: "/mec" },
+  { name: "Supply chain", href: "/supply_chain" },
+  // accounting: po, swift, received at bank
+  { name: "PO", href: "/po" },
+  { name: "Swift", href: "/swift" },
+  { name: "Received at bank", href: "/received_at_bank" },
 ];
 
 // Function to get a formatted display name from the path segment
@@ -42,20 +52,33 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
-  const [searchQuery, setSearchQuery] = useState("");
   const location = useLocation(); // Get current location
   const currentPath = location.pathname; // Get current path
   const firstSegment = getDisplayName(currentPath); // Get the formatted first segment
   const user = AuthCheck();
 
-  // Determine the current navigation item
-  const currentNav =
-    navigation.find((item) => item.href === currentPath) || navigation[0];
+  const [suggestions, setSuggestions] = useState([]);
+  const [value, setValue] = useState("");
+  const navigate = useNavigate();
 
-  // Filter sidebar items based on search query
-  const filteredItems = sidebar.filter((item) =>
-    item.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // Filter suggestions based on input
+  const searchSuggestion = (event) => {
+    let query = event.query.toLowerCase();
+    let filteredSuggestions = navigation.filter((item) =>
+      item.name.toLowerCase().includes(query)
+    );
+    setSuggestions(filteredSuggestions);
+  };
+
+  // Handle suggestion selection and navigate
+  const handleSelect = (e) => {
+    const selectedItem = e.value;
+    if (selectedItem && selectedItem.href) {
+      console.log("Navigating to:", selectedItem.href); // Debugging line
+      navigate(selectedItem.href);
+      setValue("");
+    }
+  };
 
   return (
     <Disclosure as="nav" className="bg-transparent">
@@ -66,28 +89,15 @@ export default function Navbar() {
             <span className="text-xl font-medium">{firstSegment}</span>
             {/* Search box */}
             <div className="flex-grow">
-              <Menu>
-                <MenuItem>
-                  <Input
-                    className="input bg-white"
-                    placeholder="Search..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                  />
-                </MenuItem>
-                <MenuItems>
-                  {filteredItems.map((item) => (
-                    <MenuItem key={item.href}>
-                      <NavLink
-                        to={item.href}
-                        className={({ isActive }) => (isActive ? "active" : "")}
-                      >
-                        {item.name}
-                      </NavLink>
-                    </MenuItem>
-                  ))}
-                </MenuItems>
-              </Menu>
+              <AutoComplete
+                value={value}
+                suggestions={suggestions}
+                completeMethod={searchSuggestion}
+                onChange={(e) => setValue(e.value)}
+                onSelect={handleSelect}
+                field="name" // Ensure this matches the property in suggestions
+                placeholder="Search..."
+              />
             </div>
           </div>
 
@@ -106,6 +116,7 @@ export default function Navbar() {
                   </span>
                 </MenuButton>
               </div>
+              {/* Uncomment and configure the menu if needed */}
               {/* <MenuItems
                 transition
                 className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
@@ -140,7 +151,7 @@ export default function Navbar() {
               key={item.name}
               as={Link} // Change from 'a' to 'Link' for React Router integration
               to={item.href}
-              aria-current={item.current ? "page" : undefined}
+              aria-current={item.href === currentPath ? "page" : undefined}
               className={classNames(
                 item.href === currentPath
                   ? "bg-gray-900 text-white"
