@@ -125,6 +125,7 @@ export default function CopySupply_chain() {
         className="button"
         data-style={EXPAND_LEFT}
         loading={loading}
+        disabled={user?.data.role !== "admin"}
       >
         Copy Supply chain
       </LaddaButton>

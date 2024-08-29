@@ -62,14 +62,15 @@ export default function MecWorkersList() {
             <MenuItem>
               <NavLink
                 to={`/mec/${id}/workers/${rowData.id}/edit`}
-                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                className="menuItem-link"
+                disabled={user?.data.role !== "admin"}
               >
                 Edit
               </NavLink>
             </MenuItem>
             <MenuItem>
               <NavLink
-                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                className="menuItem-link"
                 onClick={() =>
                   SweetAlert({
                     props: {
@@ -83,6 +84,7 @@ export default function MecWorkersList() {
                     },
                   })
                 }
+                disabled={user?.data.role !== "admin"}
               >
                 Delete
               </NavLink>
@@ -255,9 +257,8 @@ export default function MecWorkersList() {
   return (
     <div className="w-full py-8 flex flex-col">
       <NavLink
-        to={`/mec/${id}/workers/create`}
+        to={user?.data.role !== "admin" ? "" : `/mec/${id}/workers/create`}
         className="button mb-4 self-end"
-        disabled={user?.data.role !== "mec"}
       >
         Create Worker
       </NavLink>

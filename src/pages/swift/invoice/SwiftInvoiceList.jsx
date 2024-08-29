@@ -114,9 +114,8 @@ export default function SwiftInvoiceList() {
   return (
     <div className="w-full py-8 flex flex-col">
       <NavLink
-        to={`/swift/${id}/invoice/create`}
+        to={user?.data.role !== "admin" ? "" : `/swift/${id}/invoice/create`}
         className="button mb-4 self-end"
-        disabled={user?.data.role !== "mec"}
       >
         Create Invoice
       </NavLink>

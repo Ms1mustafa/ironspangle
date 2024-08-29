@@ -136,6 +136,7 @@ export default function CopyMec() {
         className="button"
         data-style={EXPAND_LEFT}
         loading={loading}
+        disabled={user?.data.role !== "admin"}
       >
         Copy MEC
       </LaddaButton>

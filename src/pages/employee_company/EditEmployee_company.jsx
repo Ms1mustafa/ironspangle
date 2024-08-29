@@ -109,6 +109,7 @@ export default function EditEmployee_company() {
         className="button"
         data-style={EXPAND_LEFT}
         loading={loading}
+        disabled={user?.data.role !== "admin"}
       >
         edit Employee company
       </LaddaButton>

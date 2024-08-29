@@ -6,7 +6,6 @@ import { Column } from "primereact/column";
 import { NavLink } from "react-router-dom";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/react";
 import AuthCheck from "../../API/account/AuthCheck";
-import Button from "../../components/Button";
 import SweetAlert from "../../components/SweetAlert";
 import Delete from "../../API/project/Delete";
 
@@ -57,7 +56,7 @@ export default function ProjectsList() {
             <MenuItem>
               <NavLink
                 to={`/projects/${projects.id}/items`}
-                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                className="menuItem-link"
               >
                 View
               </NavLink>
@@ -65,14 +64,15 @@ export default function ProjectsList() {
             <MenuItem>
               <NavLink
                 to={`/projects/${projects.id}/edit`}
-                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                className="menuItem-link"
+                disabled={user?.data.role !== "admin"}
               >
                 Edit
               </NavLink>
             </MenuItem>
             <MenuItem>
               <NavLink
-                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                className="menuItem-link"
                 onClick={() =>
                   SweetAlert({
                     props: {
@@ -87,6 +87,7 @@ export default function ProjectsList() {
                     },
                   })
                 }
+                disabled={user?.data.role !== "admin"}
               >
                 Delete
               </NavLink>
@@ -100,9 +101,8 @@ export default function ProjectsList() {
   return (
     <div className="w-full p-8 flex flex-col">
       <NavLink
-        to="/projects/create"
+        to={user?.data.role !== "admin" ? "" : "/projects/create"}
         className="button mb-4 self-end"
-        disabled={user?.data.role !== "admin"}
       >
         Create Project
       </NavLink>

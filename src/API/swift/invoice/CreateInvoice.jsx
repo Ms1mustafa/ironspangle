@@ -10,7 +10,7 @@ const CreateInvoice = (data, setLoading, navigate = null) => {
       if (response.status === 200) {
         toast.success(response.data.message);
         if (navigate) {
-          navigate(`/swift/${data.swift_id}/invoic`, {
+          navigate(`/swift/${data.swift_id}/invoice`, {
             replace: true,
           });
         }

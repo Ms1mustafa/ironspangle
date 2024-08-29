@@ -56,7 +56,7 @@ export default function SwiftList() {
             <MenuItem>
               <NavLink
                 to={`/swift/${swift.id}/invoice`}
-                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                className="menuItem-link"
               >
                 View
               </NavLink>
@@ -64,14 +64,15 @@ export default function SwiftList() {
             <MenuItem>
               <NavLink
                 to={`/swift/${swift.id}/edit`}
-                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                className="menuItem-link"
+                disabled={user?.data.role !== "admin"}
               >
                 Edit
               </NavLink>
             </MenuItem>
             <MenuItem>
               <NavLink
-                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                className="menuItem-link"
                 onClick={() =>
                   SweetAlert({
                     props: {
@@ -85,6 +86,7 @@ export default function SwiftList() {
                     },
                   })
                 }
+                disabled={user?.data.role !== "admin"}
               >
                 Delete
               </NavLink>
@@ -107,9 +109,8 @@ export default function SwiftList() {
   return (
     <div className="w-full p-8 flex flex-col">
       <NavLink
-        to="/swift/create"
+        to={user?.data.role !== "admin" ? "" : `/swift/create`}
         className="button mb-4 self-end"
-        disabled={user?.data.role !== "admin"}
       >
         Create swift
       </NavLink>

@@ -60,7 +60,7 @@ export default function Supply_chainList() {
             <MenuItem>
               <NavLink
                 to={`/supply_chain/${supply_chain.id}/workers`}
-                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                className="menuItem-link"
               >
                 View
               </NavLink>
@@ -68,14 +68,15 @@ export default function Supply_chainList() {
             <MenuItem>
               <NavLink
                 to={`/supply_chain/${supply_chain.id}/edit`}
-                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                className="menuItem-link"
+                disabled={user?.data.role !== "admin"}
               >
                 Edit
               </NavLink>
             </MenuItem>
             <MenuItem>
               <NavLink
-                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                className="menuItem-link"
                 onClick={() =>
                   SweetAlert({
                     props: {
@@ -93,6 +94,7 @@ export default function Supply_chainList() {
                     },
                   })
                 }
+                disabled={user?.data.role !== "admin"}
               >
                 Delete
               </NavLink>
@@ -100,7 +102,8 @@ export default function Supply_chainList() {
             <MenuItem>
               <NavLink
                 to={`/supply_chain/${supply_chain.id}/copy`}
-                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                className="menuItem-link"
+                disabled={user?.data.role !== "admin"}
               >
                 Copy
               </NavLink>
@@ -121,9 +124,8 @@ export default function Supply_chainList() {
           className="input bg-white w-fit mb-4 self-start"
         />
         <NavLink
-          to="/supply_chain/create"
+          to={user?.data.role !== "admin" ? "" : "/supply_chain/create"}
           className="button mb-4 self-end"
-          disabled={user?.data.role !== "supply_chain"}
         >
           Create Supply Chain
         </NavLink>

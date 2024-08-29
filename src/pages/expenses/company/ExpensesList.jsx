@@ -61,14 +61,15 @@ export default function Company_expensesList() {
             <MenuItem>
               <NavLink
                 to={`/expenses/company/${expenses.id}/edit`}
-                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                className="menuItem-link"
+                disabled={user?.data.role !== "admin"}
               >
                 Edit
               </NavLink>
             </MenuItem>
             <MenuItem>
               <NavLink
-                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                className="menuItem-link"
                 onClick={() =>
                   SweetAlert({
                     props: {
@@ -82,6 +83,7 @@ export default function Company_expensesList() {
                     },
                   })
                 }
+                disabled={user?.data.role !== "admin"}
               >
                 Delete
               </NavLink>
@@ -134,9 +136,8 @@ export default function Company_expensesList() {
           className="input bg-white w-fit mb-4 self-start"
         />
         <NavLink
-          to="/expenses/company/create"
+          to={user?.data.role !== "admin" ? "" : "/expenses/company/create"}
           className="button mb-4 self-end"
-          disabled={user?.data.role !== "admin"}
         >
           Create Expense
         </NavLink>

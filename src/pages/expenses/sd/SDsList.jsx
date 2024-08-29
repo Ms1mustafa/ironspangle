@@ -56,7 +56,7 @@ export default function SDsList() {
             <MenuItem>
               <NavLink
                 to={`/expenses/sd/${SDs.id}/workers`}
-                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                className="menuItem-link"
               >
                 View
               </NavLink>
@@ -64,14 +64,15 @@ export default function SDsList() {
             <MenuItem>
               <NavLink
                 to={`/expenses/sd/${SDs.id}/edit`}
-                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                className="menuItem-link"
+                disabled={user?.data.role !== "admin"}
               >
                 Edit
               </NavLink>
             </MenuItem>
             <MenuItem>
               <NavLink
-                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                className="menuItem-link"
                 onClick={() =>
                   SweetAlert({
                     props: {
@@ -86,6 +87,7 @@ export default function SDsList() {
                     },
                   })
                 }
+                disabled={user?.data.role !== "admin"}
               >
                 Delete
               </NavLink>
@@ -99,9 +101,8 @@ export default function SDsList() {
   return (
     <div className="w-full p-8 flex flex-col">
       <NavLink
-        to="/expenses/sd/create"
+        to={user?.data.role !== "admin" ? "" : "/expenses/sd/create"}
         className="button mb-4 self-end"
-        disabled={user?.data.role !== "admin"}
       >
         Create SD
       </NavLink>

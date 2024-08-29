@@ -60,14 +60,15 @@ export default function PPE_expensesList() {
             <MenuItem>
               <NavLink
                 to={`/expenses/ppe/${expenses.id}/edit`}
-                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                className="menuItem-link"
+                disabled={user?.data.role !== "admin"}
               >
                 Edit
               </NavLink>
             </MenuItem>
             <MenuItem>
               <NavLink
-                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                className="menuItem-link"
                 onClick={() =>
                   SweetAlert({
                     props: {
@@ -81,6 +82,7 @@ export default function PPE_expensesList() {
                     },
                   })
                 }
+                disabled={user?.data.role !== "admin"}
               >
                 Delete
               </NavLink>
@@ -134,7 +136,7 @@ export default function PPE_expensesList() {
         />
 
         <NavLink
-          to="/expenses/ppe/create"
+          to={user?.data.role !== "admin" ? "" : "/expenses/ppe/create"}
           className="button mb-4 self-end"
           disabled={user?.data.role !== "admin"}
         >

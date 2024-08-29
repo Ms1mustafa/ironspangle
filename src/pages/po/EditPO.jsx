@@ -159,6 +159,7 @@ export default function EditPO() {
         data-style={EXPAND_LEFT}
         loading={loading}
         type="submit"
+        disabled={user?.data.role !== "admin"}
       >
         Update PO
       </LaddaButton>

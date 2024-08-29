@@ -65,6 +65,7 @@ export default function CreateSupply_chain() {
         className="button"
         data-style={EXPAND_LEFT}
         loading={loading}
+        disabled={user?.data.role !== "admin"}
       >
         Create Supply Chain
       </LaddaButton>

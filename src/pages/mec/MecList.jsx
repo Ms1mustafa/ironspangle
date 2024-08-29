@@ -56,24 +56,22 @@ export default function MecList() {
             className="absolute right-0 z-40 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
           >
             <MenuItem>
-              <NavLink
-                to={`/mec/${mec.id}/workers`}
-                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
-              >
+              <NavLink to={`/mec/${mec.id}/workers`} className="menuItem-link">
                 View
               </NavLink>
             </MenuItem>
             <MenuItem>
               <NavLink
                 to={`/mec/${mec.id}/edit`}
-                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                className="menuItem-link"
+                disabled={user?.data.role !== "admin"}
               >
                 Edit
               </NavLink>
             </MenuItem>
             <MenuItem>
               <NavLink
-                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                className="menuItem-link"
                 onClick={() =>
                   SweetAlert({
                     props: {
@@ -87,6 +85,7 @@ export default function MecList() {
                     },
                   })
                 }
+                disabled={user?.data.role !== "admin"}
               >
                 Delete
               </NavLink>
@@ -94,7 +93,8 @@ export default function MecList() {
             <MenuItem>
               <NavLink
                 to={`/mec/${mec.id}/copy`}
-                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                className="menuItem-link"
+                disabled={user?.data.role !== "admin"}
               >
                 Copy
               </NavLink>
@@ -115,9 +115,8 @@ export default function MecList() {
           className="input bg-white w-fit mb-4 self-start"
         />
         <NavLink
-          to="/mec/create"
+          to={user?.data.role !== "admin" ? "" : "/mec/create"}
           className="button mb-4 self-end"
-          disabled={user?.data.role !== "mec"}
         >
           Create MEC
         </NavLink>

@@ -124,6 +124,7 @@ export default function EditSupply_chain() {
         className="button"
         data-style={EXPAND_LEFT}
         loading={loading}
+        disabled={user?.data.role !== "admin"}
       >
         Edit Supply chain
       </LaddaButton>

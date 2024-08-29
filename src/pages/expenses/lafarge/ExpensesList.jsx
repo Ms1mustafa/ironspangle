@@ -61,14 +61,15 @@ export default function Lafarge_expensesList() {
             <MenuItem>
               <NavLink
                 to={`/expenses/lafarge/${expenses.id}/edit`}
-                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                className="menuItem-link"
+                disabled={user?.data.role !== "admin"}
               >
                 Edit
               </NavLink>
             </MenuItem>
             <MenuItem>
               <NavLink
-                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                className="menuItem-link"
                 onClick={() =>
                   SweetAlert({
                     props: {
@@ -82,6 +83,7 @@ export default function Lafarge_expensesList() {
                     },
                   })
                 }
+                disabled={user?.data.role !== "admin"}
               >
                 Delete
               </NavLink>
@@ -133,9 +135,8 @@ export default function Lafarge_expensesList() {
           className="input bg-white w-fit mb-4 self-start"
         />
         <NavLink
-          to="/expenses/lafarge/create"
+          to={user?.data.role !== "admin" ? "" : "/expenses/lafarge/create"}
           className="button mb-4 self-end"
-          disabled={user?.data.role !== "admin"}
         >
           Create Expense
         </NavLink>

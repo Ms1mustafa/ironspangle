@@ -157,6 +157,7 @@ export default function CreateUser() {
         data-style={EXPAND_LEFT}
         loading={loading}
         type="submit"
+        disabled={user?.data.role !== "admin"}
       >
         Update sd
       </LaddaButton>

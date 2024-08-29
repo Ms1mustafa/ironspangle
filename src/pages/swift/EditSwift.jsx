@@ -117,6 +117,7 @@ export default function EditSwift() {
         data-style={EXPAND_LEFT}
         loading={loading}
         type="submit"
+        disabled={user?.data.role !== "admin"}
       >
         Update Swift
       </LaddaButton>

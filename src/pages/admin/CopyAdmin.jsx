@@ -118,6 +118,7 @@ export default function CopyAdmin() {
         className="button"
         data-style={EXPAND_LEFT}
         loading={loading}
+        disabled={user?.data.role !== "admin"}
       >
         Copy admin
       </LaddaButton>

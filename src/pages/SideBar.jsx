@@ -353,6 +353,18 @@ export default function SideBar({ logo }) {
               >
                 Swift
               </NavLink>
+              <NavLink
+                to="/received_at_bank"
+                className={({ isActive }) =>
+                  `navLink rounded-lg text-sm font-light ${
+                    isActive
+                      ? "bg-main text-slate-50"
+                      : "text-slate-400 hover:bg-gray-100"
+                  }`
+                }
+              >
+                Received at Bank
+              </NavLink>
             </div>
           </div>
           <div className="mt-6 px-4">

@@ -7,15 +7,22 @@ import {
   MenuItems,
   MenuItem,
 } from "@headlessui/react";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, NavLink } from "react-router-dom";
 import Input from "../components/Input";
 import AuthCheck from "../API/account/AuthCheck";
+import { useState } from "react";
 
 // Define navigation items with routes
 const navigation = [
   { name: "Dashboard", href: "/", current: true },
   { name: "Projects", href: "/projects", current: false },
   // Add more navigation items as needed
+];
+
+const sidebar = [
+  { name: "Dashboard", href: "/", current: true },
+  { name: "Projects", href: "/projects", current: false },
+  { name: "Expenses", href: "/expenses", current: false },
 ];
 
 // Function to get a formatted display name from the path segment
@@ -35,6 +42,7 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
+  const [searchQuery, setSearchQuery] = useState("");
   const location = useLocation(); // Get current location
   const currentPath = location.pathname; // Get current path
   const firstSegment = getDisplayName(currentPath); // Get the formatted first segment
@@ -43,6 +51,11 @@ export default function Navbar() {
   // Determine the current navigation item
   const currentNav =
     navigation.find((item) => item.href === currentPath) || navigation[0];
+
+  // Filter sidebar items based on search query
+  const filteredItems = sidebar.filter((item) =>
+    item.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <Disclosure as="nav" className="bg-transparent">
@@ -53,7 +66,28 @@ export default function Navbar() {
             <span className="text-xl font-medium">{firstSegment}</span>
             {/* Search box */}
             <div className="flex-grow">
-              <Input className="input bg-white" placeholder="Search..." />
+              <Menu>
+                <MenuItem>
+                  <Input
+                    className="input bg-white"
+                    placeholder="Search..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                </MenuItem>
+                <MenuItems>
+                  {filteredItems.map((item) => (
+                    <MenuItem key={item.href}>
+                      <NavLink
+                        to={item.href}
+                        className={({ isActive }) => (isActive ? "active" : "")}
+                      >
+                        {item.name}
+                      </NavLink>
+                    </MenuItem>
+                  ))}
+                </MenuItems>
+              </Menu>
             </div>
           </div>
 
@@ -79,7 +113,7 @@ export default function Navbar() {
                 <MenuItem>
                   <Link
                     to="/profile"
-                    className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                    className="menuItem-link"
                   >
                     Profile
                   </Link>
@@ -87,7 +121,7 @@ export default function Navbar() {
                 <MenuItem>
                   <Link
                     to="/signout"
-                    className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                    className="menuItem-link"
                   >
                     Sign out
                   </Link>

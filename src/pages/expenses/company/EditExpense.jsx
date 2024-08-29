@@ -157,6 +157,7 @@ export default function EditExpense() {
         data-style={EXPAND_LEFT}
         loading={loading}
         type="submit"
+        disabled={user?.data.role !== "admin"}
       >
         Update Expense
       </LaddaButton>

@@ -59,14 +59,15 @@ export default function Employee_companyList() {
             <MenuItem>
               <NavLink
                 to={`/employee_company/${employee_company.id}/edit`}
-                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                className="menuItem-link"
+                disabled={user?.data.role !== "admin"}
               >
                 Edit
               </NavLink>
             </MenuItem>
             <MenuItem>
               <NavLink
-                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                className="menuItem-link"
                 onClick={() =>
                   SweetAlert({
                     props: {
@@ -84,6 +85,7 @@ export default function Employee_companyList() {
                     },
                   })
                 }
+                disabled={user?.data.role !== "admin"}
               >
                 Delete
               </NavLink>
@@ -104,7 +106,7 @@ export default function Employee_companyList() {
           className="input bg-white w-fit mb-4 self-start"
         />
         <NavLink
-          to="/employee_company/create"
+          to={user?.data.role !== "admin" ? "" : "/employee_company/create"}
           className="button mb-4 self-end"
           disabled={user?.data.role !== "employee_company"}
         >

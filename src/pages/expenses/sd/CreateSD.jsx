@@ -103,6 +103,7 @@ export default function CreateUser() {
         className="button"
         data-style={EXPAND_LEFT}
         loading={loading}
+        disabled={user?.data.role !== "admin"}
       >
         Create SD
       </LaddaButton>

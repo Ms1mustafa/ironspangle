@@ -83,6 +83,8 @@ import CreateSwift from "./pages/swift/CreateSwift.jsx";
 import EditSwift from "./pages/swift/EditSwift.jsx";
 import SwiftList from "./pages/swift/SwiftList.jsx";
 
+import Received_bank_list from "./pages/swift/Received_bank_list.jsx";
+
 import CreateSwiftInvoice from "./pages/swift/invoice/CreateSwiftInvoice.jsx";
 import EditSwiftInvoice from "./pages/swift/invoice/EditSwiftInvoice.jsx";
 import SwiftInvoiceList from "./pages/swift/invoice/SwiftInvoiceList.jsx";
@@ -376,6 +378,12 @@ const router = createBrowserRouter([
       {
         path: "/swift/:id/invoice/:invoice_id/edit",
         element: <EditSwiftInvoice />,
+      },
+
+      //bank
+      {
+        path: "/received_at_bank",
+        element: <Received_bank_list />,
       },
     ],
   },
