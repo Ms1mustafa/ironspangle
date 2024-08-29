@@ -104,36 +104,6 @@ export default function AdminWorkersList() {
     }
   };
 
-  // Calculate individual worker totals
-  const calculateTotalSalary = (rowData) => {
-    const { day, night, cost_day, hours, cost_hour } = rowData;
-    return (
-      (Number(day) + Number(night)) * Number(cost_day) +
-      Number(hours) * Number(cost_hour)
-    ).toLocaleString();
-  };
-
-  const calculateTotalFood = (rowData) => {
-    const { day, food } = rowData;
-    return (day * food).toLocaleString();
-  };
-
-  const calculateTotalTransportation = (rowData) => {
-    const { day, transportation } = rowData;
-    return (day * transportation).toLocaleString();
-  };
-
-  const calculateTotalCost = (rowData) => {
-    const { day, food, transportation, night, cost_day, hours, cost_hour } =
-      rowData;
-    const totalFood = Number(day) * Number(food);
-    const totalTransportation = Number(day) * Number(transportation);
-    const totalSalary =
-      (Number(day) + Number(night)) * Number(cost_day) +
-      Number(hours) * Number(cost_hour);
-    return (totalSalary + totalFood + totalTransportation).toLocaleString();
-  };
-
   // Calculate overall totals for footer
   const calculateOverallTotalSalary = () => {
     return workers
