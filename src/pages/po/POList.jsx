@@ -144,6 +144,7 @@ export default function POList() {
           <Column field="status" header="Status"></Column>
           <Column
             field="price"
+            header="Price"
             body={({ price }) => Number(price).toLocaleString()}
           ></Column>
           <Column header="Actions" body={actionTemplate}></Column>

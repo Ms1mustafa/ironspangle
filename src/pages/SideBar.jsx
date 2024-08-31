@@ -7,6 +7,7 @@ import {
   FolderKanban,
   House,
   LogOut,
+  Users,
   UsersRound,
   WalletMinimal,
 } from "lucide-react";
@@ -24,6 +25,7 @@ export default function SideBar({ logo }) {
     mec: false,
     supplyChain: false,
     accounting: false,
+    users: false,
   });
 
   // Function to toggle section visibility
@@ -364,6 +366,44 @@ export default function SideBar({ logo }) {
                 }
               >
                 Received at Bank
+              </NavLink>
+            </div>
+          </div>
+          <div
+            className={`block py-2 pb-[.15rem] rounded-lg transition-all duration-300 ease-out ${
+              sectionsOpen.users ? "hover:bg-slate-50" : ""
+            }`}
+          >
+            <div
+              className="text-[#a5a8ae] px-4 py-[.65rem] cursor-pointer flex place-content-around"
+              onClick={() => toggleSection("users")}
+            >
+              <Users />
+              <span className="text-md font-normal uppercase dark:text-neutral-500/80 text-secondary-dark">
+                users
+              </span>
+              <span>
+                {sectionsOpen.users ? (
+                  <i className="pi pi-angle-up text-[#a5a8ae] text-xs"></i>
+                ) : (
+                  <i className="pi pi-angle-down text-[#a5a8ae] text-xs"></i>
+                )}
+              </span>
+            </div>
+            <div
+              className={`section-content ${sectionsOpen.users ? "open" : ""}`}
+            >
+              <NavLink
+                to="/users"
+                className={({ isActive }) =>
+                  `navLink rounded-lg text-sm font-light ${
+                    isActive
+                      ? "bg-main text-slate-50"
+                      : "text-slate-400 hover:bg-gray-100"
+                  }`
+                }
+              >
+                users List
               </NavLink>
             </div>
           </div>

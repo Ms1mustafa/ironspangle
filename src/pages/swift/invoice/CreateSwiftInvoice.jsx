@@ -288,62 +288,7 @@ export default function CreateSwiftInvoice() {
           <p className="text-gray-600 text-xs italic"></p>
         </div>
       </div>
-      <div className="flex flex-wrap -mx-3 mb-6">
-        <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-          <label htmlFor="guarantee" className="input-label">
-            guarantee
-          </label>
-          <input
-            id="guarantee"
-            type="number"
-            className="input"
-            name="guarantee"
-            onChange={handleChange}
-            value={inputs.guarantee || ""}
-          />
-        </div>
-        <div className="w-full md:w-1/2 px-3">
-          <label htmlFor="tax" className="input-label">
-            tax
-          </label>
-          <input
-            id="tax"
-            type="number"
-            className="input"
-            name="tax"
-            onChange={handleChange}
-            value={inputs.tax || ""}
-          />
-        </div>
-      </div>
-      <div className="flex flex-wrap -mx-3 mb-6">
-        <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-          <label htmlFor="publish" className="input-label">
-            publish
-          </label>
-          <input
-            id="publish"
-            type="number"
-            className="input"
-            name="publish"
-            onChange={handleChange}
-            value={inputs.publish || ""}
-          />
-        </div>
-        <div className="w-full md:w-1/2 px-3">
-          <label htmlFor="fines" className="input-label">
-            fines
-          </label>
-          <input
-            id="fines"
-            type="number"
-            className="input"
-            name="fines"
-            onChange={handleChange}
-            value={inputs.fines || ""}
-          />
-        </div>
-      </div>
+
       <div className="flex flex-wrap gap-5 -mx-3 mb-6">
         <LaddaButton
           className="button"

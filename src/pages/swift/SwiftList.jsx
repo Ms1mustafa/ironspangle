@@ -122,8 +122,6 @@ export default function SwiftList() {
           showGridlines
           rowsPerPageOptions={[5, 10, 25, 50]}
           emptyMessage="No swift found."
-          paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
-          currentPageReportTemplate="{first} to {last} of {totalRecords}"
           loading={loading}
           tableStyle={{
             minWidth: "50rem",

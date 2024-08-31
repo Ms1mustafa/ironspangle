@@ -9,6 +9,8 @@ import GetSwift from "../../API/swift/GetSwift";
 export default function EditSwift() {
   const [inputs, setInputs] = useState({
     swift: "",
+    date: "",
+    receive_at_bank: "",
     id: "",
   });
   const [loading, setLoading] = useState(false);
@@ -30,6 +32,8 @@ export default function EditSwift() {
             ...prevInputs,
             swift: swiftData.swift || "",
             id: id, // Assuming id is correctly defined from useParams
+            date: swiftData.date || "",
+            receive_at_bank: swiftData.receive_at_bank || "",
           }));
         }
       } catch (error) {

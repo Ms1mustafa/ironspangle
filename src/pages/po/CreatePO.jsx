@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 export default function CreateUser() {
   const [inputs, setInputs] = useState({ status: "pending" });
   const [loading, setLoading] = useState(false);
+  const user = AuthCheck();
   const navigate = useNavigate();
 
   //add user name to inputs

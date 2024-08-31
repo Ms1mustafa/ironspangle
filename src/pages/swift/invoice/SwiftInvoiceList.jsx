@@ -179,12 +179,12 @@ export default function SwiftInvoiceList() {
 
           <Column
             field="invoice_date"
-            header="Invoice Date"
+            header="Date"
             style={{ width: "auto", whiteSpace: "nowrap" }}
           />
 
           <Column
-            header="Invoice Send"
+            header="Send"
             body={(rowData) =>
               Number(rowData.invoice_send) ? "True" : "False"
             }
@@ -192,7 +192,7 @@ export default function SwiftInvoiceList() {
           />
 
           <Column
-            header="Invoice Store"
+            header="Store"
             body={(rowData) =>
               Number(rowData.invoice_store) ? "True" : "False"
             }
@@ -200,13 +200,13 @@ export default function SwiftInvoiceList() {
           />
 
           <Column
-            header="Invoice PRU"
+            header="PRU"
             body={(rowData) => (Number(rowData.invoice_pru) ? "True" : "False")}
             style={{ width: "auto", whiteSpace: "nowrap" }}
           />
 
           <Column
-            header="Invoice Accounting"
+            header="Accounting"
             body={(rowData) =>
               Number(rowData.invoice_accounting) ? "True" : "False"
             }
