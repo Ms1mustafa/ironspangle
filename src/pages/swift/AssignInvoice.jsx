@@ -52,11 +52,12 @@ export default function EditSwiftInvoice() {
 
   // Search suggestions based on input
   const searchSuggestion = (event) => {
-    let query = event.query.toLowerCase();
-    let filteredSuggestions = invoices.filter((invoice) =>
-      invoice.invoice_no.toLowerCase().includes(query)
-    );
-    console.log(filteredSuggestions);
+    let query = event.query.toString().toLowerCase(); // Ensure query is a string
+    let filteredSuggestions = invoices.filter((invoice) => {
+      // Convert invoice_no to string and check if it includes the query
+      return invoice.invoice_no.toString().includes(query);
+    });
+    console.log(filteredSuggestions); // Debugging: Check the filtered suggestions
     setSuggestions(filteredSuggestions);
   };
 
@@ -106,6 +107,7 @@ export default function EditSwiftInvoice() {
           </label>
           <AutoComplete
             value={value}
+            type="number"
             suggestions={suggestions}
             completeMethod={searchSuggestion}
             onChange={(e) => setValue(e.value)}
