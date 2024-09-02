@@ -6,7 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import GetSwift from "../../../API/swift/GetSwift";
 import CreateInvoice from "../../../API/swift/invoice/CreateInvoice";
 
-export default function CreateSwiftInvoice() {
+export default function CreateNewInvoice() {
   const [inputs, setInputs] = useState({});
   const [loading, setLoading] = useState(false);
   const [swift, setSwift] = useState(null);

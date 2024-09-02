@@ -1,15 +1,18 @@
 import axios from "axios";
 import toast from "react-hot-toast";
 
-const Edit = (data, setLoading, navigate) => {
+const AssignInvoice = (data, setLoading, navigate) => {
   setLoading(true);
   axios
-    .put(`${import.meta.env.VITE_REACT_APP_API_URL}/invoice/create.php`, data)
+    .put(
+      `${import.meta.env.VITE_REACT_APP_API_URL}/invoice/assign_to_swift.php`,
+      data
+    )
     .then((response) => {
       setLoading(false);
       if (response.status === 200) {
         toast.success(response.data.message);
-        navigate(`/invoice`, {
+        navigate(`/swift`, {
           replace: true,
         });
       } else {
@@ -24,4 +27,4 @@ const Edit = (data, setLoading, navigate) => {
     });
 };
 
-export default Edit;
+export default AssignInvoice;

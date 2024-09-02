@@ -82,12 +82,13 @@ import POList from "./pages/po/POList.jsx";
 import CreateSwift from "./pages/swift/CreateSwift.jsx";
 import EditSwift from "./pages/swift/EditSwift.jsx";
 import SwiftList from "./pages/swift/SwiftList.jsx";
+import AssignInvoice from "./pages/swift/AssignInvoice.jsx";
 
 import Received_bank_list from "./pages/swift/Received_bank_list.jsx";
 
-import CreateSwiftInvoice from "./pages/swift/invoice/CreateSwiftInvoice.jsx";
-import EditSwiftInvoice from "./pages/swift/invoice/EditSwiftInvoice.jsx";
-import SwiftInvoiceList from "./pages/swift/invoice/SwiftInvoiceList.jsx";
+import CreateNewInvoice from "./pages/swift/invoice/CreateInvoice.jsx";
+import EditInvoice from "./pages/swift/invoice/EditInvoice.jsx";
+import InvoiceList from "./pages/swift/invoice/InvoiceList.jsx";
 
 const router = createBrowserRouter([
   {
@@ -364,20 +365,27 @@ const router = createBrowserRouter([
         element: <CreateSwift />,
       },
       {
+        path: "/swift/:id/assign_invoice",
+        element: <AssignInvoice />,
+      },
+      {
         path: "/swift/:id/edit",
         element: <EditSwift />,
       },
+
+      //invoice
+
       {
-        path: "/swift/:id/invoice",
-        element: <SwiftInvoiceList />,
+        path: "/invoice",
+        element: <InvoiceList />,
       },
       {
-        path: "/swift/:id/invoice/create",
-        element: <CreateSwiftInvoice />,
+        path: "/invoice/create",
+        element: <CreateNewInvoice />,
       },
       {
-        path: "/swift/:id/invoice/:invoice_id/edit",
-        element: <EditSwiftInvoice />,
+        path: "/invoice/:invoice_id/edit",
+        element: <EditInvoice />,
       },
 
       //bank

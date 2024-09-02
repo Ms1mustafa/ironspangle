@@ -5,14 +5,13 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { NavLink, useParams } from "react-router-dom";
 import AuthCheck from "../../../API/account/AuthCheck";
-import Button from "../../../components/Button";
 import SweetAlert from "../../../components/SweetAlert";
 import Delete from "../../../API/swift/invoice/Delete";
 import { ColumnGroup } from "primereact/columngroup";
 import { Row } from "primereact/row";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/react";
 
-export default function SwiftInvoiceList() {
+export default function InvoiceList() {
   const user = AuthCheck();
   const { id } = useParams();
 
@@ -27,9 +26,7 @@ export default function SwiftInvoiceList() {
     try {
       setLoading(true);
       const response = await axios.get(
-        `${
-          import.meta.env.VITE_REACT_APP_API_URL
-        }/invoice/list.php?swift_id=${id}`
+        `${import.meta.env.VITE_REACT_APP_API_URL}/invoice/list.php`
       );
       setInvoices(response.data);
       setLoading(false);
@@ -61,7 +58,7 @@ export default function SwiftInvoiceList() {
           >
             <MenuItem>
               <NavLink
-                to={`/swift/${id}/invoice/${rowData.id}/edit`}
+                to={`/invoice/${rowData.id}/edit`}
                 className="menuItem-link"
                 disabled={user?.data.role !== "admin"}
               >
@@ -135,7 +132,7 @@ export default function SwiftInvoiceList() {
   return (
     <div className="w-full py-8 flex flex-col">
       <NavLink
-        to={user?.data.role !== "admin" ? "" : `/swift/${id}/invoice/create`}
+        to={user?.data.role !== "admin" ? "" : `/invoice/create`}
         className="button mb-4 self-end"
       >
         Create Invoice

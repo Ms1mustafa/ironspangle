@@ -344,6 +344,24 @@ export default function SideBar({ logo }) {
               }`}
             >
               <NavLink
+                to="/invoice"
+                className={({ isActive }) =>
+                  `navLink rounded-lg text-sm font-light ${
+                    isActive
+                      ? "bg-main text-slate-50"
+                      : "text-slate-400 hover:bg-gray-100"
+                  }`
+                }
+              >
+                invoice
+              </NavLink>
+            </div>
+            <div
+              className={`section-content ${
+                sectionsOpen.accounting ? "open" : ""
+              }`}
+            >
+              <NavLink
                 to="/swift"
                 className={({ isActive }) =>
                   `navLink rounded-lg text-sm font-light ${

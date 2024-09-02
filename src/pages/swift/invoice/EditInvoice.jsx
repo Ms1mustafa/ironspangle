@@ -6,7 +6,7 @@ import "react-ladda-button/dist/ladda-themeless.min.css";
 import { useNavigate, useParams } from "react-router-dom";
 import GetInvoice from "../../../API/swift/invoice/GetInvoice";
 
-export default function EditSwiftInvoice() {
+export default function EditInvoice() {
   const [inputs, setInputs] = useState({
     description: "",
     status: "in progress",
@@ -250,7 +250,6 @@ export default function EditSwiftInvoice() {
           <input
             id="invoice_accounting"
             type="checkbox"
-            className=""
             name="invoice_accounting"
             onChange={handleChange}
             checked={Number(inputs.invoice_accounting) || ""}

@@ -55,19 +55,20 @@ export default function SwiftList() {
           >
             <MenuItem>
               <NavLink
-                to={`/swift/${swift.id}/invoice`}
-                className="menuItem-link"
-              >
-                View
-              </NavLink>
-            </MenuItem>
-            <MenuItem>
-              <NavLink
                 to={`/swift/${swift.id}/edit`}
                 className="menuItem-link"
                 disabled={user?.data.role !== "admin"}
               >
                 Edit
+              </NavLink>
+            </MenuItem>
+            <MenuItem>
+              <NavLink
+                to={`/swift/${swift.id}/assign_invoice`}
+                className="menuItem-link"
+                disabled={user?.data.role !== "admin"}
+              >
+                Assign invoice
               </NavLink>
             </MenuItem>
             <MenuItem>
@@ -128,6 +129,8 @@ export default function SwiftList() {
           }}
         >
           <Column field="swift" header="Swift"></Column>
+          <Column field="date" header="Date"></Column>
+          <Column field="receive_at_bank" header="Received at bank"></Column>
           <Column header="Actions" body={actionTemplate}></Column>
         </DataTable>
       </div>

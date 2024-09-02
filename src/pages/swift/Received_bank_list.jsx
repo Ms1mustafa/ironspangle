@@ -233,13 +233,13 @@ export default function InvoiceTableDemo() {
             header="Guarantee 5%"
             style={{ minWidth: "150px" }}
             headerStyle={{ color: "#ff8e29" }}
-            body={(rowData) => Number(rowData.guarantee).toLocaleString()}
+            body={(rowData) => Number(rowData.cost * 0.05).toLocaleString()}
           ></Column>
           <Column
             header="Tax 3%"
             style={{ minWidth: "150px" }}
             headerStyle={{ color: "#ff8e29" }}
-            body={(rowData) => Number(rowData.tax).toLocaleString()}
+            body={(rowData) => Number(rowData.cost * 0.03).toLocaleString()}
           ></Column>
           <Column
             header="Publish"
