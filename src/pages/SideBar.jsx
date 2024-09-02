@@ -11,27 +11,28 @@ import {
   UsersRound,
   WalletMinimal,
 } from "lucide-react";
+import sidebarItems from "./data/sidebarItems.json"; // Adjust the path as necessary
+
+const iconMap = {
+  House: <House />,
+  FolderKanban: <FolderKanban />,
+  AlignEndVertical: <AlignEndVertical />,
+  UsersRound: <UsersRound />,
+  WalletMinimal: <WalletMinimal />,
+  Users: <Users />,
+};
 
 export default function SideBar({ logo }) {
   const navigate = useNavigate();
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
 
   // State to manage section visibility
-  const [sectionsOpen, setSectionsOpen] = useState({
-    projects: false,
-    expenses: false,
-    contractor: false,
-    admin: false,
-    mec: false,
-    supplyChain: false,
-    accounting: false,
-    users: false,
-  });
+  const [sectionsOpen, setSectionsOpen] = useState({});
 
   // Function to toggle section visibility
   const toggleSection = (section) => {
     setSectionsOpen((prevSectionsOpen) => ({
-      // ...prevSectionsOpen,
+      ...prevSectionsOpen,
       [section]: !prevSectionsOpen[section],
     }));
   };
@@ -48,383 +49,54 @@ export default function SideBar({ logo }) {
           <div className="flex flex-row gap-3 items-center justify-center">
             <img src={logo} alt="logo" className="w-28" />
           </div>
-          <div>
-            <NavLink
-              to="/"
-              className={({ isActive }) =>
-                `navLink rounded-lg text-md font-normal flex items-center place-content-around ${
-                  isActive
-                    ? "bg-main text-slate-50"
-                    : "text-slate-400 hover:bg-gray-100"
-                }`
-              }
-            >
-              <House />
-              <span>Dashboard</span>
-              <span>
-                <i className="pi pi-angle-down text-[#a5a8ae] text-xs"></i>
-              </span>
-            </NavLink>
-          </div>
-
-          {/* Projects Section */}
-          <div
-            className={`block py-2 pb-[.15rem] rounded-lg transition-all duration-300 ease-out ${
-              sectionsOpen.projects ? "hover:bg-slate-50" : ""
-            }`}
-          >
+          {sidebarItems.map((item) => (
             <div
-              className="text-[#a5a8ae] px-4 py-[.65rem] cursor-pointer flex place-content-around"
-              onClick={() => toggleSection("projects")}
-            >
-              <FolderKanban />
-              <span className="text-md font-normal uppercase dark:text-neutral-500/80 text-secondary-dark">
-                Projects
-              </span>
-              <span>
-                {sectionsOpen.projects ? (
-                  <i className="pi pi-angle-up text-[#a5a8ae] text-xs"></i>
-                ) : (
-                  <i className="pi pi-angle-down text-[#a5a8ae] text-xs"></i>
-                )}
-              </span>
-            </div>
-            <div
-              className={`section-content ${
-                sectionsOpen.projects ? "open" : ""
+              key={item.section}
+              className={`block py-2 pb-[.15rem] rounded-lg transition-all duration-300 ease-out ${
+                sectionsOpen[item.section] ? "hover:bg-slate-50" : ""
               }`}
             >
-              <NavLink
-                to="/projects"
-                className={({ isActive }) =>
-                  `navLink rounded-lg text-sm font-light ${
-                    isActive
-                      ? "bg-main text-slate-50"
-                      : "text-slate-400 hover:bg-gray-100"
-                  }`
-                }
+              <div
+                className="text-[#a5a8ae] px-4 py-[.65rem] cursor-pointer flex place-content-around"
+                onClick={() => toggleSection(item.section)}
               >
-                Projects List
-              </NavLink>
+                {iconMap[item.icon] || <span>Icon</span>}
+                <span className="text-md font-normal uppercase dark:text-neutral-500/80 text-secondary-dark">
+                  {item.title}
+                </span>
+                <span>
+                  {sectionsOpen[item.section] ? (
+                    <i className="pi pi-angle-up text-[#a5a8ae] text-xs"></i>
+                  ) : (
+                    <i className="pi pi-angle-down text-[#a5a8ae] text-xs"></i>
+                  )}
+                </span>
+              </div>
+              {item.subItems.length > 0 && (
+                <div
+                  className={`section-content ${
+                    sectionsOpen[item.section] ? "open" : ""
+                  }`}
+                >
+                  {item.subItems.map((subItem) => (
+                    <NavLink
+                      key={subItem.title}
+                      to={subItem.path}
+                      className={({ isActive }) =>
+                        `navLink rounded-lg text-sm font-light ${
+                          isActive
+                            ? "bg-main text-slate-50"
+                            : "text-slate-400 hover:bg-gray-100"
+                        }`
+                      }
+                    >
+                      {subItem.title}
+                    </NavLink>
+                  ))}
+                </div>
+              )}
             </div>
-          </div>
-
-          {/* expenses Section */}
-          <div
-            className={`block py-2 pb-[.15rem] rounded-lg transition-all duration-300 ease-out ${
-              sectionsOpen.expenses ? "hover:bg-slate-50" : ""
-            }`}
-          >
-            <div
-              className="text-[#a5a8ae] px-4 py-[.65rem] cursor-pointer flex place-content-around"
-              onClick={() => toggleSection("expenses")}
-            >
-              <AlignEndVertical />
-              <span className="text-md font-normal uppercase dark:text-neutral-500/80 text-secondary-dark">
-                Expenses
-              </span>
-              <span>
-                {sectionsOpen.expenses ? (
-                  <i className="pi pi-angle-up text-[#a5a8ae] text-xs"></i>
-                ) : (
-                  <i className="pi pi-angle-down text-[#a5a8ae] text-xs"></i>
-                )}
-              </span>
-            </div>
-            <div
-              className={`section-content rounded-lg ${
-                sectionsOpen.expenses ? "open" : ""
-              }`}
-            >
-              <NavLink
-                to="/expenses/company"
-                className={({ isActive }) =>
-                  `navLink rounded-lg text-sm font-light ${
-                    isActive
-                      ? "bg-main text-slate-50"
-                      : "text-slate-400 hover:bg-gray-100"
-                  }`
-                }
-              >
-                Company Expenses
-              </NavLink>
-              <NavLink
-                to="/expenses/lafarge"
-                className={({ isActive }) =>
-                  `navLink rounded-lg text-sm font-light ${
-                    isActive
-                      ? "bg-main text-slate-50"
-                      : "text-slate-400 hover:bg-gray-100"
-                  }`
-                }
-              >
-                Lafarge Expenses
-              </NavLink>
-              <NavLink
-                to="/expenses/ppe"
-                className={({ isActive }) =>
-                  `navLink rounded-lg text-sm font-light ${
-                    isActive
-                      ? "bg-main text-slate-50"
-                      : "text-slate-400 hover:bg-gray-100"
-                  }`
-                }
-              >
-                PPE
-              </NavLink>
-              <NavLink
-                to="/expenses/sd"
-                className={({ isActive }) =>
-                  `navLink rounded-lg text-sm font-light ${
-                    isActive
-                      ? "bg-main text-slate-50"
-                      : "text-slate-400 hover:bg-gray-100"
-                  }`
-                }
-              >
-                SD
-              </NavLink>
-            </div>
-          </div>
-
-          <div
-            className={`block py-2 pb-[.15rem] rounded-lg transition-all duration-300 ease-out ${
-              sectionsOpen.contractor ? "hover:bg-slate-50" : ""
-            }`}
-          >
-            <div
-              className="text-[#a5a8ae] px-4 py-[.65rem] cursor-pointer flex place-content-around"
-              onClick={() => toggleSection("contractor")}
-            >
-              <UsersRound />
-              <span className="text-md font-normal uppercase dark:text-neutral-500/80 text-secondary-dark">
-                Contract
-              </span>
-              <span>
-                {sectionsOpen.contractor ? (
-                  <i className="pi pi-angle-up text-[#a5a8ae] text-xs"></i>
-                ) : (
-                  <i className="pi pi-angle-down text-[#a5a8ae] text-xs"></i>
-                )}
-              </span>
-            </div>
-            <div
-              className={`section-content ${
-                sectionsOpen.contractor ? "open" : ""
-              }`}
-            >
-              <NavLink
-                to="/summary"
-                className={({ isActive }) =>
-                  `navLink rounded-lg text-sm font-light ${
-                    isActive
-                      ? "bg-main text-slate-50"
-                      : "text-slate-400 hover:bg-gray-100"
-                  }`
-                }
-              >
-                Summary
-              </NavLink>
-            </div>
-            <div
-              className={`section-content ${
-                sectionsOpen.contractor ? "open" : ""
-              }`}
-            >
-              <NavLink
-                to="/employee_company"
-                className={({ isActive }) =>
-                  `navLink rounded-lg text-sm font-light ${
-                    isActive
-                      ? "bg-main text-slate-50"
-                      : "text-slate-400 hover:bg-gray-100"
-                  }`
-                }
-              >
-                employee company
-              </NavLink>
-            </div>
-            <div
-              className={`section-content ${
-                sectionsOpen.contractor ? "open" : ""
-              }`}
-            >
-              <NavLink
-                to="/admin"
-                className={({ isActive }) =>
-                  `navLink rounded-lg text-sm font-light ${
-                    isActive
-                      ? "bg-main text-slate-50"
-                      : "text-slate-400 hover:bg-gray-100"
-                  }`
-                }
-              >
-                Admin
-              </NavLink>
-            </div>
-            <div
-              className={`section-content ${
-                sectionsOpen.contractor ? "open" : ""
-              }`}
-            >
-              <NavLink
-                to="/mec"
-                className={({ isActive }) =>
-                  `navLink rounded-lg text-sm font-light ${
-                    isActive
-                      ? "bg-main text-slate-50"
-                      : "text-slate-400 hover:bg-gray-100"
-                  }`
-                }
-              >
-                MEC
-              </NavLink>
-            </div>
-            <div
-              className={`section-content ${
-                sectionsOpen.contractor ? "open" : ""
-              }`}
-            >
-              <NavLink
-                to="/supply_chain"
-                className={({ isActive }) =>
-                  `navLink rounded-lg text-sm font-light ${
-                    isActive
-                      ? "bg-main text-slate-50"
-                      : "text-slate-400 hover:bg-gray-100"
-                  }`
-                }
-              >
-                Supply Chain
-              </NavLink>
-            </div>
-          </div>
-          <div
-            className={`block py-2 pb-[.15rem] rounded-lg transition-all duration-200 ease-out ${
-              sectionsOpen.accounting ? "hover:bg-slate-50" : ""
-            }`}
-          >
-            <div
-              className="text-[#a5a8ae] px-4 py-[.65rem] cursor-pointer flex place-content-around"
-              onClick={() => toggleSection("accounting")}
-            >
-              <WalletMinimal />
-              <span className="text-md font-normal uppercase dark:text-neutral-500/80 text-secondary-dark">
-                Account
-              </span>
-              <span>
-                {sectionsOpen.accounting ? (
-                  <i className="pi pi-angle-up text-[#a5a8ae] text-xs"></i>
-                ) : (
-                  <i className="pi pi-angle-down text-[#a5a8ae] text-xs"></i>
-                )}
-              </span>
-            </div>
-            <div
-              className={`section-content ${
-                sectionsOpen.accounting ? "open" : ""
-              }`}
-            >
-              <NavLink
-                to="/po"
-                className={({ isActive }) =>
-                  `navLink rounded-lg text-sm font-light ${
-                    isActive
-                      ? "bg-main text-slate-50"
-                      : "text-slate-400 hover:bg-gray-100"
-                  }`
-                }
-              >
-                PO
-              </NavLink>
-            </div>
-            <div
-              className={`section-content ${
-                sectionsOpen.accounting ? "open" : ""
-              }`}
-            >
-              <NavLink
-                to="/invoice"
-                className={({ isActive }) =>
-                  `navLink rounded-lg text-sm font-light ${
-                    isActive
-                      ? "bg-main text-slate-50"
-                      : "text-slate-400 hover:bg-gray-100"
-                  }`
-                }
-              >
-                invoice
-              </NavLink>
-            </div>
-            <div
-              className={`section-content ${
-                sectionsOpen.accounting ? "open" : ""
-              }`}
-            >
-              <NavLink
-                to="/swift"
-                className={({ isActive }) =>
-                  `navLink rounded-lg text-sm font-light ${
-                    isActive
-                      ? "bg-main text-slate-50"
-                      : "text-slate-400 hover:bg-gray-100"
-                  }`
-                }
-              >
-                Swift
-              </NavLink>
-              <NavLink
-                to="/received_at_bank"
-                className={({ isActive }) =>
-                  `navLink rounded-lg text-sm font-light ${
-                    isActive
-                      ? "bg-main text-slate-50"
-                      : "text-slate-400 hover:bg-gray-100"
-                  }`
-                }
-              >
-                Received at Bank
-              </NavLink>
-            </div>
-          </div>
-          <div
-            className={`block py-2 pb-[.15rem] rounded-lg transition-all duration-300 ease-out ${
-              sectionsOpen.users ? "hover:bg-slate-50" : ""
-            }`}
-          >
-            <div
-              className="text-[#a5a8ae] px-4 py-[.65rem] cursor-pointer flex place-content-around"
-              onClick={() => toggleSection("users")}
-            >
-              <Users />
-              <span className="text-md font-normal uppercase dark:text-neutral-500/80 text-secondary-dark">
-                users
-              </span>
-              <span>
-                {sectionsOpen.users ? (
-                  <i className="pi pi-angle-up text-[#a5a8ae] text-xs"></i>
-                ) : (
-                  <i className="pi pi-angle-down text-[#a5a8ae] text-xs"></i>
-                )}
-              </span>
-            </div>
-            <div
-              className={`section-content ${sectionsOpen.users ? "open" : ""}`}
-            >
-              <NavLink
-                to="/users"
-                className={({ isActive }) =>
-                  `navLink rounded-lg text-sm font-light ${
-                    isActive
-                      ? "bg-main text-slate-50"
-                      : "text-slate-400 hover:bg-gray-100"
-                  }`
-                }
-              >
-                users List
-              </NavLink>
-            </div>
-          </div>
+          ))}
           <div className="mt-6 px-4">
             <button
               className="w-24 px-2 py-3 rounded-lg text-main hover:bg-main hover:text-white flex items-center place-content-evenly"
@@ -435,7 +107,6 @@ export default function SideBar({ logo }) {
             </button>
           </div>
         </div>
-        {/* </div> */}
       </aside>
     </>
   );

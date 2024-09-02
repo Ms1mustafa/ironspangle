@@ -1,0 +1,109 @@
+[
+  {
+    "section": "dashboard",
+    "title": "Dashboard",
+    "icon": "House",
+    "path": "/",
+    "subItems": [
+      {
+        "title": "Dashboard",
+        "path": "/"
+      }
+    ]
+  },
+  {
+    "section": "projects",
+    "title": "Projects",
+    "icon": "FolderKanban",
+    "subItems": [
+      {
+        "title": "Projects List",
+        "path": "/projects"
+      }
+    ]
+  },
+  {
+    "section": "expenses",
+    "title": "Expenses",
+    "icon": "AlignEndVertical",
+    "subItems": [
+      {
+        "title": "Company Expenses",
+        "path": "/expenses/company"
+      },
+      {
+        "title": "Lafarge Expenses",
+        "path": "/expenses/lafarge"
+      },
+      {
+        "title": "PPE",
+        "path": "/expenses/ppe"
+      },
+      {
+        "title": "SD",
+        "path": "/expenses/sd"
+      }
+    ]
+  },
+  {
+    "section": "contractor",
+    "title": "Contract",
+    "icon": "UsersRound",
+    "subItems": [
+      {
+        "title": "Summary",
+        "path": "/summary"
+      },
+      {
+        "title": "Employee Company",
+        "path": "/employee_company"
+      },
+      {
+        "title": "Admin",
+        "path": "/admin"
+      },
+      {
+        "title": "MEC",
+        "path": "/mec"
+      },
+      {
+        "title": "Supply Chain",
+        "path": "/supply_chain"
+      }
+    ]
+  },
+  {
+    "section": "accounting",
+    "title": "Account",
+    "icon": "WalletMinimal",
+    "subItems": [
+      {
+        "title": "PO",
+        "path": "/po"
+      },
+      {
+        "title": "Invoice",
+        "path": "/invoice"
+      },
+      {
+        "title": "Swift",
+        "path": "/swift"
+      },
+      {
+        "title": "Received at Bank",
+        "path": "/received_at_bank"
+      }
+    ]
+  },
+  {
+    "section": "users",
+    "title": "Users",
+    "icon": "Users",
+    "subItems": [
+      {
+        "title": "Users List",
+        "path": "/users"
+      }
+    ]
+  }
+]
