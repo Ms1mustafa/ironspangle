@@ -54,7 +54,7 @@ export default function EditSwiftInvoice() {
   const searchSuggestion = (event) => {
     let query = event.query.toLowerCase();
     let filteredSuggestions = invoices.filter((invoice) =>
-      invoice.description.toLowerCase().includes(query)
+      invoice.invoice_no.toLowerCase().includes(query)
     );
     console.log(filteredSuggestions);
     setSuggestions(filteredSuggestions);
@@ -70,7 +70,7 @@ export default function EditSwiftInvoice() {
         id: selectedItem.id,
       }));
       setSelectedInvoice(selectedItem);
-      setValue(selectedItem.description); // Update AutoComplete value to selected description
+      setValue(selectedItem.invoice_no); // Update AutoComplete value to selected description
     }
   };
 
@@ -110,7 +110,7 @@ export default function EditSwiftInvoice() {
             completeMethod={searchSuggestion}
             onChange={(e) => setValue(e.value)}
             onSelect={handleSelect}
-            field="description" // Ensure this matches the property in suggestions
+            field="invoice_no" // Ensure this matches the property in suggestions
             placeholder="Search..."
           />
         </div>

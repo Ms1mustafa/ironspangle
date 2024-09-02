@@ -169,6 +169,16 @@ export default function InvoiceList() {
             style={{ width: "auto", whiteSpace: "nowrap" }}
           />
           <Column
+            field="po_no"
+            header="PO No"
+            style={{ width: "auto", whiteSpace: "nowrap" }}
+          />
+          <Column
+            field="po_date"
+            header="PO Date"
+            style={{ width: "auto", whiteSpace: "nowrap" }}
+          />
+          <Column
             field="invoice_no"
             header="Invoice No"
             style={{ width: "auto", whiteSpace: "nowrap" }}

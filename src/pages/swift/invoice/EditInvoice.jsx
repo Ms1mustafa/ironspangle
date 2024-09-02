@@ -32,7 +32,6 @@ export default function EditInvoice() {
   const user = AuthCheck();
   const { id, invoice_id } = useParams();
 
-  // Fetch project data on component mount
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -42,8 +41,7 @@ export default function EditInvoice() {
           setLoading,
           navigate
         );
-        setInvoice(invoiceData); // Set project data in state
-        // Update inputs with project data
+        setInvoice(invoiceData); // Set invoice data in state
         if (invoiceData) {
           setInputs((prevInputs) => ({
             ...prevInputs,
@@ -68,8 +66,7 @@ export default function EditInvoice() {
           }));
         }
       } catch (error) {
-        console.error("Error fetching project:", error);
-        // Handle error or display message
+        console.error("Error fetching invoice:", error);
       } finally {
         setLoading(false);
       }
@@ -80,10 +77,10 @@ export default function EditInvoice() {
 
   // Handle input changes
   const handleChange = (event) => {
-    const { name, value } = event.target;
+    const { name, type, checked, value } = event.target;
     setInputs((prevInputs) => ({
       ...prevInputs,
-      [name]: value,
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
 
@@ -92,11 +89,9 @@ export default function EditInvoice() {
     e.preventDefault();
     try {
       await Edit(inputs, setLoading, navigate);
-      console.log("Project updated successfully:", inputs);
-      // Optionally, you can navigate to another page or show a success message
+      console.log("Invoice updated successfully:", inputs);
     } catch (error) {
-      console.error("Error updating project:", error);
-      // Handle error or display message
+      console.error("Error updating invoice:", error);
     }
   };
 
@@ -104,10 +99,11 @@ export default function EditInvoice() {
     <form className="form w-full p-10 max-w-lg" onSubmit={handleSubmit}>
       <h1 className="text-3xl text-gray-600 font-bold mb-10">Edit Invoice</h1>
 
+      {/* Existing fields */}
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full px-3">
           <label htmlFor="description" className="input-label">
-            description <span className="text-red-500 text-sm">*</span>
+            Description <span className="text-red-500 text-sm">*</span>
           </label>
           <input
             id="description"
@@ -116,7 +112,6 @@ export default function EditInvoice() {
             onChange={handleChange}
             value={inputs.description || ""}
           />
-          <p className="text-gray-600 text-xs italic"></p>
         </div>
       </div>
       <div className="flex flex-wrap -mx-3 mb-6">
@@ -206,7 +201,7 @@ export default function EditInvoice() {
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="px-3 mb-6 md:mb-0">
           <label htmlFor="invoice_send" className="mr-2">
-            invoice send
+            Invoice send
           </label>
           <input
             id="invoice_send"
@@ -214,12 +209,12 @@ export default function EditInvoice() {
             className=""
             name="invoice_send"
             onChange={handleChange}
-            checked={Number(inputs.invoice_send) || ""}
+            checked={inputs.invoice_send == 1 || false}
           />
         </div>
         <div className="px-3">
           <label htmlFor="invoice_store" className="mr-2">
-            invoice store
+            Invoice store
           </label>
           <input
             id="invoice_store"
@@ -227,12 +222,12 @@ export default function EditInvoice() {
             className=""
             name="invoice_store"
             onChange={handleChange}
-            checked={Number(inputs.invoice_store) || ""}
+            checked={inputs.invoice_store == 1 || false}
           />
         </div>
         <div className="px-3 mb-6 md:mb-0">
           <label htmlFor="invoice_pru" className="mr-2">
-            invoice pru
+            Invoice pru
           </label>
           <input
             id="invoice_pru"
@@ -240,26 +235,27 @@ export default function EditInvoice() {
             className=""
             name="invoice_pru"
             onChange={handleChange}
-            checked={Number(inputs.invoice_pru) || ""}
+            checked={inputs.invoice_pru == 1 || false}
           />
         </div>
         <div className="px-3">
           <label htmlFor="invoice_accounting" className="mr-2">
-            invoice accounting
+            Invoice accounting
           </label>
           <input
             id="invoice_accounting"
             type="checkbox"
+            className=""
             name="invoice_accounting"
             onChange={handleChange}
-            checked={Number(inputs.invoice_accounting) || ""}
+            checked={inputs.invoice_accounting == 1 || false}
           />
         </div>
       </div>
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <label htmlFor="s_no" className="input-label">
-            s no
+            S no
           </label>
           <input
             id="s_no"
@@ -272,7 +268,7 @@ export default function EditInvoice() {
         </div>
         <div className="w-full md:w-1/2 px-3">
           <label htmlFor="s_date" className="input-label">
-            s date
+            S date
           </label>
           <input
             id="s_date"
@@ -287,7 +283,7 @@ export default function EditInvoice() {
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <label htmlFor="cost" className="input-label">
-            cost <span className="text-red-500 text-sm">*</span>
+            Cost <span className="text-red-500 text-sm">*</span>
           </label>
           <input
             id="cost"
@@ -300,17 +296,16 @@ export default function EditInvoice() {
         </div>
         <div className="w-full md:w-1/2 px-3">
           <label htmlFor="status" className="input-label">
-            status <span className="text-red-500 text-sm">*</span>
+            Status <span className="text-red-500 text-sm">*</span>
           </label>
           <select
             name="status"
             onChange={handleChange}
             value={inputs.status || "in progress"}
             className="input"
-            defaultValue={"in progress"}
           >
-            <option value="in progress">in progress</option>
-            <option value="recived in bank">recived in bank</option>
+            <option value="in progress">In progress</option>
+            <option value="received in bank">Received in bank</option>
           </select>
         </div>
       </div>
@@ -320,16 +315,14 @@ export default function EditInvoice() {
             P&LC
           </label>
           <select
-            name="status"
+            name="p_and_lc"
             onChange={handleChange}
-            value={inputs.status || "LC"}
+            value={inputs.p_and_lc || "LC"}
             className="input"
-            defaultValue={"LC"}
           >
             <option value="LC">LC</option>
             <option value="P">P</option>
           </select>
-          <p className="text-gray-600 text-xs italic"></p>
         </div>
       </div>
 

@@ -33,9 +33,11 @@ export default function CreateNewInvoice() {
   }, [id, navigate]); // Fetch data whenever id changes
 
   const handleChange = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    setInputs((values) => ({ ...values, [name]: value }));
+    const { name, type, checked, value } = event.target;
+    setInputs((values) => ({
+      ...values,
+      [name]: type === "checkbox" ? checked : value,
+    }));
   };
 
   function handleSubmit(e) {
@@ -165,7 +167,6 @@ export default function CreateNewInvoice() {
             className=""
             name="invoice_send"
             onChange={handleChange}
-            value={inputs.invoice_send || ""}
           />
         </div>
         <div className="px-3">
@@ -178,7 +179,6 @@ export default function CreateNewInvoice() {
             className=""
             name="invoice_store"
             onChange={handleChange}
-            value={inputs.invoice_store || ""}
           />
         </div>
         <div className="px-3 mb-6 md:mb-0">
@@ -191,7 +191,6 @@ export default function CreateNewInvoice() {
             className=""
             name="invoice_pru"
             onChange={handleChange}
-            value={inputs.invoice_pru || ""}
           />
         </div>
         <div className="px-3">
@@ -204,7 +203,6 @@ export default function CreateNewInvoice() {
             className=""
             name="invoice_accounting"
             onChange={handleChange}
-            value={inputs.invoice_accounting || ""}
           />
         </div>
       </div>
