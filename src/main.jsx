@@ -390,7 +390,7 @@ const router = createBrowserRouter([
 
       //bank
       {
-        path: "/received_at_bank",
+        path: "swift/:id/view",
         element: <Received_bank_list />,
       },
     ],

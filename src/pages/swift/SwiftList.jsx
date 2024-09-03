@@ -55,6 +55,15 @@ export default function SwiftList() {
           >
             <MenuItem>
               <NavLink
+                to={`/swift/${swift.id}/view`}
+                className="menuItem-link"
+                disabled={user?.data.role !== "admin"}
+              >
+                view
+              </NavLink>
+            </MenuItem>
+            <MenuItem>
+              <NavLink
                 to={`/swift/${swift.id}/edit`}
                 className="menuItem-link"
                 disabled={user?.data.role !== "admin"}

@@ -5,15 +5,20 @@ import { Column } from "primereact/column";
 import { Banknote, CheckCheck, NotepadText, SquareMinus } from "lucide-react";
 import { ColumnGroup } from "primereact/columngroup";
 import { Row } from "primereact/row";
+import { useParams } from "react-router-dom";
 
 export default function InvoiceTableDemo() {
   const [swiftData, setSwiftData] = useState([]);
+
+  const { id } = useParams();
 
   useEffect(() => {
     async function fetchData() {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_REACT_APP_API_URL}/swift/received_bank.php`
+          `${
+            import.meta.env.VITE_REACT_APP_API_URL
+          }/swift/received_bank.php?swift_id=${id}`
         );
         // Assuming response.data is an array with the format [{ swift: "1", invoices: [...] }, {...}]
         const data = response.data;
@@ -43,15 +48,15 @@ export default function InvoiceTableDemo() {
 
   const calculateOverallGuarantee = () => {
     return flattenedData.reduce((total, data) => {
-      const { guarantee } = data;
-      return total + Number(guarantee);
+      const { cost } = data;
+      return total + Number(cost * 0.5);
     }, 0);
   };
 
   const calculateOverallTax = () => {
     return flattenedData.reduce((total, data) => {
-      const { tax } = data;
-      return total + Number(tax);
+      const { cost } = data;
+      return total + Number(cost * 0.3);
     }, 0);
   };
 
@@ -260,8 +265,8 @@ export default function InvoiceTableDemo() {
             body={(rowData) =>
               Number(
                 rowData.cost -
-                  rowData.guarantee -
-                  rowData.tax -
+                  rowData.cost * 0.05 -
+                  rowData.cost * 0.03 -
                   rowData.publish -
                   rowData.fines
               ).toLocaleString()

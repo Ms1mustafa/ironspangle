@@ -129,6 +129,7 @@ export default function EditSwiftInvoice() {
               type="checkbox"
               name="guarantee"
               onChange={handleChange}
+              disabled={selectedInvoice ? false : true}
               //   checked={inputs.guarantee}
             />
           </div>
@@ -150,6 +151,7 @@ export default function EditSwiftInvoice() {
               type="checkbox"
               name="tax"
               onChange={handleChange}
+              disabled={selectedInvoice ? false : true}
               //   checked={inputs.tax}
             />
           </div>
