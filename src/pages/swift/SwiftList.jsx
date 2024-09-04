@@ -138,6 +138,12 @@ export default function SwiftList() {
           }}
         >
           <Column field="swift" header="Swift"></Column>
+          <Column
+            header="Total Cost"
+            body={(rowData) =>
+              Number(rowData.total_invoices_cost).toLocaleString()
+            }
+          ></Column>
           <Column field="date" header="Date"></Column>
           <Column field="receive_at_bank" header="Received at bank"></Column>
           <Column header="Actions" body={actionTemplate}></Column>

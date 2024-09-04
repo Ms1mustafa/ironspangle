@@ -155,7 +155,7 @@ export default function InvoiceTableDemo() {
   );
   return (
     <div className="w-full p-10">
-      <div className="flex gap-4 mb-6">
+      {/* <div className="flex gap-4 mb-6">
         <div className="count-card">
           <div className="count-card-inner">
             <Banknote size={55} className="count-card-icon bg-[#f54f5f]" />
@@ -192,7 +192,7 @@ export default function InvoiceTableDemo() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
       <div className="card w-[70rem]">
         <DataTable
           value={flattenedData}
@@ -238,13 +238,21 @@ export default function InvoiceTableDemo() {
             header="Guarantee 5%"
             style={{ minWidth: "150px" }}
             headerStyle={{ color: "#ff8e29" }}
-            body={(rowData) => Number(rowData.cost * 0.05).toLocaleString()}
+            body={(rowData) =>
+              (rowData.guarantee > 0 &&
+                Number(rowData.cost * 0.05).toLocaleString()) ||
+              0
+            }
           ></Column>
           <Column
             header="Tax 3%"
             style={{ minWidth: "150px" }}
             headerStyle={{ color: "#ff8e29" }}
-            body={(rowData) => Number(rowData.cost * 0.03).toLocaleString()}
+            body={(rowData) =>
+              (rowData.tax > 0 &&
+                Number(rowData.cost * 0.03).toLocaleString()) ||
+              0
+            }
           ></Column>
           <Column
             header="Publish"

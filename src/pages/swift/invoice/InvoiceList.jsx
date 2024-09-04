@@ -233,8 +233,8 @@ export default function InvoiceList() {
           />
 
           <Column
-            field="cost"
             header="Cost"
+            body={(rowData) => Number(rowData.cost).toLocaleString()}
             style={{ width: "auto", whiteSpace: "nowrap" }}
           />
 
