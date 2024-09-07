@@ -49,14 +49,16 @@ export default function InvoiceTableDemo() {
   const calculateOverallGuarantee = () => {
     return flattenedData.reduce((total, data) => {
       const { cost } = data;
-      return total + Number(cost * 0.5);
+      const guarantee = data.guarantee > 0 ? cost * 0.05 : 0;
+      return total + Number(guarantee);
     }, 0);
   };
 
   const calculateOverallTax = () => {
     return flattenedData.reduce((total, data) => {
       const { cost } = data;
-      return total + Number(cost * 0.3);
+      const tax = data.tax > 0 ? cost * 0.03 : 0;
+      return total + Number(tax);
     }, 0);
   };
 
