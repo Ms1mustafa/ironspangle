@@ -275,8 +275,8 @@ export default function InvoiceTableDemo() {
             body={(rowData) =>
               Number(
                 rowData.cost -
-                  rowData.cost * 0.05 -
-                  rowData.cost * 0.03 -
+                  (rowData.guarantee > 0 && rowData.cost * 0.05) -
+                  (rowData.tax > 0 && rowData.cost * 0.03) -
                   rowData.publish -
                   rowData.fines
               ).toLocaleString()
