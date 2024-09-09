@@ -138,6 +138,7 @@ export default function SwiftList() {
           }}
         >
           <Column field="swift" header="Swift"></Column>
+          <Column field="invoices_no" header="Invoices"></Column>
           <Column
             header="Total Cost"
             body={(rowData) =>
