@@ -137,22 +137,6 @@ export default function InvoiceTableDemo() {
           }}
         />
       </Row>
-      <Row>
-        <Column colSpan={5} footerStyle={{ backgroundColor: "#fff" }} />
-        <Column
-          colSpan={3}
-          footer={(
-            calculateOverallGuarantee() +
-            calculateOverallTax() +
-            calculateOverallPublish()
-          ).toLocaleString()}
-          footerStyle={{
-            color: "#fff",
-            textAlign: "center",
-            backgroundColor: "#ff8e29",
-          }}
-        />
-      </Row>
     </ColumnGroup>
   );
   return (
