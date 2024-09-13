@@ -67,6 +67,15 @@ export default function EditInvoiceValues() {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (
+      !inputs.guarantee &&
+      !inputs.tax &&
+      (!inputs.publish || inputs.publish === "0") &&
+      (!inputs.fines || inputs.fines === "0")
+    ) {
+      toast.error("Please fill at least one field to update.");
+      return;
+    }
     try {
       await Edit(inputs, setLoading, navigate);
       console.log("Invoice updated successfully:", inputs);
