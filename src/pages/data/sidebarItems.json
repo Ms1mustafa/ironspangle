@@ -98,7 +98,7 @@
     "subItems": [
       {
         "title": "Users List",
-        "path": "/users"
+        "path": "/user"
       }
     ]
   }

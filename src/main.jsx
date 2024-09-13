@@ -88,7 +88,11 @@ import Received_bank_list from "./pages/swift/Received_bank_list.jsx";
 
 import CreateNewInvoice from "./pages/swift/invoice/CreateInvoice.jsx";
 import EditInvoice from "./pages/swift/invoice/EditInvoice.jsx";
+import EditInvoiceValues from "./pages/swift/invoice/EditInvoiceValues.jsx";
 import InvoiceList from "./pages/swift/invoice/InvoiceList.jsx";
+
+import UsersList from "./pages/user/UsersList.jsx";
+import CreateUser from "./pages/user/CreateUser.jsx";
 
 const router = createBrowserRouter([
   {
@@ -387,11 +391,29 @@ const router = createBrowserRouter([
         path: "/invoice/:invoice_id/edit",
         element: <EditInvoice />,
       },
+      {
+        path: "/invoice/:invoice_id/edit_values",
+        element: <EditInvoiceValues />,
+      },
 
       //bank
       {
         path: "swift/:id/view",
         element: <Received_bank_list />,
+      },
+
+      //user
+      {
+        path: "/user",
+        element: <UsersList />,
+      },
+      {
+        path: "/user/create",
+        element: <CreateUser />,
+      },
+      {
+        path: "/user/:id/edit",
+        // element: <EditUser />,
       },
     ],
   },

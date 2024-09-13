@@ -101,33 +101,39 @@ export default function InvoiceList() {
     }
   };
 
-  const footerGroup = invoices.length > 0 && (
-    <ColumnGroup>
-      <Row>
-        {/* <Column
-          colSpan={3}
-          footerStyle={{
-            backgroundColor: "#fff",
-          }}
-        />
-        <Column
-          footer={calculateOverallTotalActiveDays}
-          footerStyle={{
-            // textAlign: "center",
-            backgroundColor: "yellow",
-            color: "#000",
-            fontWeight: "bold",
-          }}
-        />
-        <Column
-          colSpan={2}
-          footerStyle={{
-            backgroundColor: "#fff",
-          }}
-        /> */}
-      </Row>
-    </ColumnGroup>
-  );
+  // const getInvoiceStatus=
+  const getInvoiceStatus = (invoice) => {
+    const now = new Date().toISOString().split("T")[0];
+    const sDate = invoice.s_date;
+
+    if (invoice.swift_id) {
+      return {
+        status: "Received in bank",
+        color: "green",
+      };
+    }
+
+    if (!invoice.s_date) {
+      return {
+        status: "In process",
+        color: "orange",
+      };
+    }
+
+    if (sDate >= now) {
+      return {
+        status: "Waiting",
+        color: "#dede13",
+      };
+    }
+
+    if (sDate < now) {
+      return {
+        status: "Exceeded the scheduled date",
+        color: "red",
+      };
+    }
+  };
 
   return (
     <div className="w-full py-8 flex flex-col">
@@ -145,7 +151,6 @@ export default function InvoiceList() {
           showGridlines
           rowGroupMode="rowspan"
           groupRowsBy="pr_no"
-          footerColumnGroup={footerGroup}
           rowsPerPageOptions={[5, 10, 25, 50]}
           emptyMessage="No invoices found."
           paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
@@ -192,31 +197,73 @@ export default function InvoiceList() {
 
           <Column
             header="Send"
-            body={(rowData) =>
-              Number(rowData.invoice_send) ? "True" : "False"
-            }
+            body={(rowData) => {
+              const hasSend = Number(rowData.invoice_send);
+              return (
+                <span
+                  style={{
+                    color: hasSend ? "green" : "red",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {hasSend ? "True" : "False"}
+                </span>
+              );
+            }}
             style={{ width: "auto", whiteSpace: "nowrap" }}
           />
 
           <Column
             header="Store"
-            body={(rowData) =>
-              Number(rowData.invoice_store) ? "True" : "False"
-            }
+            body={(rowData) => {
+              const hasStore = Number(rowData.invoice_store);
+              return (
+                <span
+                  style={{
+                    color: hasStore ? "green" : "red",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {hasStore ? "True" : "False"}
+                </span>
+              );
+            }}
             style={{ width: "auto", whiteSpace: "nowrap" }}
           />
 
           <Column
             header="PRU"
-            body={(rowData) => (Number(rowData.invoice_pru) ? "True" : "False")}
+            body={(rowData) => {
+              const hasPRU = Number(rowData.invoice_pru);
+              return (
+                <span
+                  style={{
+                    color: hasPRU ? "green" : "red",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {hasPRU ? "True" : "False"}
+                </span>
+              );
+            }}
             style={{ width: "auto", whiteSpace: "nowrap" }}
           />
 
           <Column
             header="Accounting"
-            body={(rowData) =>
-              Number(rowData.invoice_accounting) ? "True" : "False"
-            }
+            body={(rowData) => {
+              const hasAccounting = Number(rowData.invoice_accounting);
+              return (
+                <span
+                  style={{
+                    color: hasAccounting ? "green" : "red",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {hasAccounting ? "True" : "False"}
+                </span>
+              );
+            }}
             style={{ width: "auto", whiteSpace: "nowrap" }}
           />
 
@@ -239,35 +286,22 @@ export default function InvoiceList() {
           />
 
           <Column
+            header="Status"
+            body={(rowData) => {
+              return (
+                <span style={{ color: getInvoiceStatus(rowData)?.color }}>
+                  {getInvoiceStatus(rowData)?.status}
+                </span>
+              );
+            }}
+            style={{ width: "auto", whiteSpace: "nowrap" }}
+          />
+
+          <Column
             field="p_and_lc"
             header="P & LC"
             style={{ width: "auto", whiteSpace: "nowrap" }}
           />
-
-          {/* <Column
-            field="guarantee"
-            header="Guarantee"
-            style={{ width: "auto", whiteSpace: "nowrap" }}
-          />
-
-          <Column
-            field="tax"
-            header="Tax"
-            style={{ width: "auto", whiteSpace: "nowrap" }}
-          />
-
-          <Column
-            field="publish"
-            header="Publish"
-            style={{ width: "auto", whiteSpace: "nowrap" }}
-          />
-
-          <Column
-            field="fines"
-            header="Fines"
-            style={{ width: "auto", whiteSpace: "nowrap" }}
-          /> */}
-
           <Column header="Actions" body={actionTemplate} />
         </DataTable>
       </div>

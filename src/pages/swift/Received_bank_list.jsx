@@ -5,11 +5,13 @@ import { Column } from "primereact/column";
 import { Banknote, CheckCheck, NotepadText, SquareMinus } from "lucide-react";
 import { ColumnGroup } from "primereact/columngroup";
 import { Row } from "primereact/row";
-import { useParams } from "react-router-dom";
+import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/react";
+import { NavLink, useParams } from "react-router-dom";
+import AuthCheck from "../../API/account/AuthCheck";
 
 export default function InvoiceTableDemo() {
   const [swiftData, setSwiftData] = useState([]);
-
+  const user = AuthCheck();
   const { id } = useParams();
 
   useEffect(() => {
@@ -29,6 +31,36 @@ export default function InvoiceTableDemo() {
     }
     fetchData();
   }, []);
+
+  const actionTemplate = (rowData) => {
+    return (
+      <div className="flex gap-2">
+        <Menu as="div" className="place-self-center">
+          <div>
+            <MenuButton className="flex items-center space-x-2 rounded-full focus:outline-none">
+              <span className="hidden sm:inline ml-2 text-lg font-bold">
+                ...
+              </span>
+            </MenuButton>
+          </div>
+          <MenuItems
+            transition
+            className="absolute right-0 z-40 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+          >
+            <MenuItem>
+              <NavLink
+                to={`/invoice/${rowData.id}/edit_values`}
+                className="menuItem-link"
+                disabled={user?.data.role !== "admin"}
+              >
+                Edit Values
+              </NavLink>
+            </MenuItem>
+          </MenuItems>
+        </Menu>
+      </div>
+    );
+  };
 
   // Flatten the data for the DataTable
   const flattenedData = swiftData.flatMap((item) =>
@@ -141,49 +173,12 @@ export default function InvoiceTableDemo() {
   );
   return (
     <div className="w-full p-10">
-      {/* <div className="flex gap-4 mb-6">
-        <div className="count-card">
-          <div className="count-card-inner">
-            <Banknote size={55} className="count-card-icon bg-[#f54f5f]" />
-            <div className="count-card-info">
-              <p>Total Send</p>
-              <span>{calculateOverallCost().toLocaleString()}</span>
-            </div>
-          </div>
-        </div>
-        <div className="count-card">
-          <div className="count-card-inner">
-            <SquareMinus size={55} className="count-card-icon bg-[#67cadf]" />
-            <div className="count-card-info">
-              <p>Total Deduction</p>
-              <span>{calculateOverallGuarantee().toLocaleString()}</span>
-            </div>
-          </div>
-        </div>
-        <div className="count-card">
-          <div className="count-card-inner">
-            <CheckCheck size={55} className="count-card-icon bg-[#27d095]" />
-            <div className="count-card-info">
-              <p>Total Received</p>
-              <span>{calculateOverallReceived().toLocaleString()}</span>
-            </div>
-          </div>
-        </div>
-        <div className="count-card">
-          <div className="count-card-inner">
-            <NotepadText size={55} className="count-card-icon bg-[#ffbc56]" />
-            <div className="count-card-info">
-              <p>Total Fines</p>
-              <span>{calculateOverallFines().toLocaleString()}</span>
-            </div>
-          </div>
-        </div>
-      </div> */}
       <div className="card w-[70rem]">
         <DataTable
           value={flattenedData}
           rowGroupMode="rowspan"
           footerColumnGroup={footerGroup}
+          showGridlines
           groupRowsBy="swift"
           sortMode="single"
           sortField="swift"
@@ -266,6 +261,7 @@ export default function InvoiceTableDemo() {
               ).toLocaleString()
             }
           ></Column>
+          <Column body={actionTemplate} style={{ minWidth: "150px" }}></Column>
         </DataTable>
       </div>
     </div>

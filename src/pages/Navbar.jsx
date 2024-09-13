@@ -32,7 +32,7 @@ const navigation = [
   // accounting: po, swift, received at bank
   { name: "PO", href: "/po" },
   { name: "Swift", href: "/swift" },
-  { name: "Received at bank", href: "/received_at_bank" },
+  { name: "invoice", href: "/invoice" },
 ];
 
 // Function to get a formatted display name from the path segment
