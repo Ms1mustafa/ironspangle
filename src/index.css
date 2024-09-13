@@ -121,7 +121,7 @@ layer(primereact);
   }
 
   .section-content.open {
-    max-height: 230px;
+    max-height: 250px;
     /* Adjust the max-height as needed */
   }
 }
