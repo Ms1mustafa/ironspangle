@@ -8,27 +8,31 @@ import { Row } from "primereact/row";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/react";
 import { NavLink, useParams } from "react-router-dom";
 import AuthCheck from "../../API/account/AuthCheck";
+import Remove_swift from "../../API/swift/invoice/Remove_swift";
+import SweetAlert from "../../components/SweetAlert";
 
 export default function InvoiceTableDemo() {
   const [swiftData, setSwiftData] = useState([]);
+  const [loading, setLoading] = useState(false);
   const user = AuthCheck();
   const { id } = useParams();
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await axios.get(
-          `${
-            import.meta.env.VITE_REACT_APP_API_URL
-          }/swift/received_bank.php?swift_id=${id}`
-        );
-        // Assuming response.data is an array with the format [{ swift: "1", invoices: [...] }, {...}]
-        const data = response.data;
-        setSwiftData(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
+  async function fetchData() {
+    try {
+      const response = await axios.get(
+        `${
+          import.meta.env.VITE_REACT_APP_API_URL
+        }/swift/received_bank.php?swift_id=${id}`
+      );
+      // Assuming response.data is an array with the format [{ swift: "1", invoices: [...] }, {...}]
+      const data = response.data;
+      setSwiftData(data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
     }
+  }
+
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -54,6 +58,27 @@ export default function InvoiceTableDemo() {
                 disabled={user?.data.role !== "admin"}
               >
                 Edit Values
+              </NavLink>
+            </MenuItem>
+            <MenuItem>
+              <NavLink
+                className="menuItem-link"
+                onClick={() =>
+                  SweetAlert({
+                    props: {
+                      title: "Are you sure?",
+                      icon: "warning",
+                      showCancelButton: true,
+                      confirmButtonText: "Remove",
+                      onConfirm: () => {
+                        Remove_swift(rowData, setLoading, fetchData);
+                      },
+                    },
+                  })
+                }
+                disabled={user?.data.role !== "admin"}
+              >
+                Remove from swift
               </NavLink>
             </MenuItem>
           </MenuItems>

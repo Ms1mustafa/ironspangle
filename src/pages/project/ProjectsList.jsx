@@ -8,20 +8,38 @@ import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/react";
 import AuthCheck from "../../API/account/AuthCheck";
 import SweetAlert from "../../components/SweetAlert";
 import Delete from "../../API/project/Delete";
+import GetTotals from "../../API/project/GetTotals"; // Make sure to import your GetTotals function
 
 export default function ProjectsList() {
   const user = AuthCheck();
 
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [date, setDate] = useState(new Date().toISOString().slice(0, 7));
 
   async function getProjects() {
     try {
       setLoading(true);
       const response = await axios.get(
-        `${import.meta.env.VITE_REACT_APP_API_URL}/project/list.php`
+        `${
+          import.meta.env.VITE_REACT_APP_API_URL
+        }/project/list.php?date=${date}`
       );
-      setProjects(response.data);
+      const projectsData = response.data;
+
+      // Fetch totals for each project
+      const projectsWithTotals = await Promise.all(
+        projectsData.map(async (project) => {
+          const totals = await GetTotals(project.id, setLoading);
+          return {
+            ...project,
+            total_project_cost: totals.total_project_cost,
+            profit: project.budget - totals.total_project_cost,
+          };
+        })
+      );
+
+      setProjects(projectsWithTotals);
       setLoading(false);
     } catch (error) {
       console.error("Error fetching projects:", error);
@@ -32,7 +50,7 @@ export default function ProjectsList() {
 
   useEffect(() => {
     getProjects();
-  }, []);
+  }, [date]);
 
   const refreshProjects = () => {
     getProjects(); // Function to refresh projects list
@@ -100,12 +118,20 @@ export default function ProjectsList() {
 
   return (
     <div className="w-full p-8 flex flex-col">
-      <NavLink
-        to={user?.data.role !== "admin" ? "" : "/projects/create"}
-        className="button mb-4 self-end"
-      >
-        Create Project
-      </NavLink>
+      <div className="place-content-between flex flex-wrap gap-4">
+        <input
+          type="month"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+          className="input bg-white w-fit mb-4 self-start"
+        />
+        <NavLink
+          to={user?.data.role !== "admin" ? "" : "/projects/create"}
+          className="button mb-4 self-end"
+        >
+          Create Project
+        </NavLink>
+      </div>
       <div className="card">
         <DataTable
           value={projects}
@@ -120,7 +146,18 @@ export default function ProjectsList() {
           }}
         >
           <Column field="name" header="Name"></Column>
-          <Column field="created_at" header="Created at"></Column>
+          <Column
+            field="total_project_cost"
+            header="Total Project Cost"
+          ></Column>
+          <Column field="budget" header="Budget"></Column>
+          <Column field="profit" header="Profit"></Column>
+          <Column
+            header="Created at"
+            body={(data) =>
+              new Date(data.created_at).toLocaleDateString("en-US")
+            }
+          ></Column>
           <Column header="Actions" body={actionTemplate}></Column>
         </DataTable>
       </div>

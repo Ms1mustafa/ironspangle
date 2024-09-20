@@ -8,6 +8,7 @@ import AuthCheck from "../../../API/account/AuthCheck";
 import SweetAlert from "../../../components/SweetAlert";
 import Delete from "../../../API/expenses/sd/Delete";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/react";
+import GetTotals from "../../../API/expenses/sd/GetTotals"; // Import your GetTotals function
 
 export default function SDsList() {
   const user = AuthCheck();
@@ -21,7 +22,17 @@ export default function SDsList() {
       const response = await axios.get(
         `${import.meta.env.VITE_REACT_APP_API_URL}/expense/sd/list.php`
       );
-      setSDs(response.data);
+      const sdList = response.data;
+
+      // Fetch totals for each SD
+      const updatedSDs = await Promise.all(
+        sdList.map(async (sd) => {
+          const totals = await GetTotals(sd.id, setLoading);
+          return { ...sd, ...totals }; // Merge SD data with totals
+        })
+      );
+
+      setSDs(updatedSDs);
       setLoading(false);
     } catch (error) {
       console.error("Error fetching SDs:", error);
@@ -49,10 +60,7 @@ export default function SDsList() {
               </span>
             </MenuButton>
           </div>
-          <MenuItems
-            transition
-            className="absolute right-0 z-40 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
-          >
+          <MenuItems className="absolute right-0 z-40 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none">
             <MenuItem>
               <NavLink
                 to={`/expenses/sd/${SDs.id}/workers`}
@@ -115,15 +123,31 @@ export default function SDsList() {
           rowsPerPageOptions={[5, 10, 25, 50]}
           emptyMessage="No SDs found."
           loading={loading}
-          tableStyle={{
-            minWidth: "50rem",
-            backgroundColor: "white",
-          }}
+          tableStyle={{ minWidth: "50rem", backgroundColor: "white" }}
         >
           <Column field="name" header="Name"></Column>
           <Column field="budget" header="PO cost"></Column>
-          <Column field="po" header="PO"></Column>
-          <Column field="pr" header="PR"></Column>
+          <Column field="isg" header="ISG"></Column>
+          <Column
+            header="Profit"
+            body={(data) =>
+              (
+                Number(data.budget) - Number(data.total_sd_cost)
+              ).toLocaleString()
+            }
+          ></Column>
+          <Column
+            header="Total sd cost"
+            body={(data) => Number(data.total_sd_cost).toLocaleString()}
+          ></Column>
+          <Column
+            header="Lafarge"
+            body={(data) =>
+              (Number(data.po) - Number(data.isg)).toLocaleString()
+            }
+          ></Column>
+          <Column field="po" header="PO cost"></Column>
+          <Column field="pr" header="PR cost"></Column>
           <Column header="Actions" body={actionTemplate}></Column>
         </DataTable>
       </div>

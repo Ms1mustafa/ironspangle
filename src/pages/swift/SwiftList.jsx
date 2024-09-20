@@ -14,12 +14,13 @@ export default function SwiftList() {
 
   const [swift, setSwift] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [date, setDate] = useState(new Date().toISOString().slice(0, 7));
 
   async function getSwift() {
     try {
       setLoading(true);
       const response = await axios.get(
-        `${import.meta.env.VITE_REACT_APP_API_URL}/swift/list.php`
+        `${import.meta.env.VITE_REACT_APP_API_URL}/swift/list.php?date=${date}`
       );
       setSwift(response.data);
       setLoading(false);
@@ -32,7 +33,7 @@ export default function SwiftList() {
 
   useEffect(() => {
     getSwift();
-  }, []);
+  }, [date]);
 
   const refreshSwift = () => {
     getSwift(); // Function to refresh po list
@@ -118,12 +119,20 @@ export default function SwiftList() {
 
   return (
     <div className="w-full p-8 flex flex-col">
-      <NavLink
-        to={user?.data.role !== "admin" ? "" : `/swift/create`}
-        className="button mb-4 self-end"
-      >
-        Create swift
-      </NavLink>
+      <div className="place-content-between flex flex-wrap gap-4">
+        <input
+          type="month"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+          className="input bg-white w-fit mb-4 self-start"
+        />
+        <NavLink
+          to={user?.data.role !== "admin" ? "" : `/swift/create`}
+          className="button mb-4 self-end"
+        >
+          Create swift
+        </NavLink>
+      </div>
       <div className="card">
         <DataTable
           value={swift}
