@@ -154,6 +154,10 @@ export default function SwiftList() {
               Number(rowData.total_invoices_cost).toLocaleString()
             }
           ></Column>
+          <Column
+            header="Received"
+            body={(rowData) => Number(rowData.received).toLocaleString()}
+          ></Column>
           <Column field="date" header="Date"></Column>
           <Column field="receive_at_bank" header="Received at bank"></Column>
           <Column header="Actions" body={actionTemplate}></Column>

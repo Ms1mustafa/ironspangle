@@ -116,14 +116,14 @@ export default function InvoiceList() {
     if (!invoice.s_date) {
       return {
         status: "In process",
-        color: "orange",
+        color: "#00427f",
       };
     }
 
     if (sDate >= now) {
       return {
         status: "Waiting",
-        color: "#dede13",
+        color: "orange",
       };
     }
 
