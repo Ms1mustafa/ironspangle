@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import AuthCheck from "../../../API/account/AuthCheck";
 import LaddaButton, { EXPAND_LEFT } from "react-ladda-button";
 import "react-ladda-button/dist/ladda-themeless.min.css";
 import { useNavigate, useParams } from "react-router-dom";
-import GetSwift from "../../../API/swift/GetSwift";
 import CreateInvoice from "../../../API/swift/invoice/CreateInvoice";
 
 export default function CreateNewInvoice() {
@@ -13,24 +12,6 @@ export default function CreateNewInvoice() {
   const navigate = useNavigate();
   const user = AuthCheck();
   const { id } = useParams();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const invoiceData = await GetSwift(id, setLoading, navigate); // Await GetSwift promise
-        setSwift(invoiceData); // Set invoice data in state
-      } catch (error) {
-        // toast.error(error.message); // Display specific error message using toast
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-
-    setInputs((values) => ({ ...values, swift_id: id }));
-  }, [id, navigate]); // Fetch data whenever id changes
 
   const handleChange = (event) => {
     const { name, type, checked, value } = event.target;
