@@ -164,11 +164,6 @@ export default function InvoiceList() {
             style={{ width: "auto", whiteSpace: "nowrap" }}
           />
           <Column
-            field="pr_no"
-            header="PR No"
-            style={{ width: "auto", whiteSpace: "nowrap" }}
-          />
-          <Column
             field="pr_date"
             header="PR Date"
             style={{ width: "auto", whiteSpace: "nowrap" }}

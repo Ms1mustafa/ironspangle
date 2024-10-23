@@ -243,7 +243,6 @@ export default function CreateNewInvoice() {
             <option value="in progress" selected>
               in progress
             </option>
-            <option value="recived in bank">recived in bank</option>
           </select>
         </div>
       </div>
