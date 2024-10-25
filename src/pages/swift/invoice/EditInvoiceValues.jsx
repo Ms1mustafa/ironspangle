@@ -43,6 +43,7 @@ export default function EditInvoiceValues() {
             cost: invoiceData.cost || "",
             invoice_no: invoiceData.invoice_no || "",
             id: invoice_id,
+            swift_id: invoiceData.swift_id,
           }));
         }
       } catch (error) {

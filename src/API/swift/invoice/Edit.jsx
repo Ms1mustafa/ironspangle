@@ -9,9 +9,13 @@ const Edit = (data, setLoading, navigate) => {
       setLoading(false);
       if (response.status === 200) {
         toast.success(response.data.message);
-        navigate(`/invoice`, {
-          replace: true,
-        });
+        data.swift_id
+          ? navigate(`/swift/${data.swift_id}/view`, {
+              replace: true,
+            })
+          : navigate(`/invoice`, {
+              replace: true,
+            });
       } else {
         toast.error(response.data.message);
       }
