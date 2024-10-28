@@ -13,8 +13,10 @@ export default function EditInvoiceValues() {
     id: "",
     guarantee: false,
     tax: false,
+    tax_bint: false,
     publish: "",
     fines: "",
+    values_edit: true,
   });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -38,6 +40,7 @@ export default function EditInvoiceValues() {
             ...prevInputs,
             guarantee: invoiceData.guarantee > 0 || false,
             tax: invoiceData.tax > 0 || false,
+            tax_bint: invoiceData.tax_bint > 0 || false,
             publish: invoiceData.publish || "",
             fines: invoiceData.fines || "",
             cost: invoiceData.cost || "",
@@ -105,7 +108,7 @@ export default function EditInvoiceValues() {
         </div>
         <div className="w-full md:w-1/2 px-3">
           <p className="input-label">
-            {inputs.guarantee ? inputs.cost * 0.05 : ""}
+            {inputs.guarantee ? (inputs.cost * 0.05).toLocaleString() : ""}
           </p>
         </div>
       </div>
@@ -126,9 +129,30 @@ export default function EditInvoiceValues() {
         </div>
         <div className="w-full md:w-1/2 px-3">
           <p htmlFor="tax" className="input-label">
-            {inputs.tax ? inputs.cost * 0.03 : ""}
+            {inputs.tax ? (inputs.cost * 0.03).toLocaleString() : ""}
           </p>
         </div>
+      </div>
+      <div className="flex flex-wrap -mx-3 mb-6">
+        <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+          <div className="px-3 mb-6 md:mb-0">
+            <label htmlFor="tax_bint" className="mr-2">
+              TAX BINT
+            </label>
+            <input
+              id="tax_bint"
+              type="checkbox"
+              name="tax_bint"
+              onChange={handleChange}
+              checked={inputs.tax_bint}
+            />
+          </div>
+        </div>
+        {/* <div className="w-full md:w-1/2 px-3">
+          <p htmlFor="tax bint" className="input-label">
+            {inputs.tax_bint ? selectedInvoice.cost * 0.03 : ""}
+          </p>
+        </div> */}
       </div>
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">

@@ -6,7 +6,9 @@ import "react-ladda-button/dist/ladda-themeless.min.css";
 import { useNavigate } from "react-router-dom";
 
 export default function CreateExpense() {
-  const [inputs, setInputs] = useState({});
+  const [inputs, setInputs] = useState({
+    unit: "LS",
+  });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const user = AuthCheck();

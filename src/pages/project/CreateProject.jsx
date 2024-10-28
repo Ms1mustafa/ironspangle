@@ -88,7 +88,7 @@ export default function CreateUser() {
         </div>
         <div className="w-full md:w-1/2 px-3">
           <label htmlFor="pr" className="input-label">
-            PR <span className="text-red-500 text-sm">*</span>
+            PR
           </label>
           <input
             id="pr"

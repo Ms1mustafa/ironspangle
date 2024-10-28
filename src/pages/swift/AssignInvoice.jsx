@@ -138,7 +138,9 @@ export default function EditSwiftInvoice() {
         </div>
         <div className="w-full md:w-1/2 px-3">
           <p className="input-label">
-            {inputs.guarantee ? selectedInvoice.cost * 0.05 : ""}
+            {inputs.guarantee
+              ? (selectedInvoice.cost * 0.05).toLocaleString()
+              : ""}
           </p>
         </div>
       </div>
@@ -160,7 +162,7 @@ export default function EditSwiftInvoice() {
         </div>
         <div className="w-full md:w-1/2 px-3">
           <p htmlFor="tax" className="input-label">
-            {inputs.tax ? selectedInvoice.cost * 0.03 : ""}
+            {inputs.tax ? (selectedInvoice.cost * 0.03).toLocaleString() : ""}
           </p>
         </div>
       </div>

@@ -4,6 +4,7 @@ import LaddaButton, { EXPAND_LEFT } from "react-ladda-button";
 import "react-ladda-button/dist/ladda-themeless.min.css";
 import { useNavigate, useParams } from "react-router-dom";
 import GetExpense from "../../../API/expenses/company/GetExpenses";
+import AuthCheck from "../../../API/account/AuthCheck";
 
 export default function EditExpense() {
   const [inputs, setInputs] = useState({
@@ -18,6 +19,8 @@ export default function EditExpense() {
   const [expense, setExpense] = useState({});
   const navigate = useNavigate();
   const { id } = useParams();
+
+  const user = AuthCheck();
 
   // Fetch Expense data on component mount
   useEffect(() => {

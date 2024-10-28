@@ -147,11 +147,17 @@ export default function ProjectsList() {
         >
           <Column field="name" header="Name"></Column>
           <Column
-            field="total_project_cost"
             header="Total Project Cost"
+            body={(data) => data.total_project_cost.toLocaleString()}
           ></Column>
-          <Column field="budget" header="Budget"></Column>
-          <Column field="profit" header="Profit"></Column>
+          <Column
+            header="Budget"
+            body={(data) => data.budget.toLocaleString()}
+          ></Column>
+          <Column
+            header="Profit"
+            body={(data) => data.profit.toLocaleString()}
+          ></Column>
           <Column
             header="Created at"
             body={(data) =>
