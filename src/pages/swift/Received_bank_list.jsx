@@ -273,6 +273,12 @@ export default function InvoiceTableDemo() {
             body={(rowData) => Number(rowData.fines).toLocaleString()}
           ></Column>
           <Column
+            header="Tax bint"
+            style={{ minWidth: "150px" }}
+            headerStyle={{ color: "#ff8e29" }}
+            body={(rowData) => Number(rowData.tax_bint).toLocaleString()}
+          ></Column>
+          <Column
             header="Received"
             style={{ minWidth: "150px" }}
             headerStyle={{ color: "#ff8e29" }}
@@ -282,7 +288,8 @@ export default function InvoiceTableDemo() {
                   (rowData.guarantee > 0 && rowData.cost * 0.05) -
                   (rowData.tax > 0 && rowData.cost * 0.03) -
                   rowData.publish -
-                  rowData.fines
+                  rowData.fines -
+                  rowData.tax_bint
               ).toLocaleString()
             }
           ></Column>

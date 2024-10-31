@@ -13,9 +13,9 @@ export default function EditInvoiceValues() {
     id: "",
     guarantee: false,
     tax: false,
-    tax_bint: false,
     publish: "",
     fines: "",
+    tax_bint: "",
     values_edit: true,
   });
   const [loading, setLoading] = useState(false);
@@ -40,9 +40,9 @@ export default function EditInvoiceValues() {
             ...prevInputs,
             guarantee: invoiceData.guarantee > 0 || false,
             tax: invoiceData.tax > 0 || false,
-            tax_bint: invoiceData.tax_bint > 0 || false,
             publish: invoiceData.publish || "",
             fines: invoiceData.fines || "",
+            tax_bint: invoiceData.tax_bint || "",
             cost: invoiceData.cost || "",
             invoice_no: invoiceData.invoice_no || "",
             id: invoice_id,
@@ -71,15 +71,15 @@ export default function EditInvoiceValues() {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (
-      !inputs.guarantee &&
-      !inputs.tax &&
-      (!inputs.publish || inputs.publish === "0") &&
-      (!inputs.fines || inputs.fines === "0")
-    ) {
-      toast.error("Please fill at least one field to update.");
-      return;
-    }
+    // if (
+    //   !inputs.guarantee &&
+    //   !inputs.tax &&
+    //   (!inputs.publish || inputs.publish === "0") &&
+    //   (!inputs.fines || inputs.fines === "0")
+    // ) {
+    //   toast.error("Please fill at least one field to update.");
+    //   return;
+    // }
     try {
       await Edit(inputs, setLoading, navigate);
       console.log("Invoice updated successfully:", inputs);
@@ -134,20 +134,6 @@ export default function EditInvoiceValues() {
         </div>
       </div>
       <div className="flex flex-wrap -mx-3 mb-6">
-        <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-          <div className="px-3 mb-6 md:mb-0">
-            <label htmlFor="tax_bint" className="mr-2">
-              TAX BINT
-            </label>
-            <input
-              id="tax_bint"
-              type="checkbox"
-              name="tax_bint"
-              onChange={handleChange}
-              checked={inputs.tax_bint}
-            />
-          </div>
-        </div>
         {/* <div className="w-full md:w-1/2 px-3">
           <p htmlFor="tax bint" className="input-label">
             {inputs.tax_bint ? selectedInvoice.cost * 0.03 : ""}
@@ -179,6 +165,19 @@ export default function EditInvoiceValues() {
             name="fines"
             onChange={handleChange}
             value={inputs.fines}
+          />
+        </div>
+        <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+          <label htmlFor="tax_bint" className="input-label">
+            tax_bint
+          </label>
+          <input
+            id="tax_bint"
+            type="number"
+            className="input"
+            name="tax_bint"
+            onChange={handleChange}
+            value={inputs.tax_bint}
           />
         </div>
       </div>
